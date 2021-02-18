@@ -1,7 +1,10 @@
+import { TokenService } from './../../services/token.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { LoginModel } from 'src/app/models/login.model';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -9,14 +12,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  @Output()
-  userLogged = new EventEmitter<boolean>();
 
   loginForm!: FormGroup;
 
   constructor(private fomrBuilder: FormBuilder,
               private router: Router,
-              private snackBar: MatSnackBar ) {
+              private snackBar: MatSnackBar,
+              private loginService: LoginService,
+              private tokenService: TokenService) {
     this.construirFormulario();
   }
 
@@ -36,9 +39,16 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.userLogged.emit(true);
-    this.snackBar.open('Usuário logado.');
-    this.router.navigate(['/p/home']);
+    this.loginService.realizarLogin(this.loginForm.value as LoginModel)
+      .subscribe(token => {
+        try {
+          this.tokenService.setToken(token);
+          this.snackBar.open('Usuário logado.');
+          this.router.navigate(['/p/home']);
+        } catch (e) {
+          console.log(e);
+        }
+      });
   }
 
   get login(): FormControl {

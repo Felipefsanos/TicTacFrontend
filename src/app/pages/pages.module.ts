@@ -22,7 +22,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes)
   ]
 })
 export class PagesModule { }

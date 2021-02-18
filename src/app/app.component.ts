@@ -1,11 +1,13 @@
-import { animate, style, transition, trigger } from '@angular/animations';
+import { TokenService } from './shared/services/token.service';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { transformAll } from '@angular/compiler/src/render3/r3_ast';
 import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
+import { NavigationStart, Router } from '@angular/router';
 import { MenuFlatNode, MenuItem } from './shared/models/base/menu-item.model';
 import { menuItems } from './shared/navigation/menu.model';
+import { filter } from 'rxjs/operators';
+import { LoginService } from './services/login.service';
 
 /** Flat node with expandable and level information */
 
@@ -19,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   title = 'Tic tac Admin';
   opened = true;
-  userLoged = true;
+  showMenu = false;
 
   sideNavOpened = false;
   mobileQuery: MediaQueryList;
@@ -47,15 +49,27 @@ export class AppComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line: member-ordering
   dataSourceMenu = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+  constructor(private changeDetectorRef: ChangeDetectorRef,
+              private media: MediaMatcher,
+              private router: Router,
+              private loginService: LoginService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addEventListener<'change'>('change', this.mobileQueryListener);
 
     this.dataSourceMenu.data = menuItems;
 
-    //TODO: Verificar se tem token válido.
-    
+    router.events
+    .pipe(filter((e: any) => e instanceof NavigationStart))
+    .subscribe((e: NavigationStart) => {
+      if (e.url === '/auth/login')
+      {
+        this.showMenu = false;
+      }
+      else {
+        this.showMenu = true;
+      }
+    });
   }
 
   hasChild = (_: number, node: MenuFlatNode) => node.expandable;
@@ -67,7 +81,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.mobileQuery.removeEventListener<'change'>('change', this.mobileQueryListener);
   }
 
-  userLogged(event: boolean): void {
-    this.userLoged = event;
+  logout(): void {
+    this.loginService.logout();
+    this.router.navigate(['/auth/login']);
   }
+
 }

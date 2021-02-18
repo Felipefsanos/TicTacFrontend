@@ -5,7 +5,7 @@ import { NotfoundComponent } from './shared/components/notfound/notfound.compone
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'auth/login',
+    redirectTo: 'p/home',
     pathMatch: 'full'
   },
   {
