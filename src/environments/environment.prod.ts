@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api: 'https://localhost:49157/api/'
+  api: 'https://tictacapi.azurewebsites.net/api/'
 };

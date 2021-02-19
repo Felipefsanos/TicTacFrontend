@@ -24,6 +24,10 @@ const routes: Routes = [
   },
   {
     path: '**',
+    redirectTo: 's/pagina-nao-encontrada',
+  },
+  {
+    path: 's/pagina-nao-encontrada',
     component: NotfoundComponent
   }
 ];

@@ -3,7 +3,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationError, NavigationStart, Router, RoutesRecognized } from '@angular/router';
 import { MenuFlatNode, MenuItem } from './shared/models/base/menu-item.model';
 import { menuItems } from './shared/navigation/menu.model';
 import { filter } from 'rxjs/operators';
@@ -22,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'Tic tac Admin';
   opened = true;
   showMenu = false;
+  dontShowMenuUrls = ['/auth/login', '**', '/s/sessao-expirada'];
 
   sideNavOpened = false;
   mobileQuery: MediaQueryList;
@@ -50,9 +51,9 @@ export class AppComponent implements OnInit, OnDestroy {
   dataSourceMenu = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   constructor(private changeDetectorRef: ChangeDetectorRef,
-              private media: MediaMatcher,
-              private router: Router,
-              private loginService: LoginService) {
+    private media: MediaMatcher,
+    private router: Router,
+    private loginService: LoginService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addEventListener<'change'>('change', this.mobileQueryListener);
@@ -60,16 +61,23 @@ export class AppComponent implements OnInit, OnDestroy {
     this.dataSourceMenu.data = menuItems;
 
     router.events
-    .pipe(filter((e: any) => e instanceof NavigationStart))
-    .subscribe((e: NavigationStart) => {
-      if (e.url === '/auth/login')
-      {
-        this.showMenu = false;
-      }
-      else {
-        this.showMenu = true;
-      }
-    });
+      .pipe(filter((e: any) => e instanceof RoutesRecognized))
+      .subscribe((e: RoutesRecognized) => {
+        if (e.urlAfterRedirects === '/s/pagina-nao-encontrada') {
+          this.showMenu = false;
+        }
+      });
+
+    router.events
+      .pipe(filter((e: any) => e instanceof NavigationStart))
+      .subscribe((e: NavigationStart) => {
+        if (this.dontShowMenuUrls.includes(e.url)) {
+          this.showMenu = false;
+        }
+        else {
+          this.showMenu = true;
+        }
+      });
   }
 
   hasChild = (_: number, node: MenuFlatNode) => node.expandable;
