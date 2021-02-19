@@ -1,4 +1,30 @@
-body{
+body {
     margin: 0;
     height: 100vh;
+}
+
+
+.success-snackbar {
+    color: white;
+
+    .mat-simple-snackbar-action {
+        color: white !important;
+    }
+}
+
+.info-snackbar {
+    color: white;
+
+    .mat-simple-snackbar-action {
+        color: white !important;
+    }
+}
+
+.warn-snackbar {
+    background-color: var(--warn-color);
+    color: white;
+
+    .mat-simple-snackbar-action {
+        color: white !important;
+    }
 }

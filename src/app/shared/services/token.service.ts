@@ -1,7 +1,6 @@
 import { TokenModel } from './../models/token.model';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import * as CryptoJS from 'crypto-js';
 
 
 @Injectable({
@@ -17,7 +16,7 @@ export class TokenService {
 
     if (token && expirationDate) {
       return {
-        token: CryptoJS.AES.decrypt(token, environment.key).toString(CryptoJS.enc.Utf8),
+        token: atob(token),
         dataExpiracao: new Date(expirationDate)
       };
     }
@@ -31,7 +30,7 @@ export class TokenService {
       throw new Error('Não pé possível definir um token inválido!');
     }
 
-    const encryptToken = CryptoJS.AES.encrypt(token.token as string, environment.key).toString();
+    const encryptToken = btoa(token.token as string);
 
     localStorage.setItem('token', encryptToken);
     localStorage.setItem('tokenExpiration', token.dataExpiracao.toString());

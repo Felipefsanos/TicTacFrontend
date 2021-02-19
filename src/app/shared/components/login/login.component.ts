@@ -1,10 +1,10 @@
 import { TokenService } from './../../services/token.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginModel } from 'src/app/models/login.model';
 import { LoginService } from 'src/app/services/login.service';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private fomrBuilder: FormBuilder,
               private router: Router,
-              private snackBar: MatSnackBar,
+              private messageService: MessageService,
               private loginService: LoginService,
               private tokenService: TokenService) {
     this.construirFormulario();
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
       .subscribe(token => {
         try {
           this.tokenService.setToken(token);
-          this.snackBar.open('Usuário logado.');
+          this.messageService.warn('Login realizado!', 'OK');
           this.router.navigate(['/p/home']);
         } catch (e) {
           console.log(e);
