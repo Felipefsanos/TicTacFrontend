@@ -30,9 +30,9 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
+              "src/web.config",
               "src/favicon.ico",
-              "src/assets",
-              "src/web.config"
+              "src/assets"
             ],
             "styles": [
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
