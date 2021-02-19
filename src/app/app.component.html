@@ -1,0 +1,47 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="showMenu">
+    <mat-toolbar color="primary">
+        <button mat-icon-button (click)="snav.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span class="mx-1">App Name</span>
+        <span class="spacer"></span>
+        <button mat-icon-button aria-label="Logout" (click)="logout()">
+            <mat-icon>logout</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="example-sidenav-container">
+        <mat-sidenav #snav [(opened)]="opened" [mode]="mobileQuery.matches ? 'over' : 'side'"
+            [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+            <div class="p-2">
+                <mat-tree [dataSource]="dataSourceMenu" [treeControl]="treeControl">
+                    <!-- This is the tree node template for leaf nodes -->
+                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                        <button mat-button>
+                            <a class="menu-item" href="#">{{node.name}}</a>
+                        </button>
+                    </mat-tree-node>
+                    <!-- This is the tree node template for expandable nodes -->
+                    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+                        <button mat-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                            <a class="menu-item">{{node.name}}</a>
+                            <mat-icon class="mat-icon-rtl-mirror">
+                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                            </mat-icon>
+                        </button>
+
+                    </mat-tree-node>
+                </mat-tree>
+            </div>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+            <section class="p-2 content-container">
+                <router-outlet></router-outlet>
+            </section>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
+<ng-container *ngIf="!showMenu">
+    <router-outlet></router-outlet>
+</ng-container>

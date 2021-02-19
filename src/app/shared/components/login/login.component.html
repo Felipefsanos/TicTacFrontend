@@ -1,0 +1,28 @@
+<div class="container" fxLayout="colummn" fxLayoutAlign="center center">
+    <mat-card class="example-card mat-elevation-z8">
+        <mat-card-header fxLayout="column" fxLayoutAlign="center center">
+            <mat-card-title class="text-center">Login</mat-card-title>
+            <mat-card-subtitle>Realize login no sistema</mat-card-subtitle>
+        </mat-card-header>
+        <form fxLayout="column" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <mat-card-content>
+                <mat-form-field appearance="outline" fxFlexFill>
+                    <mat-label>Login</mat-label>
+                    <input matInput formControlName="login" placeholder="Placeholder">
+                    <mat-icon matSuffix>account_circle</mat-icon>
+                    <mat-error *ngIf="login.hasError('required')">Campo obrigatório</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlexFill>
+                    <mat-label>Senha</mat-label>
+                    <input matInput formControlName="password" type="password" placeholder="Placeholder">
+                    <mat-icon matSuffix>password</mat-icon>
+                    <mat-error *ngIf="password.hasError('required')">Campo obrigatório</mat-error>
+                    <mat-error *ngIf="password.hasError('minlength')">Senha deve conter mais de 8 caracteres</mat-error>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions fxLayout="row-reverse">
+                <button mat-raised-button color="primary">LOGIN</button>
+            </mat-card-actions>
+        </form>
+    </mat-card>
+</div>
