@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  api: 'https://localhost:49157/api/',
-  key: 'Q#%2fj@8m5mK#iD6*C()P4lKm+b=n'
+  api: 'https://localhost:49157/api/'
 };
 
 /*
