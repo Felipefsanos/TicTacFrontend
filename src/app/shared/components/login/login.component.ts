@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
       .subscribe(token => {
         try {
           this.tokenService.setToken(token);
-          this.messageService.warn('Login realizado!', 'OK');
+          this.messageService.success('Login realizado!', 'OK');
           this.router.navigate(['/p/home']);
         } catch (e) {
           console.log(e);
