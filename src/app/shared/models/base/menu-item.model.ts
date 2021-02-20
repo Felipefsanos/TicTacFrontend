@@ -1,9 +1,7 @@
-import { Component } from "@angular/core";
-
 export class MenuItem {
     id!: number;
     name!: string;
-    url!: string;
+    url?: string;
     icon?: string;
     children?: MenuItem[];
 }

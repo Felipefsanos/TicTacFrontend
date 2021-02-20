@@ -2,34 +2,29 @@ import { MenuItem } from '../models/base/menu-item.model';
 
 export const menuItems: MenuItem[] = [
     {
-        id: 0,
+        id: 1,
+        name: 'Home',
+        url: 'p/home'
+    },
+    {
+        id: 2,
         name: 'Clientes',
-        icon: 'people_alt',
-        url: '/home',
         children: [
             {
-                id: 2,
-                name: 'Novo',
-                url: '/home/tretas',
-                children: [
-                    {
-                        id: 2,
-                        name: 'Novo Contrato',
-                        url: '/home/teste'
-                    }
-                ]
+                id: 3,
+                name: 'Novo Cliente',
+                url: 'p/clientes/novo'
             }
         ]
     },
     {
-        id: 3,
-        name: 'Produtos',
-        url: '/home/pizza',
+        id: 4,
+        name: 'Orçamentos',
         children: [
             {
-                id: 2,
-                name: 'Filho do Menu 1',
-                url: '/home/tretas'
+                id: 5,
+                name: 'Novo Orçamento',
+                url: 'p/orcamentos/novo'
             }
         ]
     }

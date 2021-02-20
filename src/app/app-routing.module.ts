@@ -1,4 +1,4 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotfoundComponent } from './shared/components/notfound/notfound.component';
 import { ValidTokenGuard } from './shared/guards/valid-token.guard';

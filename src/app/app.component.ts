@@ -34,7 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
       icon: !!node.icon ? node.icon : '',
-      url: node.url,
+      url: !!node.url ? node.url : '',
       level,
     };
   }
@@ -51,9 +51,9 @@ export class AppComponent implements OnInit, OnDestroy {
   dataSourceMenu = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   constructor(private changeDetectorRef: ChangeDetectorRef,
-    private media: MediaMatcher,
-    private router: Router,
-    private loginService: LoginService) {
+              private media: MediaMatcher,
+              private router: Router,
+              private loginService: LoginService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addEventListener<'change'>('change', this.mobileQueryListener);
@@ -73,14 +73,23 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe((e: NavigationStart) => {
         if (this.dontShowMenuUrls.includes(e.url)) {
           this.showMenu = false;
+          this.opened = false;
         }
         else {
           this.showMenu = true;
+          this.opened = true;
         }
       });
   }
 
   hasChild = (_: number, node: MenuFlatNode) => node.expandable;
+
+  navigate(url: string | undefined): void {
+    console.log(url);
+    if (url) {
+      this.router.navigate([url]);
+    }
+  }
 
   ngOnInit(): void {
   }
