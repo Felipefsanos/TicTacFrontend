@@ -1,0 +1,94 @@
+<mat-horizontal-stepper labelPosition="bottom" #stepper>
+    <mat-step [stepControl]="informacoesClienteForm">
+        <form [formGroup]="informacoesClienteForm">
+            <ng-template matStepLabel>Contato</ng-template>
+            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Nome</mat-label>
+                    <input formControlName="nome" matInput placeholder="Nome do cliente">
+                    <mat-error *ngIf="informacoesClienteForm.controls.nome.hasError('required')">Nome do cliente é
+                        obrigatório</mat-error>
+                    <mat-error *ngIf="informacoesClienteForm.controls.nome.hasError('minLength')">Nome do cliente tem
+                        que ter mais de 5 caracteres</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>CPF / CNPJ</mat-label>
+                    <input formControlName="cpfCnpj" matInput placeholder="CPF ou CNPJ"
+                        mask="000.000.000-00||00.000.000/0000-00" [showMaskTyped]="true">
+                    <mat-error *ngIf="informacoesClienteForm.controls.cpfCnpj.hasError('required')">CPF ou CPNJ é
+                        obrigatório</mat-error>
+                    <mat-error *ngIf="informacoesClienteForm.controls.cpfCnpj.hasError('mask')">CPF ou CPNJ inválido
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayoutGap.gt-sm="10px" fxLayout.lt-md="column" fxLayout="row">
+                <ng-container formArrayName="contatos">
+                    <ng-container *ngFor="let contato of contatos.controls; let i=index">
+                        <ng-container formGroupName="{{i}}">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Telefone</mat-label>
+                                <input matInput placeholder="Telefone do cliente" formControlName="telefone"
+                                    mask="(00) 0000-0000||(00) 0 0000-0000" [showMaskTyped]="true">
+                                <mat-error *ngIf="getErrorMessageContatos(i, 'telefone').hasError('required')">
+                                    Telefone obrigatório
+                                </mat-error>
+                                <mat-error *ngIf="getErrorMessageContatos(i, 'telefone').hasError('mask')">
+                                    Telefone inválido
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex.gt-xs>
+                                <mat-label>Contato</mat-label>
+                                <input matInput placeholder="Nome do responsável do telefone" formControlName="contato">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex.gt-xs>
+                                <mat-label>Email</mat-label>
+                                <input matInput placeholder="exemplo@tictac.com" formControlName="email">
+                                <mat-error *ngIf="getErrorMessageContatos(i, 'email').hasError('email')">
+                                    Email inválido
+                                </mat-error>
+                            </mat-form-field>
+
+                        </ng-container>
+                    </ng-container>
+
+                </ng-container>
+            </div>
+            <div>
+                <mat-form-field appearance="outline" fxFill>
+                    <mat-label>Observações</mat-label>
+                    <textarea formControlName="observacao" placeholder="Observações sobre o cliente"
+                        matInput></textarea>
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-button matStepperPrevious (click)="printForm()">Cancelar</button>
+                <button mat-button matStepperNext>Próximo</button>
+            </div>
+        </form>
+    </mat-step>
+    <!-- <mat-step [stepControl]="secondFormGroup" optional>
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Fill out your address</ng-template>
+        <mat-form-field>
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                 required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step> -->
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>
