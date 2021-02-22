@@ -14,6 +14,10 @@ import { ExpiredSessionComponent } from './components/expired-session/expired-se
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { LoadingComponent } from './components/loading/loading.component';
+import { ClienteFormularioComponent } from './components/formularios/cliente-formulario/cliente-formulario.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { MatStepperModule } from '@angular/material/stepper';
 
 const routes: Routes = [
   {
@@ -27,7 +31,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LoginComponent, NotfoundComponent, ExpiredSessionComponent],
+  declarations: [LoginComponent, NotfoundComponent, ExpiredSessionComponent, LoadingComponent, ClienteFormularioComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -42,9 +46,13 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     RouterModule.forChild(routes),
+    NgxMaskModule.forRoot(),
+    MatStepperModule
   ],
   exports: [
-    LoginComponent
+    LoginComponent,
+    LoadingComponent,
+    ClienteFormularioComponent
   ]
 })
 export class SharedModule { }

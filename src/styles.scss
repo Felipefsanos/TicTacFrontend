@@ -28,3 +28,19 @@ body {
         color: white !important;
     }
 }
+
+div.header-pages {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--text-primary-color);
+    border-radius: 5px;
+    padding: 10px 0px;
+
+    .title-header {
+        margin: 0px 8px 0px 8px;
+    }
+
+    .icon-header {
+        margin: 0;
+    }
+}

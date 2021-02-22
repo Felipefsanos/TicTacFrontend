@@ -2,11 +2,19 @@
     flex: 1 1 auto;
 }
 
+.toolbar {
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+}
+
 .mat-drawer{
   min-width: 360px;
 }
 
 .container-img {
+  display: flex;
   img {
       max-width: 100px;
       max-height: 35px;
@@ -33,6 +41,11 @@
 
 .content-container {
   height: 92.7%;
+}
+
+.content-container-mobile {
+  padding: 0.2rem;
+  height: 100%;
 }
 
 .example-container {

@@ -1,8 +1,17 @@
+<ng-container *ngIf="$isLoading | async">
+    <app-loading></app-loading>
+</ng-container>
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-    <mat-toolbar color="primary" *ngIf="showMenu">
+    <mat-toolbar class="toolbar" color="primary" *ngIf="showMenu">
         <button mat-icon-button (click)="snav.toggle()">
-            <mat-icon>menu</mat-icon>
+            <ng-container *ngIf="!snav.opened">
+                <mat-icon>menu</mat-icon>
+            </ng-container>
+            <ng-container *ngIf="snav.opened">
+                <mat-icon>close</mat-icon>
+            </ng-container>
         </button>
+        <span class="spacer"></span>
         <span class="mx-1 container-img">
             <img src="../../../../assets/tic tac branco.png" alt="Logo da Tic Tac">
         </span>
@@ -14,18 +23,19 @@
 
     <mat-sidenav-container class="example-sidenav-container">
         <mat-sidenav #snav [(opened)]="opened" [mode]="mobileQuery.matches ? 'over' : 'side'"
-            [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+            [fixedInViewport]="mobileQuery.matches" fixedTopGap="40">
             <div class="p-2">
                 <mat-tree [dataSource]="dataSourceMenu" [treeControl]="treeControl">
                     <!-- This is the tree node template for leaf nodes -->
                     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-                        <button mat-button (click)="navigate(node.url)">
-                            <a class="menu-item" >{{node.name}}</a>
+                        <button mat-button (click)="navigate(node.url, snav)">
+                            <a class="menu-item">{{node.name}}</a>
                         </button>
                     </mat-tree-node>
                     <!-- This is the tree node template for expandable nodes -->
-                    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding >
-                        <button mat-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name" (click)="navigate(node.url)">
+                    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                        <button mat-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name"
+                            (click)="navigate(node.url, snav)">
                             <a class="menu-item">{{node.name}}</a>
                             <mat-icon class="mat-icon-rtl-mirror">
                                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
@@ -38,12 +48,9 @@
         </mat-sidenav>
 
         <mat-sidenav-content>
-            <section [ngClass]="{'p-2 content-container': showMenu, 'h-100': !showMenu}">
+            <section [ngClass]="{'p-1': showMenu && !mobileQuery.matches, 'content-container': showMenu && !mobileQuery.matches, 'content-container-mobile': mobileQuery.matches && showMenu, 'h-100': !showMenu}">
                 <router-outlet></router-outlet>
             </section>
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
-<!-- <ng-container *ngIf="!showMenu">
-    <router-outlet></router-outlet>
-</ng-container> -->

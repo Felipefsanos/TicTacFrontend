@@ -8,6 +8,9 @@ import { MenuFlatNode, MenuItem } from './shared/models/base/menu-item.model';
 import { menuItems } from './shared/navigation/menu.model';
 import { filter } from 'rxjs/operators';
 import { LoginService } from './services/login.service';
+import { BehaviorSubject } from 'rxjs';
+import { LoadingService } from './shared/services/loading.service';
+import { MatSidenav } from '@angular/material/sidenav';
 
 /** Flat node with expandable and level information */
 
@@ -20,11 +23,12 @@ import { LoginService } from './services/login.service';
 export class AppComponent implements OnInit, OnDestroy {
 
   title = 'Tic tac Admin';
-  opened = true;
+  opened = false;
   showMenu = false;
+  $isLoading: BehaviorSubject<boolean | 'dont-show'>;
+
   dontShowMenuUrls = ['/auth/login', '**', '/s/sessao-expirada'];
 
-  sideNavOpened = false;
   mobileQuery: MediaQueryList;
 
   private mobileQueryListener: () => void;
@@ -53,7 +57,9 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private changeDetectorRef: ChangeDetectorRef,
               private media: MediaMatcher,
               private router: Router,
-              private loginService: LoginService) {
+              private loginService: LoginService,
+              private loadingService: LoadingService) {
+    this.$isLoading = loadingService.$isLoading;
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addEventListener<'change'>('change', this.mobileQueryListener);
@@ -84,9 +90,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   hasChild = (_: number, node: MenuFlatNode) => node.expandable;
 
-  navigate(url: string | undefined): void {
-    console.log(url);
+  navigate(url: string | undefined, snav: MatSidenav): void {
     if (url) {
+      if (this.mobileQuery.matches) { // Identifica se é um celular, ao navegar diminui o menu
+        snav.toggle();
+      }
       this.router.navigate([url]);
     }
   }

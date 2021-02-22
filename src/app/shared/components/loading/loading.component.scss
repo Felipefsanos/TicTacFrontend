@@ -1,0 +1,20 @@
+div.loading-container {
+    z-index: 999;
+    display: flex;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(179, 179, 179, 0.2);
+    cursor: wait;
+
+    span {
+        margin: auto;
+
+        .fa-spinner {
+            color: var(--primary-color);
+        }
+    }
+}
