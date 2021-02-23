@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
 
+ 
+
 @Component({
   selector: 'app-cliente-formulario',
   templateUrl: './cliente-formulario.component.html',
   styleUrls: ['./cliente-formulario.component.scss']
 })
+
 export class ClienteFormularioComponent implements OnInit {
 
+ 
   informacoesClienteForm: FormGroup = new FormGroup({});
+  informacoesEnderecoForm: FormGroup = new FormGroup({});
 
   constructor(private formBuilder: FormBuilder)
   {
@@ -30,6 +35,15 @@ export class ClienteFormularioComponent implements OnInit {
         })
       ]),
       observacao: ['']
+    });
+    this.informacoesEnderecoForm = this.formBuilder.group({
+      cep: [''],
+      bairro: [''],
+      cidade: [''],
+      numero: [''],
+      estado: [''],
+      complemento: [''],
+      logradouro: ['']
     });
   }
 

@@ -20,7 +20,6 @@ import { NgxMaskModule } from 'ngx-mask';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatOptionModule } from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
-ng 
 const routes: Routes = [
   {
     path: 'login',
