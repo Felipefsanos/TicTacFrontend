@@ -51,6 +51,10 @@ export class ClienteFormularioComponent implements OnInit {
     console.log(this.informacoesClienteForm);
   }
 
+  OnSubmit() : void {
+   debugger;
+  }
+
   getErrorMessageContatos(formGroupIndex: number, controlName: string): FormControl {
     const formGroup = this.contatos.controls[formGroupIndex] as FormGroup;
     return formGroup.get(controlName) as FormControl;

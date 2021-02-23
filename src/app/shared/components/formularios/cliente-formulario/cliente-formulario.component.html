@@ -73,6 +73,11 @@
       <form [formGroup]="informacoesEnderecoForm">
         <ng-template matStepLabel>Endereço</ng-template>
         <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+            <mat-form-field appearance="outline" >
+                <mat-label>CEP</mat-label>
+                <input formControlName="cep" matInput placeholder="CEP do cliente"
+                mask="00000-000" [showMaskTyped]="true">
+            </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Estado</mat-label>
                 <mat-select matInput formControlName="estado" placeholder="Estado">
@@ -110,13 +115,9 @@
                 <mat-label>Cidade</mat-label>
                 <input formControlName="cidade" matInput placeholder="Cidade do cliente">
             </mat-form-field>
-            <mat-form-field appearance="outline" >
-                <mat-label>CEP</mat-label>
-                <input formControlName="cep" matInput placeholder="CEP do cliente"
-                mask="00000-000" [showMaskTyped]="true">
-            </mat-form-field>
         </div>
         <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+           
             <mat-form-field appearance="outline" fxFlex.gt-xs>
                 <mat-label>Bairro</mat-label>
                 <input formControlName="bairro" matInput placeholder="Bairro">
@@ -138,17 +139,18 @@
             </mat-form-field>
         </div>
         <div>
-            <button mat-button matStepperPrevious (click)="printForm()">Cancelar</button>
+            <button mat-button matStepperPrevious>Voltar</button>
             <button mat-button matStepperNext>Próximo</button>
         </div>
       </form>
     </mat-step>
     <mat-step>
         <ng-template matStepLabel>Done</ng-template>
-        <p>You are now done.</p>
+        <p>Tudo Pronto!! Podemos Continuar o cadastro ?</p>
         <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
+            <button mat-raised-button color="primary" type="submit" >Sim</button>
+            <button mat-button  matStepperPrevious>Voltar</button>
+            <button mat-button  (click)="stepper.reset()">Desfazer Cadastro</button>
         </div>
     </mat-step>
 </mat-horizontal-stepper>
