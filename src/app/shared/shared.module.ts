@@ -18,7 +18,9 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { ClienteFormularioComponent } from './components/formularios/cliente-formulario/cliente-formulario.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatStepperModule } from '@angular/material/stepper';
-
+import { MatOptionModule } from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
+ng 
 const routes: Routes = [
   {
     path: 'login',
@@ -47,7 +49,9 @@ const routes: Routes = [
     MatInputModule,
     RouterModule.forChild(routes),
     NgxMaskModule.forRoot(),
-    MatStepperModule
+    MatStepperModule,
+    MatOptionModule,
+    MatSelectModule,
   ],
   exports: [
     LoginComponent,
