@@ -20,6 +20,8 @@ import { NgxMaskModule } from 'ngx-mask';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatOptionModule } from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 import { OrcamentoFormularioComponent } from './components/formularios/orcamento-formulario/orcamento-formulario.component';
 const routes: Routes = [
   {
@@ -52,6 +54,12 @@ const routes: Routes = [
     MatStepperModule,
     MatOptionModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatDatepickerModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatNativeDateModule, 
+    //MatMomentDateModule,
   ],
   exports: [
     LoginComponent,
