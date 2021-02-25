@@ -1,0 +1,230 @@
+<mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
+    <mat-step [stepControl]="informacoesClienteForm">
+        <form [formGroup]="informacoesClienteForm">
+            <ng-template matStepLabel>Contato</ng-template>
+            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Nome</mat-label>
+                    <input formControlName="nome" matInput placeholder="Nome do cliente">
+                    <mat-error *ngIf="informacoesClienteForm.controls.nome.hasError('required')">Nome do cliente é
+                        obrigatório</mat-error>
+                    <mat-error *ngIf="informacoesClienteForm.controls.nome.hasError('minLength')">Nome do cliente tem
+                        que ter mais de 5 caracteres</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>CPF / CNPJ</mat-label>
+                    <input formControlName="cpfCnpj" matInput placeholder="CPF ou CNPJ"
+                        mask="000.000.000-00||00.000.000/0000-00" [showMaskTyped]="true">
+                    <mat-error *ngIf="informacoesClienteForm.controls.cpfCnpj.hasError('required')">CPF ou CPNJ é
+                        obrigatório</mat-error>
+                    <mat-error *ngIf="informacoesClienteForm.controls.cpfCnpj.hasError('mask')">CPF ou CPNJ inválido
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayoutGap.gt-sm="10px" fxLayout.lt-md="column" fxLayout="row">
+                <ng-container formArrayName="contatos">
+                    <ng-container *ngFor="let contato of contatos.controls; let i=index">
+                        <ng-container formGroupName="{{i}}">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Telefone</mat-label>
+                                <input matInput placeholder="Telefone do cliente" formControlName="telefone"
+                                    mask="(00) 0000-0000||(00) 0 0000-0000" [showMaskTyped]="true">
+                                <mat-error *ngIf="getErrorMessageContatos(i, 'telefone').hasError('required')">
+                                    Telefone obrigatório
+                                </mat-error>
+                                <mat-error *ngIf="getErrorMessageContatos(i, 'telefone').hasError('mask')">
+                                    Telefone inválido
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex.gt-xs>
+                                <mat-label>Contato</mat-label>
+                                <input matInput placeholder="Nome do responsável do telefone" formControlName="contato">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex.gt-xs>
+                                <mat-label>Email</mat-label>
+                                <input matInput placeholder="exemplo@tictac.com" formControlName="email">
+                                <mat-error *ngIf="getErrorMessageContatos(i, 'email').hasError('email')">
+                                    Email inválido
+                                </mat-error>
+                            </mat-form-field>
+
+                        </ng-container>
+                    </ng-container>
+
+                </ng-container>
+            </div>
+            <div>
+                <mat-form-field appearance="outline" fxFill>
+                    <mat-label>Observações</mat-label>
+                    <textarea formControlName="observacao" placeholder="Observações sobre o cliente"
+                        matInput></textarea>
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-button matStepperPrevious (click)="printForm()">Cancelar</button>
+                <button mat-button matStepperNext>Próximo</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="informacoesOrcamentoForm">
+        <form [formGroup]="informacoesOrcamentoForm">
+            <ng-template matStepLabel>Orçamento</ng-template>
+            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Tipo De Evento</mat-label>
+                    <mat-select matInput formControlName="tipoEvento" placeholder="Tipo De Evento">
+                        <mat-option value="" selected></mat-option>
+                        <mat-option value=1>Aniversário</mat-option>
+                        <mat-option value=2>Infantil</mat-option>
+                        <mat-option value=3>Casamento</mat-option>
+                        <mat-option value=4>Formatura</mat-option>
+                        <mat-option value=5>Empresarial</mat-option>
+                      </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Quantidade Adultos</mat-label>
+                    <input formControlName="quantidadeAdultos" matInput placeholder="Quantidade Adultos">
+                    <mat-error *ngIf="informacoesOrcamentoForm.controls.quantidadeAdultos.hasError('required')">Quantidade Adultos é
+                        obrigatório</mat-error>
+                    <mat-error *ngIf="informacoesOrcamentoForm.controls.quantidadeAdultos.hasError('minLength')">Quantidade Adultos tem
+                        que ter mais de 5 caracteres</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Quantidade Crianças</mat-label>
+                    <input formControlName="quantidadeCriancas" matInput placeholder="Quantidade Crianças">
+                    <mat-error *ngIf="informacoesOrcamentoForm.controls.quantidadeCriancas.hasError('required')">Quantidade Adultos é
+                        obrigatório</mat-error>
+                    <mat-error *ngIf="informacoesOrcamentoForm.controls.quantidadeCriancas.hasError('minLength')">Quantidade Adultos tem
+                        que ter mais de 5 caracteres</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Buffet Principal</mat-label>
+                    <mat-select matInput formControlName="buffetPrincipal" placeholder="Buffet Principal">
+                        <mat-option value="" selected></mat-option>
+                        <mat-option value=1>Sim</mat-option>
+                        <mat-option value=5>Não</mat-option>
+                      </mat-select>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline" fxFill>
+                    <mat-label>Observações</mat-label>
+                    <textarea formControlName="observacao" placeholder="Observações sobre o cliente"
+                        matInput></textarea>
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-button matStepperPrevious (click)="printForm()">Cancelar</button>
+                <button mat-button matStepperNext>Próximo</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="informacoesEnderecoForm" mat-optional>
+      <form [formGroup]="informacoesEnderecoForm">
+        <ng-template matStepLabel>Endereço</ng-template>
+        <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+            <mat-form-field appearance="outline" >
+                <mat-label>CEP</mat-label>
+                <input formControlName="cep" matInput placeholder="CEP do cliente"
+                mask="00000-000" [showMaskTyped]="true">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Estado</mat-label>
+                <mat-select matInput formControlName="estado" placeholder="Estado">
+                    <mat-option value="" selected></mat-option>
+                    <mat-option value="AC">Acre</mat-option>
+                    <mat-option value="AL">Alagoas</mat-option>
+                    <mat-option value="AP">Amapá</mat-option>
+                    <mat-option value="AM">Amazonas</mat-option>
+                    <mat-option value="BA">Bahia</mat-option>
+                    <mat-option value="CE">Ceará</mat-option>
+                    <mat-option value="DF">Distrito Federal</mat-option>
+                    <mat-option value="ES">Espírito Santo</mat-option>
+                    <mat-option value="GO">Goiás</mat-option>
+                    <mat-option value="MA">Maranhão</mat-option>
+                    <mat-option value="MT">Mato Grosso</mat-option>
+                    <mat-option value="MS">Mato Grosso do Sul</mat-option>
+                    <mat-option value="MG">Minas Gerais</mat-option>
+                    <mat-option value="PA">Pará</mat-option>
+                    <mat-option value="PB">Paraíba</mat-option>
+                    <mat-option value="PR">Paraná</mat-option>
+                    <mat-option value="PE">Pernambuco</mat-option>
+                    <mat-option value="PI">Piauí</mat-option>
+                    <mat-option value="RJ">Rio de Janeiro</mat-option>
+                    <mat-option value="RN">Rio Grande do Norte</mat-option>
+                    <mat-option value="RS">Rio Grande do Sul</mat-option>
+                    <mat-option value="RO">Rondônia</mat-option>
+                    <mat-option value="RR">Roraima</mat-option>
+                    <mat-option value="SC">Santa Catarina</mat-option>
+                    <mat-option value="SP">São Paulo</mat-option>
+                    <mat-option value="SE">Sergipe</mat-option>
+                    <mat-option value="TO">Tocantins</mat-option>
+                  </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex.gt-xs>
+                <mat-label>Cidade</mat-label>
+                <input formControlName="cidade" matInput placeholder="Cidade do cliente">
+            </mat-form-field>
+        </div>
+        <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+            <mat-form-field appearance="outline" fxFlex.gt-xs>
+                <mat-label>Bairro</mat-label>
+                <input formControlName="bairro" matInput placeholder="Bairro">
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex.gt-xs>
+                <mat-label>Logradouro</mat-label>
+                <input formControlName="logradouro" matInput placeholder="Logradouro">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Número</mat-label>
+                <input formControlName="numero" matInput placeholder="Número">
+            </mat-form-field>
+        </div>
+        <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+            <mat-form-field appearance="outline">
+                <mat-label>Possui Elevador</mat-label>
+                <mat-select matInput formControlName="elevador" placeholder="Possui Elevador">
+                    <mat-option value="" selected></mat-option>
+                    <mat-option value=1>Sim</mat-option>
+                    <mat-option value=5>Não</mat-option>
+                  </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Possui Escada</mat-label>
+                <mat-select matInput formControlName="escada" placeholder="Possui escada">
+                    <mat-option value="" selected></mat-option>
+                    <mat-option value=1>Sim</mat-option>
+                    <mat-option value=5>Não</mat-option>
+                  </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Possui Restrição de Horário</mat-label>
+                <mat-select matInput formControlName="restricaoHorario" placeholder="Possui Restrição de Horário">
+                    <mat-option value="" selected></mat-option>
+                    <mat-option value=1>Sim</mat-option>
+                    <mat-option value=5>Não</mat-option>
+                  </mat-select>
+            </mat-form-field>
+        </div>
+        <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+            <mat-form-field appearance="outline">
+                <mat-label>Tamanho do Local</mat-label>
+                <input formControlName="tamanhoLocal" matInput placeholder="Tamanho do Local">
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFill>
+                <mat-label>Ponto de Referência</mat-label>
+                <textarea formControlName="complemento" placeholder="Ponto de Referência"
+                    matInput></textarea>
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-raised-button color="primary" type="submit" (click)="OnSubmit()">Sim</button>
+            <button mat-button  matStepperPrevious>Voltar</button>
+            <button mat-button  (click)="stepper.reset()">Desfazer Cadastro</button>
+        </div>
+      </form>
+    </mat-step>
+</mat-horizontal-stepper>

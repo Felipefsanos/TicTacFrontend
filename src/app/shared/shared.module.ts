@@ -20,6 +20,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatOptionModule } from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
+import { OrcamentoFormularioComponent } from './components/formularios/orcamento-formulario/orcamento-formulario.component';
 const routes: Routes = [
   {
     path: 'login',
@@ -32,7 +33,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LoginComponent, NotfoundComponent, ExpiredSessionComponent, LoadingComponent, ClienteFormularioComponent],
+  declarations: [LoginComponent, NotfoundComponent, ExpiredSessionComponent, LoadingComponent, ClienteFormularioComponent, OrcamentoFormularioComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -55,7 +56,8 @@ const routes: Routes = [
   exports: [
     LoginComponent,
     LoadingComponent,
-    ClienteFormularioComponent
+    ClienteFormularioComponent,
+    OrcamentoFormularioComponent
   ]
 })
 export class SharedModule { }
