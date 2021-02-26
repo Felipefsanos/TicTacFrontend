@@ -5,6 +5,10 @@ export class ClienteModel {
     nome!: string;
     cpfCnpj?: number;
     observacao?: string;
-    contato!:  ContatoModel[];
-    canalCaptacaoId!: number
+    contatos!:  ContatoModel[];
+    canalCaptacaoId!: number;
+    
+    public constructor(init?: Partial<ClienteModel>) {
+        Object.assign(this, init);
+    }
 }

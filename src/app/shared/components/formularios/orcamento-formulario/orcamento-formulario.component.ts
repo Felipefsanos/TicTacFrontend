@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ClienteModel } from 'src/app/models/cliente.model';
 import { ContatoModel } from 'src/app/models/contato.model';
 import { EnderecoLocalModel } from 'src/app/models/endereco-local.model';
 import { OrcamentoModel } from 'src/app/models/orcamento.model';
 import { OrcamentoService } from 'src/app/services/orcamento.service';
+import { MessageService } from 'src/app/shared/services/message.service';
  
 @Component({
   selector: 'app-orcamento-formulario',
@@ -15,13 +17,15 @@ import { OrcamentoService } from 'src/app/services/orcamento.service';
 export class OrcamentoFormularioComponent implements OnInit {
 
  
-  orcamentoModelService  = new OrcamentoModel();
+  orcamentoModel  = new OrcamentoModel();
   informacoesClienteForm: FormGroup = new FormGroup({});
   informacoesOrcamentoForm: FormGroup = new FormGroup({});
   informacoesEnderecoForm: FormGroup = new FormGroup({});
   informacoesSubmitForm: FormGroup = new FormGroup({});
 
-  constructor(private formBuilder: FormBuilder, private orcamentoService: OrcamentoService)
+  constructor(private formBuilder: FormBuilder, 
+    private orcamentoService: OrcamentoService,
+    private messageService: MessageService)
   {
     this.construirFormularioInformacoesCliente();
   }
@@ -72,62 +76,43 @@ export class OrcamentoFormularioComponent implements OnInit {
 
   OnSubmit() : void {
    debugger;
+   if(!this.informacoesClienteForm.valid){
+    return
+   }
+   if(!this.informacoesEnderecoForm.valid){
+    //return
+   }
+   if(!this.informacoesOrcamentoForm.valid){
+    return
+   }
+    
     this.montarFormularioSubmit();
       
-    this.orcamentoService.incluirOrcamento(this.orcamentoModelService)
+    this.orcamentoService.incluirOrcamento(this.orcamentoModel)
     .subscribe(token => {
       try {
+        this.messageService.success("Orçamento salvo som sucesso!")
       } catch (e) {
-        console.log(e);
+        this.messageService.warn("Erro ao salvar orçamento!");
       }
-    });
+    },(error=>  this.messageService.warn("Não foi possivel acessar o serviço de orçamento!")));
   }
   
 
   montarFormularioSubmit(): void {
-
-    this.orcamentoModelService  = new OrcamentoModel();
-    this.orcamentoModelService.dataEvento = this.informacoesOrcamentoForm.controls.dataEvento.value;
-    this.orcamentoModelService.tipoEvento = this.informacoesOrcamentoForm.controls.tipoEvento.value;
-    this.orcamentoModelService.quantidadeAdultos = this.informacoesOrcamentoForm.controls.quantidadeAdultos.value;
-    this.orcamentoModelService.quantidadeCriancas = this.informacoesOrcamentoForm.controls.quantidadeCriancas.value;
-    this.orcamentoModelService.buffetPrincipal = this.informacoesOrcamentoForm.controls.buffetPrincipal.value;
-    this.orcamentoModelService.observacao = this.informacoesOrcamentoForm.controls.observacao.value;
-
-    let localService = new EnderecoLocalModel();
-
-    localService.cep = this.informacoesEnderecoForm.controls.cep.value;
-    localService.bairro = this.informacoesEnderecoForm.controls.bairro.value;
-    localService.cidade = this.informacoesEnderecoForm.controls.cidade.value;
-    localService.numero = this.informacoesEnderecoForm.controls.numero.value;
-    localService.estado = this.informacoesEnderecoForm.controls.estado.value;
-    localService.complemento = this.informacoesEnderecoForm.controls.complemento.value;
-    localService.logradouro = this.informacoesEnderecoForm.controls.logradouro.value;
-    localService.tamanhoLocal = this.informacoesEnderecoForm.controls.tamanhoLocal.value;
-    localService.escada = JSON.parse(this.informacoesEnderecoForm.controls.escada.value);
-    localService.elevador = JSON.parse(this.informacoesEnderecoForm.controls.elevador.value);
-    localService.restricaoHorario = JSON.parse(this.informacoesEnderecoForm.controls.restricaoHorario.value);
-    //Add Endereço no Orçamento
-    this.orcamentoModelService.local = localService;
-
-    let clienteService = new ClienteModel();
-    clienteService.nome = this.informacoesClienteForm.controls.nome.value;
-    clienteService.cpfCnpj = this.informacoesClienteForm.controls.cpfCnpj.value;
-    clienteService.cpfCnpj = this.informacoesClienteForm.controls.cpfCnpj.value;
-    clienteService.observacao = this.informacoesClienteForm.controls.observacao.value;
-
-    const contatosServices = [] ;
+debugger;
+    this.orcamentoModel =  new OrcamentoModel(this.informacoesOrcamentoForm.value);
+    this.orcamentoModel.buffetPrincipal= JSON.parse(String(this.orcamentoModel.buffetPrincipal));
+    this.orcamentoModel.local = new EnderecoLocalModel(this.informacoesEnderecoForm.value);
+    this.orcamentoModel.local.elevador = JSON.parse(String(this.orcamentoModel.local.elevador));
+    this.orcamentoModel.local.restricaoHorario = JSON.parse(String(this.orcamentoModel.local.restricaoHorario));
+    this.orcamentoModel.local.escada = JSON.parse(String(this.orcamentoModel.local.escada));
+    this.orcamentoModel.cliente = new ClienteModel(this.informacoesClienteForm.value);
+     
+    this.orcamentoModel.cliente.contatos = [] ;
     for(let item of this.informacoesClienteForm.controls.contatos.value){
-        let contatoServices = new ContatoModel();
-        contatoServices.telefone = item.telefone;
-        contatoServices.email = item.email;
-        contatoServices.nomeContato = item.nomeContato;
-        contatosServices.push(contatoServices);
+        this.orcamentoModel.cliente.contatos.push(item);
     }
-    // add Contato no cliente 
-    clienteService.contato = contatosServices;
-    //add Cliente no Orçamento
-    this.orcamentoModelService.cliente = clienteService;
   }
   getErrorMessageContatos(formGroupIndex: number, controlName: string): FormControl {
     const formGroup = this.contatos.controls[formGroupIndex] as FormGroup;
@@ -137,4 +122,5 @@ export class OrcamentoFormularioComponent implements OnInit {
   get contatos(): FormArray {
     return this.informacoesClienteForm.get('contatos') as FormArray;
   }
+ 
 }

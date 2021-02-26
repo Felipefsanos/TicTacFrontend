@@ -10,4 +10,8 @@ export class EnderecoLocalModel {
     escada!: boolean;
     elevador!: boolean;
     restricaoHorario!: boolean;
+
+    public constructor(init?: Partial<EnderecoLocalModel>) {
+        Object.assign(this, init);
+    }
 }

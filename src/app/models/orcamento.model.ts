@@ -10,4 +10,10 @@ export class OrcamentoModel  {
     observacao?: string;
     local!: EnderecoLocalModel;
     cliente!: ClienteModel;
+
+    public constructor(init?: Partial<OrcamentoModel>) {
+        Object.assign(this, init);
+    }
 }
+
+

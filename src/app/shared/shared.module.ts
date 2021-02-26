@@ -22,6 +22,7 @@ import { MatOptionModule } from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatDialogModule} from '@angular/material/dialog';
 import { OrcamentoFormularioComponent } from './components/formularios/orcamento-formulario/orcamento-formulario.component';
 const routes: Routes = [
   {
@@ -59,6 +60,8 @@ const routes: Routes = [
     MatButtonModule,
     MatFormFieldModule,
     MatNativeDateModule, 
+    MatDialogModule
+
     //MatMomentDateModule,
   ],
   exports: [

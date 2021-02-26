@@ -97,34 +97,28 @@
                     <mat-label>Buffet Principal</mat-label>
                     <mat-select matInput formControlName="buffetPrincipal" placeholder="Buffet Principal">
                         <mat-option value="" selected></mat-option>
-                        <mat-option value=1>Sim</mat-option>
-                        <mat-option value=5>Não</mat-option>
+                        <mat-option value=true>Sim</mat-option>
+                        <mat-option value=false>Não</mat-option>
                       </mat-select>
                 </mat-form-field>
-                <mat-form-field class="example-full-width" appearance="fill">
+                <mat-form-field class="example-full-width" appearance="outline">
                     <mat-label>Informe a Data do Evento</mat-label>
                     <input matInput formControlName="dataEvento"  placeholder="Data do Evento"[matDatepicker]="picker">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker></mat-datepicker>
                   </mat-form-field>
-            </div>
-            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
-
                 <mat-form-field appearance="outline" fxFlex.gt-xs>
                     <mat-label>Quantidade Adultos</mat-label>
                     <input type="number" formControlName="quantidadeAdultos" matInput placeholder="Quantidade Adultos">
                     <mat-error *ngIf="informacoesOrcamentoForm.controls.quantidadeAdultos.hasError('required')">Quantidade Adultos é
                         obrigatório</mat-error>
-
                 </mat-form-field>
                 <mat-form-field appearance="outline" fxFlex.gt-xs>
                     <mat-label>Quantidade Crianças</mat-label>
                     <input type="number"  formControlName="quantidadeCriancas" matInput placeholder="Quantidade Crianças">
                     <mat-error *ngIf="informacoesOrcamentoForm.controls.quantidadeCriancas.hasError('required')">Quantidade Crianças é
                         obrigatório</mat-error>
-
                 </mat-form-field>
-
             </div>
             <div>
                 <mat-form-field appearance="outline" fxFill>
@@ -210,24 +204,24 @@
                 <mat-label>Possui Elevador</mat-label>
                 <mat-select matInput formControlName="elevador" placeholder="Possui Elevador">
                     <mat-option value="" selected></mat-option>
-                    <mat-option value= "true">Sim</mat-option>
-                    <mat-option value= "false">Não</mat-option>
+                    <mat-option value= true>Sim</mat-option>
+                    <mat-option value= false>Não</mat-option>
                   </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Possui Escada</mat-label>
                 <mat-select matInput formControlName="escada" placeholder="Possui escada">
                     <mat-option value="" selected></mat-option>
-                    <mat-option value= "true">Sim</mat-option>
-                    <mat-option value= "false">Não</mat-option>
+                    <mat-option value= true>Sim</mat-option>
+                    <mat-option value= false>Não</mat-option>
                   </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Possui Restrição de Horário</mat-label>
                 <mat-select matInput formControlName="restricaoHorario" placeholder="Possui Restrição de Horário">
                     <mat-option value="" selected></mat-option>
-                    <mat-option value= "true">Sim</mat-option>
-                    <mat-option value= "false">Não</mat-option>
+                    <mat-option value= true>Sim</mat-option>
+                    <mat-option value= false>Não</mat-option>
                   </mat-select>
             </mat-form-field>
 
