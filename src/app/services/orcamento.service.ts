@@ -16,7 +16,15 @@ export class OrcamentoService extends BaseService {
     super(http);
   }
 
-  incluirOrcamento(orcamentoModel: OrcamentoModel): Observable<TokenModel> {
-    return this.post('orcamentoModel', orcamentoModel);
+  novoOrcamento(orcamentoModel: OrcamentoModel): Observable<any> {
+    return this.post('orcamentos', orcamentoModel);
+  }
+
+  obterOrcamentos(): Observable<OrcamentoModel[]>{
+    return this.get('orcamentos');
+  }
+
+  obterOrcamento(id: number): Observable<OrcamentoModel>{
+    return this.get('orcamentos/' + id );
   }
 }

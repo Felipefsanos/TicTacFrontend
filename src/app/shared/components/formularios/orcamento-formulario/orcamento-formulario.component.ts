@@ -34,15 +34,17 @@ export class OrcamentoFormularioComponent implements OnInit {
   }
 
   construirFormularioInformacoesCliente(): void {
+    
     this.informacoesClienteForm = this.formBuilder.group({
       nome: ['', [Validators.required, Validators.minLength(5)]],
       cpfCnpj: [''],
-      canalCaptacaoId:[''],
+      canalCaptacaoId:['',Validators.required],
       contatos: this.formBuilder.array([
         this.formBuilder.group({
           telefone: ['', Validators.required],
           nomeContato: ['',Validators.required],
-          email: ['', Validators.email]
+          email: ['', Validators.email],
+          ddd:['', Validators.required]
         })
       ]),
       observacao: ['']
@@ -55,10 +57,10 @@ export class OrcamentoFormularioComponent implements OnInit {
       estado: [''],
       complemento: [''],
       logradouro: [''],
-      tamanhoLocal: [''],
-      escada: [''],
-      elevador: [''],
-      restricaoHorario: [''],
+      tamanhoLocal: ['',Validators.required],
+      escada: ['',Validators.required],
+      elevador: ['',Validators.required],
+      restricaoHorario: ['',Validators.required],
     });
     this.informacoesOrcamentoForm = this.formBuilder.group({
       dataEvento: ['', Validators.required],
@@ -85,22 +87,21 @@ export class OrcamentoFormularioComponent implements OnInit {
    if(!this.informacoesOrcamentoForm.valid){
     return
    }
-    
+
     this.montarFormularioSubmit();
       
-    this.orcamentoService.incluirOrcamento(this.orcamentoModel)
-    .subscribe(token => {
+    this.orcamentoService.novoOrcamento(this.orcamentoModel)
+    .subscribe(res => {
       try {
         this.messageService.success("Orçamento salvo som sucesso!")
       } catch (e) {
         this.messageService.warn("Erro ao salvar orçamento!");
       }
-    },(error=>  this.messageService.warn("Não foi possivel acessar o serviço de orçamento!")));
+    },(error=>  this.messageService.warn("Favor validar: " + error.error.message)));
   }
   
-
   montarFormularioSubmit(): void {
-debugger;
+    debugger;
     this.orcamentoModel =  new OrcamentoModel(this.informacoesOrcamentoForm.value);
     this.orcamentoModel.buffetPrincipal= JSON.parse(String(this.orcamentoModel.buffetPrincipal));
     this.orcamentoModel.local = new EnderecoLocalModel(this.informacoesEnderecoForm.value);
@@ -111,6 +112,8 @@ debugger;
      
     this.orcamentoModel.cliente.contatos = [] ;
     for(let item of this.informacoesClienteForm.controls.contatos.value){
+        item.ddd = item.telefone.substring(0,2);
+        item.telefone = item.telefone.substring(2,item.telefone.length);
         this.orcamentoModel.cliente.contatos.push(item);
     }
   }

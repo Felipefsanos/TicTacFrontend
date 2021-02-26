@@ -81,7 +81,7 @@
     <mat-step [stepControl]="informacoesOrcamentoForm">
         <form [formGroup]="informacoesOrcamentoForm">
             <ng-template matStepLabel>Orçamento</ng-template>
-            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+            <div fxLayoutGap.gt-xs="10px" fxLayoutAlign="start stretch" fxLayout.lt-sm="column" fxLayout="row">
                 <mat-form-field appearance="outline">
                     <mat-label>Tipo De Evento</mat-label>
                     <mat-select matInput formControlName="tipoEvento" placeholder="Tipo De Evento">
@@ -203,25 +203,22 @@
             <mat-form-field appearance="outline">
                 <mat-label>Possui Elevador</mat-label>
                 <mat-select matInput formControlName="elevador" placeholder="Possui Elevador">
-                    <mat-option value="" selected></mat-option>
                     <mat-option value= true>Sim</mat-option>
-                    <mat-option value= false>Não</mat-option>
+                    <mat-option value= false selected>Não</mat-option>
                   </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Possui Escada</mat-label>
                 <mat-select matInput formControlName="escada" placeholder="Possui escada">
-                    <mat-option value="" selected></mat-option>
                     <mat-option value= true>Sim</mat-option>
-                    <mat-option value= false>Não</mat-option>
+                    <mat-option value= false selected>Não</mat-option>
                   </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Possui Restrição de Horário</mat-label>
                 <mat-select matInput formControlName="restricaoHorario" placeholder="Possui Restrição de Horário">
-                    <mat-option value="" selected></mat-option>
                     <mat-option value= true>Sim</mat-option>
-                    <mat-option value= false>Não</mat-option>
+                    <mat-option value= false selected>Não</mat-option>
                   </mat-select>
             </mat-form-field>
 
