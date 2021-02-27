@@ -44,7 +44,7 @@ export class OrcamentoFormularioComponent implements OnInit {
           telefone: ['', Validators.required],
           nomeContato: ['',Validators.required],
           email: ['', Validators.email],
-          ddd:['', Validators.required]
+          ddd:['']
         })
       ]),
       observacao: ['']
