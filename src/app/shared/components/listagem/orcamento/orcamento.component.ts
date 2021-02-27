@@ -4,8 +4,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { OrcamentoService } from 'src/app/services/orcamento.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
- 
- 
 
 @Component({
   selector: 'app-orcamento',
@@ -53,6 +51,6 @@ export class OrcamentoComponent implements OnInit {
       } catch (e) {
         this.messageService.warn('Erro ao listar orçamentos!');
       }
-    }, (error => this.messageService.warn('Favor validar: ' + error.error.message)));
+    });
   }
 }

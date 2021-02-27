@@ -11,7 +11,7 @@ import { OrcamentoModel } from '../models/orcamento.model';
 })
 export class OrcamentoService extends BaseService {
 
-  constructor(protected http: HttpClient, private tokenService: TokenService)
+  constructor(protected http: HttpClient)
   {
     super(http);
   }

@@ -19,13 +19,16 @@ import { ClienteFormularioComponent } from './components/formularios/cliente-for
 import { NgxMaskModule } from 'ngx-mask';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatOptionModule } from '@angular/material/core';
-import {MatSelectModule} from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
 import { OrcamentoFormularioComponent } from './components/formularios/orcamento-formulario/orcamento-formulario.component';
 import { OrcamentoComponent } from './components/listagem/orcamento/orcamento.component';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
+import { CanalCaptacaoComponent } from './components/listagem/canal-captacao/canal-captacao.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 const routes: Routes = [
   {
     path: 'login',
@@ -38,7 +41,15 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LoginComponent, NotfoundComponent, ExpiredSessionComponent, LoadingComponent, ClienteFormularioComponent, OrcamentoFormularioComponent, OrcamentoComponent],
+  declarations: [
+    LoginComponent,
+    NotfoundComponent,
+    ExpiredSessionComponent,
+    LoadingComponent,
+    ClienteFormularioComponent,
+    OrcamentoFormularioComponent,
+    OrcamentoComponent,
+    CanalCaptacaoComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -61,18 +72,18 @@ const routes: Routes = [
     MatDatepickerModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatNativeDateModule, 
+    MatNativeDateModule,
     MatDialogModule,
-    MatTableModule
-
-    //MatMomentDateModule,
+    MatTableModule,
+    MatTooltipModule
   ],
   exports: [
     LoginComponent,
     LoadingComponent,
     ClienteFormularioComponent,
     OrcamentoFormularioComponent,
-    OrcamentoComponent
+    OrcamentoComponent,
+    CanalCaptacaoComponent
   ]
 })
 export class SharedModule { }

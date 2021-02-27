@@ -22,4 +22,15 @@ export const menuItems: MenuItem[] = [
             }
         ]
     },
+    {
+        id: 5,
+        name: 'Configurações',
+        children: [
+            {
+                id: 6,
+                name: 'Canais de Captação',
+                url: 'p/configuracoes/canal-captacao'
+            },
+        ]
+    },
 ];
