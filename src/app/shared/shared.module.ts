@@ -24,6 +24,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDialogModule} from '@angular/material/dialog';
 import { OrcamentoFormularioComponent } from './components/formularios/orcamento-formulario/orcamento-formulario.component';
+import { OrcamentoComponent } from './components/listagem/orcamento/orcamento.component';
+import {MatTableModule} from '@angular/material/table';
 const routes: Routes = [
   {
     path: 'login',
@@ -36,7 +38,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LoginComponent, NotfoundComponent, ExpiredSessionComponent, LoadingComponent, ClienteFormularioComponent, OrcamentoFormularioComponent],
+  declarations: [LoginComponent, NotfoundComponent, ExpiredSessionComponent, LoadingComponent, ClienteFormularioComponent, OrcamentoFormularioComponent, OrcamentoComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -60,7 +62,8 @@ const routes: Routes = [
     MatButtonModule,
     MatFormFieldModule,
     MatNativeDateModule, 
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule
 
     //MatMomentDateModule,
   ],
@@ -68,7 +71,8 @@ const routes: Routes = [
     LoginComponent,
     LoadingComponent,
     ClienteFormularioComponent,
-    OrcamentoFormularioComponent
+    OrcamentoFormularioComponent,
+    OrcamentoComponent
   ]
 })
 export class SharedModule { }

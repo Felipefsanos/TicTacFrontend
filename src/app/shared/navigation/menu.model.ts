@@ -14,6 +14,11 @@ export const menuItems: MenuItem[] = [
                 id: 3,
                 name: 'Novo Orçamento',
                 url: 'p/orcamentos/novo'
+            },
+            {
+                id: 4,
+                name: 'Lista de Orçamentos',
+                url: 'p/orcamentos/listagem'
             }
         ]
     },

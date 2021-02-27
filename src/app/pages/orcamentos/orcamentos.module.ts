@@ -5,16 +5,21 @@ import { NovoOrcamentoComponent } from './novo-orcamento/novo-orcamento.componen
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ListagemOrcamentosComponent } from './listagem-orcamentos/listagem-orcamentos.component';
 
 const routes: Routes = [
   {
     path: 'novo',
     component: NovoOrcamentoComponent
+  },
+  {
+    path: 'listagem',
+    component: ListagemOrcamentosComponent
   }
 ];
 
 @NgModule({
-  declarations: [NovoOrcamentoComponent],
+  declarations: [NovoOrcamentoComponent, ListagemOrcamentosComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
