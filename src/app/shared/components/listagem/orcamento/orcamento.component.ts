@@ -20,15 +20,17 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   ],
 })
 export class OrcamentoComponent implements OnInit {
-  columnsToDisplay : string[] = ['id','dataEvento', 'tipoEvento', 'buffetPrincipal', 'observacao'];
-  columnsToName : string[] = ['id','dataEvento', 'tipoEvento', 'buffetPrincipal', 'observacao'];
+  columnsToDisplay: string[] = ['id', 'dataEvento', 'tipoEvento', 'observacao', 'valor'];
+  columnsToName: string[] = ['Número', 'Data do Evento', 'Tipo do Evento', 'Observação', 'Valor'];
   dataSource = new MatTableDataSource<OrcamentoModel>();
   expandedElement: any | null;
-  
-  constructor(  private orcamentoService: OrcamentoService,
-    private messageService: MessageService) { }
-  
-  applyFilter(event: Event) {
+
+  constructor(private orcamentoService: OrcamentoService,
+              private messageService: MessageService) {
+    this.refresh();
+  }
+
+  applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
@@ -40,19 +42,17 @@ export class OrcamentoComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-    debugger;
-    this.refresh();
+  ngOnInit(): void {
   }
 
-  refresh() {
+  refresh(): void {
     this.orcamentoService.obterOrcamentos()
     .subscribe(res => {
       try {
         this.dataSource.data = res;
       } catch (e) {
-        this.messageService.warn("Erro ao listar orçamentos!");
+        this.messageService.warn('Erro ao listar orçamentos!');
       }
-    },(error=>  this.messageService.warn("Favor validar: " + error.error.message)));
+    }, (error => this.messageService.warn('Favor validar: ' + error.error.message)));
   }
 }
