@@ -28,6 +28,9 @@ import { OrcamentoComponent } from './components/listagem/orcamento/orcamento.co
 import { MatTableModule } from '@angular/material/table';
 import { CanalCaptacaoComponent } from './components/listagem/canal-captacao/canal-captacao.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CanalCaptacaoModalComponent } from './components/modals/canal-captacao-modal/canal-captacao-modal.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { ConfirmacaoModalComponent } from './components/modals/confirmacao-modal/confirmacao-modal.component';
 
 const routes: Routes = [
   {
@@ -49,7 +52,9 @@ const routes: Routes = [
     ClienteFormularioComponent,
     OrcamentoFormularioComponent,
     OrcamentoComponent,
-    CanalCaptacaoComponent],
+    CanalCaptacaoComponent,
+    CanalCaptacaoModalComponent,
+    ConfirmacaoModalComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -75,7 +80,8 @@ const routes: Routes = [
     MatNativeDateModule,
     MatDialogModule,
     MatTableModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDividerModule
   ],
   exports: [
     LoginComponent,
@@ -83,7 +89,8 @@ const routes: Routes = [
     ClienteFormularioComponent,
     OrcamentoFormularioComponent,
     OrcamentoComponent,
-    CanalCaptacaoComponent
+    CanalCaptacaoComponent,
+    MatDialogModule
   ]
 })
 export class SharedModule { }

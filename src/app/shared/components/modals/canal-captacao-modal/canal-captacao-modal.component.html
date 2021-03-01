@@ -1,0 +1,32 @@
+<div class="modal-header" mat-dialog-title>
+    {{titulo}}
+</div>
+<form [formGroup]="form" (ngSubmit)="enviarFormulario()">
+    <mat-dialog-content>
+        <div fxLayout="column">
+
+            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Código</mat-label>
+                    <input matInput formControlName="id">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex.gt-xs="grow">
+                    <mat-label>Descrição</mat-label>
+                    <input formControlName="canal" matInput placeholder="Descrição do canal" required>
+                    <mat-error *ngIf="form.controls.canal.hasError('required')">Descrição é obrigatória</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <p class="text-center">
+                    * Ao Alterar a descrição de um canal, será alterado a descrição para todos os clientes pertencentes a esse canal!
+                </p>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayout="row-reverse" fxLayoutGap="10px">
+        <button mat-raised-button color="primary" type="submit" mat-dialog-close>Confirmar</button>
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Cancelar</button>
+    </mat-dialog-actions>
+</form>
