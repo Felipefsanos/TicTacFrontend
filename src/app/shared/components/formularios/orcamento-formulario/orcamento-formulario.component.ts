@@ -18,9 +18,8 @@ export class OrcamentoFormularioComponent implements OnInit {
 
   orcamentoModel = new OrcamentoModel();
   informacoesClienteForm: FormGroup = new FormGroup({});
-  informacoesOrcamentoForm: FormGroup = new FormGroup({});
-  informacoesEnderecoForm: FormGroup = new FormGroup({});
-  informacoesSubmitForm: FormGroup = new FormGroup({});
+  orcamentoForm: FormGroup = new FormGroup({});
+  enderecoForm: FormGroup = new FormGroup({});
 
   constructor(private formBuilder: FormBuilder,
               private orcamentoService: OrcamentoService,
@@ -47,21 +46,22 @@ export class OrcamentoFormularioComponent implements OnInit {
       ]),
       observacao: ['']
     });
-    this.informacoesEnderecoForm = this.formBuilder.group({
-      cep: [''],
-      bairro: [''],
-      cidade: [''],
+    this.enderecoForm = this.formBuilder.group({
+      cep: ['', Validators.required],
+      bairro: ['', Validators.required],
+      cidade: ['', Validators.required],
       numero: [''],
-      estado: [''],
+      estado: ['', Validators.required],
       complemento: [''],
-      logradouro: [''],
+      logradouro: ['', Validators.required],
       tamanhoLocal: ['', Validators.required],
       escada: ['', Validators.required],
       elevador: ['', Validators.required],
       restricaoHorario: ['', Validators.required],
     });
-    this.informacoesOrcamentoForm = this.formBuilder.group({
+    this.orcamentoForm = this.formBuilder.group({
       dataEvento: ['', Validators.required],
+      horaEvento: ['', Validators.required],
       tipoEvento: ['', Validators.required],
       quantidadeAdultos: ['', Validators.required],
       quantidadeCriancas: ['', Validators.required],
@@ -70,18 +70,14 @@ export class OrcamentoFormularioComponent implements OnInit {
     });
   }
 
-  printForm(): void {
-    console.log(this.informacoesClienteForm);
-  }
-
   OnSubmit(): void {
     if (this.informacoesClienteForm.invalid) {
       return;
     }
-    if (this.informacoesEnderecoForm.value && this.informacoesEnderecoForm.invalid) {
+    if (this.enderecoForm.value && this.enderecoForm.invalid) {
       return;
     }
-    if (this.informacoesOrcamentoForm.valid) {
+    if (this.orcamentoForm.valid) {
       return;
     }
 
@@ -98,9 +94,9 @@ export class OrcamentoFormularioComponent implements OnInit {
   }
 
   montarFormularioSubmit(): void {
-    this.orcamentoModel = new OrcamentoModel(this.informacoesOrcamentoForm.value);
+    this.orcamentoModel = new OrcamentoModel(this.orcamentoForm.value);
     this.orcamentoModel.buffetPrincipal = JSON.parse(String(this.orcamentoModel.buffetPrincipal));
-    this.orcamentoModel.local = new EnderecoLocalModel(this.informacoesEnderecoForm.value);
+    this.orcamentoModel.local = new EnderecoLocalModel(this.enderecoForm.value);
     this.orcamentoModel.local.elevador = JSON.parse(String(this.orcamentoModel.local.elevador));
     this.orcamentoModel.local.restricaoHorario = JSON.parse(String(this.orcamentoModel.local.restricaoHorario));
     this.orcamentoModel.local.escada = JSON.parse(String(this.orcamentoModel.local.escada));
