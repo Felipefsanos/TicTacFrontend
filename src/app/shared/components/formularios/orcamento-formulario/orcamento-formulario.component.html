@@ -2,19 +2,9 @@
     <mat-step [stepControl]="informacoesClienteForm">
         <form [formGroup]="informacoesClienteForm" class="mt-2">
             <ng-template matStepLabel>Contato</ng-template>
-            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
-                <mat-form-field appearance="outline">
-                    <mat-label>Canal De Capitacao</mat-label>
-                    <mat-select matInput formControlName="canalCaptacaoId" placeholder="Canal De Captação">
-                        <mat-option value="" selected></mat-option>
-                        <mat-option value=1>Facebook</mat-option>
-                        <mat-option value=2>Instagram</mat-option>
-                        <mat-option value=3>Google</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="informacoesClienteForm.controls.canalCaptacaoId.hasError('required')">Campo
-                        obrigatório
-                    </mat-error>
-                </mat-form-field>
+
+            <div fxLayoutGap.gt-sm="10px" fxLayout.lt-lg="column" fxLayout="row">
+
                 <mat-form-field appearance="outline" fxFlex.gt-xs>
                     <mat-label>Nome</mat-label>
                     <input formControlName="nome" matInput placeholder="Nome do cliente">
@@ -24,45 +14,70 @@
                         que ter mais de 5 caracteres</mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                    <mat-label>CPF / CNPJ</mat-label>
-                    <input formControlName="cpfCnpj" matInput placeholder="CPF ou CNPJ"
-                        mask="000.000.000-00||00.000.000/0000-00" [showMaskTyped]="true">
-                    <mat-error *ngIf="informacoesClienteForm.controls.cpfCnpj.hasError('required')">CPF ou CPNJ é
-                        obrigatório</mat-error>
-                    <mat-error *ngIf="informacoesClienteForm.controls.cpfCnpj.hasError('mask')">CPF ou CPNJ inválido
-                    </mat-error>
-                </mat-form-field>
+                <div fxLayoutGap.gt-sm="10px" fxLayout.lt-md="column" fxLayout="row">
+
+                    <mat-form-field appearance="outline" fxFlex.gt-sm>
+                        <mat-label>CPF / CNPJ</mat-label>
+                        <input formControlName="cpfCnpj" matInput placeholder="CPF ou CNPJ"
+                            mask="000.000.000-00||00.000.000/0000-00" [showMaskTyped]="true">
+                        <mat-error *ngIf="informacoesClienteForm.controls.cpfCnpj.hasError('required')">CPF ou CPNJ é
+                            obrigatório</mat-error>
+                        <mat-error *ngIf="informacoesClienteForm.controls.cpfCnpj.hasError('mask')">CPF ou CPNJ inválido
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" fxFlex.gt-sm>
+                        <mat-label>Canal De Capitacao</mat-label>
+                        <mat-select matInput formControlName="canalCaptacaoId" placeholder="Canal De Captação">
+                            <mat-option value="" selected></mat-option>
+                            <mat-option value=1>Facebook</mat-option>
+                            <mat-option value=2>Instagram</mat-option>
+                            <mat-option value=3>Google</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="informacoesClienteForm.controls.canalCaptacaoId.hasError('required')">Campo
+                            obrigatório
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
             </div>
-            <div fxLayoutGap.gt-sm="10px" fxLayout.lt-md="column" fxLayout="row">
+
+            <div fxLayoutGap.gt-md="10px" fxLayout.lt-lg="column" fxLayout="row">
+
                 <ng-container formArrayName="contatos">
                     <ng-container *ngFor="let contato of contatos.controls; let i=index">
                         <ng-container formGroupName="{{i}}">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Telefone</mat-label>
-                                <input matInput placeholder="Telefone do cliente" formControlName="telefone"
-                                    mask="(00) 0000-0000||(00) 0 0000-0000" [showMaskTyped]="true">
-                                <mat-error *ngIf="getErrorMessageContatos(i, 'telefone').hasError('required')">
-                                    Telefone obrigatório
-                                </mat-error>
-                                <mat-error *ngIf="getErrorMessageContatos(i, 'telefone').hasError('mask')">
-                                    Telefone inválido
-                                </mat-error>
-                            </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex.gt-xs>
-                                <mat-label>Contato</mat-label>
-                                <input matInput placeholder="Nome do responsável do telefone"
-                                    formControlName="nomeContato">
-                                <mat-error *ngIf="informacoesClienteForm.controls.canalCaptacaoId.hasError('required')">
-                                    Campo obrigatório
-                                </mat-error>
-                            </mat-form-field>
+                            <div fxLayoutGap.gt-sm="10px" fxLayout.lt-md="column" fxLayout="row" fxFlex.gt-xs>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Telefone</mat-label>
+                                    <input matInput placeholder="Telefone do cliente" formControlName="telefone"
+                                        mask="(00) 0000-0000||(00) 0 0000-0000" [showMaskTyped]="true">
+                                    <mat-error *ngIf="getFormControlContatos(i, 'telefone').hasError('required')">
+                                        Telefone obrigatório
+                                    </mat-error>
+                                    <mat-error *ngIf="getFormControlContatos(i, 'telefone').hasError('mask')">
+                                        Telefone inválido
+                                    </mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                                    <mat-label>Contato</mat-label>
+                                    <input matInput placeholder="Nome do responsável do telefone"
+                                        formControlName="nomeContato">
+                                    <mat-error
+                                        *ngIf="informacoesClienteForm.controls.canalCaptacaoId.hasError('required')">
+                                        Campo obrigatório
+                                    </mat-error>
+                                </mat-form-field>
+
+                            </div>
 
                             <mat-form-field appearance="outline" fxFlex.gt-xs>
                                 <mat-label>Email</mat-label>
                                 <input matInput placeholder="exemplo@tictac.com" formControlName="email">
-                                <mat-error *ngIf="getErrorMessageContatos(i, 'email').hasError('email')">
+                                <mat-error *ngIf="getFormControlContatos(i, 'email').hasError('email')">
                                     Email inválido
                                 </mat-error>
                             </mat-form-field>
@@ -72,6 +87,7 @@
 
                 </ng-container>
             </div>
+
             <div>
                 <mat-form-field appearance="outline" fxFill>
                     <mat-label>Observações</mat-label>
@@ -82,13 +98,38 @@
             <div fxLayoutGap="10px">
                 <button mat-button matStepperNext>Próximo</button>
             </div>
+
         </form>
     </mat-step>
     <mat-step [stepControl]="orcamentoForm">
         <form [formGroup]="orcamentoForm" class="mt-2">
             <ng-template matStepLabel>Orçamento</ng-template>
-            <div fxLayoutGap.gt-xs="10px" fxLayoutAlign="start stretch" fxLayout.lt-sm="column" fxLayout="row wrap">
-                <mat-form-field appearance="outline">
+
+
+
+            <div fxLayoutGap.gt-sm="10px" fxLayout.lt-md="column" fxLayout="row">
+
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Data do Evento</mat-label>
+                    <input matInput formControlName="dataEvento" placeholder="Data do Evento" [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #picker></mat-datepicker>
+                    <mat-error *ngIf="orcamentoForm.controls.dataEvento.hasError('required')">Campo obrigatório
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Hora do Evento</mat-label>
+                    <input matInput formControlName="horaEvento" placeholder="Hora do Evento" mask="Hh:m0" [showMaskTyped]="true">
+                    <mat-error *ngIf="orcamentoForm.controls.horaEvento.hasError('required')">Campo obrigatório
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+
+            <div fxLayoutGap.gt-md="10px" fxLayout.lt-lg="column" fxLayout="row">
+
+                <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Tipo De Evento</mat-label>
                     <mat-select matInput formControlName="tipoEvento" placeholder="Tipo De Evento">
                         <mat-option value="" selected></mat-option>
@@ -101,7 +142,8 @@
                     <mat-error *ngIf="orcamentoForm.controls.tipoEvento.hasError('required')">Campo obrigatório
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field appearance="outline">
+
+                <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Buffet Principal</mat-label>
                     <mat-select matInput formControlName="buffetPrincipal" placeholder="Buffet Principal">
                         <mat-option value="" selected></mat-option>
@@ -111,28 +153,16 @@
                     <mat-error *ngIf="orcamentoForm.controls.buffetPrincipal.hasError('required')">Campo obrigatório
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Data do Evento</mat-label>
-                    <input matInput formControlName="dataEvento" placeholder="Data do Evento" [matDatepicker]="picker">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker touchUi #picker></mat-datepicker>
-                    <mat-error *ngIf="orcamentoForm.controls.dataEvento.hasError('required')">Campo obrigatório
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Hora do Evento</mat-label>
-                    <input matInput formControlName="horaEvento" placeholder="Hora do Evento" mask="Hh:m0">
-                    <mat-error *ngIf="orcamentoForm.controls.horaEvento.hasError('required')">Campo obrigatório
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex.gt-xs>
+
+                <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Quantidade Adultos</mat-label>
                     <input type="number" formControlName="quantidadeAdultos" matInput placeholder="Quantidade Adultos">
                     <mat-error *ngIf="orcamentoForm.controls.quantidadeAdultos.hasError('required')">Quantidade Adultos
                         é
                         obrigatório</mat-error>
                 </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex.gt-xs>
+
+                <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Quantidade Crianças</mat-label>
                     <input type="number" formControlName="quantidadeCriancas" matInput
                         placeholder="Quantidade Crianças">
@@ -140,6 +170,7 @@
                         Crianças é
                         obrigatório</mat-error>
                 </mat-form-field>
+
             </div>
             <div>
                 <mat-form-field appearance="outline" fxFill>
@@ -156,15 +187,17 @@
     </mat-step>
     <mat-step [stepControl]="enderecoForm" mat-optional>
         <form [formGroup]="enderecoForm" class="mt-2">
-            <ng-template matStepLabel>Endereço Do Evento</ng-template>
+            <ng-template matStepLabel>Local do Evento</ng-template>
 
             <div fxLayoutGap.gt-xs="10px" fxLayout.lt-md="column" fxLayout="row">
 
                 <mat-form-field appearance="outline" fxFlex="initial">
                     <mat-label>CEP</mat-label>
-                    <input formControlName="cep" matInput placeholder="CEP do cliente" mask="00000-000"
-                        [showMaskTyped]="true">
+                    <input #inputCep formControlName="cep" matInput placeholder="CEP do cliente" mask="00000-000"
+                        [showMaskTyped]="true" (blur)="buscarCep(inputCep.value)">
                     <mat-error *ngIf="enderecoForm.controls.cep.hasError('required')">Campo obrigatório
+                    </mat-error>
+                    <mat-error *ngIf="enderecoForm.controls.cep.hasError('cepInvalido')">CEP inválido
                     </mat-error>
                 </mat-form-field>
 
@@ -182,7 +215,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                
+
 
             </div>
 
@@ -239,45 +272,56 @@
 
             </div>
 
-            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-md="column" fxLayout="row">
-                <mat-form-field appearance="outline" fxFlex.gt-xs>
-                    <mat-label>Tamanho do Local</mat-label>
-                    <input formControlName="tamanhoLocal" type="number" matInput placeholder="Tamanho do Local">
-                    <mat-error *ngIf="enderecoForm.controls.tamanhoLocal.hasError('required')">Campo obrigatório
-                    </mat-error>
-                </mat-form-field>
+            <div fxLayoutGap.gt-sm="10px" fxLayout.lt-lg="column" fxLayout="row">
 
-                <mat-form-field appearance="outline" fxFlex.gt-xs>
-                    <mat-label>Possui Elevador</mat-label>
-                    <mat-select matInput formControlName="elevador" placeholder="Possui Elevador">
-                        <mat-option value=true>Sim</mat-option>
-                        <mat-option value=false selected>Não</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="enderecoForm.controls.elevador.hasError('required')">Campo obrigatório
-                    </mat-error>
-                </mat-form-field>
+                <div fxLayoutGap.gt-xs="10px" fxLayout.lt-md="column" fxLayout="row" fxFlex>
 
-                <mat-form-field appearance="outline" fxFlex.gt-xs>
-                    <mat-label>Possui Escada</mat-label>
-                    <mat-select matInput formControlName="escada" placeholder="Possui escada">
-                        <mat-option value=true>Sim</mat-option>
-                        <mat-option value=false selected>Não</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="enderecoForm.controls.escada.hasError('required')">Campo obrigatório
-                    </mat-error>
-                </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex.gt-xs>
+                        <mat-label>Tamanho do Local</mat-label>
+                        <input formControlName="tamanhoLocal" type="number" matInput placeholder="Tamanho do Local">
+                        <mat-error *ngIf="enderecoForm.controls.tamanhoLocal.hasError('required')">Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex.gt-xs>
-                    <mat-label>Possui Restrição de Horário</mat-label>
-                    <mat-select matInput formControlName="restricaoHorario" placeholder="Possui Restrição de Horário">
-                        <mat-option value=true>Sim</mat-option>
-                        <mat-option value=false selected>Não</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="enderecoForm.controls.restricaoHorario.hasError('required')">Campo obrigatório
-                    </mat-error>
-                </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex.gt-xs>
+                        <mat-label>Possui Elevador</mat-label>
+                        <mat-select matInput formControlName="elevador" placeholder="Possui Elevador">
+                            <mat-option value=true>Sim</mat-option>
+                            <mat-option value=false selected>Não</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="enderecoForm.controls.elevador.hasError('required')">Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+                <div fxLayoutGap.gt-sm="10px" fxLayout.lt-md="column" fxLayout="row" fxFlex>
+
+                    <mat-form-field appearance="outline" fxFlex.gt-xs>
+                        <mat-label>Possui Escada</mat-label>
+                        <mat-select matInput formControlName="escada" placeholder="Possui escada">
+                            <mat-option value=true>Sim</mat-option>
+                            <mat-option value=false selected>Não</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="enderecoForm.controls.escada.hasError('required')">Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" fxFlex.gt-xs>
+                        <mat-label>Possui Restrição de Horário</mat-label>
+                        <mat-select matInput formControlName="restricaoHorario"
+                            placeholder="Possui Restrição de Horário">
+                            <mat-option value=true>Sim</mat-option>
+                            <mat-option value=false selected>Não</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="enderecoForm.controls.restricaoHorario.hasError('required')">Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
 
             </div>
+
             <div fxLayoutGap.gt-xs="10px" fxLayout.lt-md="column" fxLayout="row">
 
                 <mat-form-field appearance="outline" fxFill>

@@ -6,6 +6,8 @@ import { ContatoModel } from 'src/app/models/contato.model';
 import { EnderecoLocalModel } from 'src/app/models/endereco-local.model';
 import { OrcamentoModel } from 'src/app/models/orcamento.model';
 import { OrcamentoService } from 'src/app/services/orcamento.service';
+import { ViaCepEnderecoModel } from 'src/app/shared/models/viacep-endereco.model';
+import { CepService } from 'src/app/shared/services/cep.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
@@ -23,7 +25,8 @@ export class OrcamentoFormularioComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private orcamentoService: OrcamentoService,
-              private messageService: MessageService) {
+              private messageService: MessageService,
+              private cepService: CepService) {
     this.construirFormularioInformacoesCliente();
   }
 
@@ -77,7 +80,7 @@ export class OrcamentoFormularioComponent implements OnInit {
     if (this.enderecoForm.value && this.enderecoForm.invalid) {
       return;
     }
-    if (this.orcamentoForm.valid) {
+    if (this.orcamentoForm.invalid) {
       return;
     }
 
@@ -94,22 +97,50 @@ export class OrcamentoFormularioComponent implements OnInit {
   }
 
   montarFormularioSubmit(): void {
+    debugger;
     this.orcamentoModel = new OrcamentoModel(this.orcamentoForm.value);
-    this.orcamentoModel.buffetPrincipal = JSON.parse(String(this.orcamentoModel.buffetPrincipal));
     this.orcamentoModel.local = new EnderecoLocalModel(this.enderecoForm.value);
-    this.orcamentoModel.local.elevador = JSON.parse(String(this.orcamentoModel.local.elevador));
-    this.orcamentoModel.local.restricaoHorario = JSON.parse(String(this.orcamentoModel.local.restricaoHorario));
-    this.orcamentoModel.local.escada = JSON.parse(String(this.orcamentoModel.local.escada));
     this.orcamentoModel.cliente = new ClienteModel(this.informacoesClienteForm.value);
 
-    this.orcamentoModel.cliente.contatos = [];
-    for (const item of this.informacoesClienteForm.controls.contatos.value) {
-      item.ddd = item.telefone.substring(0, 2);
-      item.telefone = item.telefone.substring(2, item.telefone.length);
-      this.orcamentoModel.cliente.contatos.push(item);
-    }
+    // this.orcamentoModel.cliente.contatos = [];
+    // for (const item of this.informacoesClienteForm.controls.contatos.value) {
+    //   const contato = new ContatoModel()
+    //   this.orcamentoModel.cliente.contatos.push(item);
+    // }
   }
-  getErrorMessageContatos(formGroupIndex: number, controlName: string): FormControl {
+
+  buscarCep(cep: string): void {
+    if (cep === '_____-___') { // Valor da máscara do CEP
+      return;
+    }
+    const cepNumber = cep.replace('-', '');
+
+    if (cepNumber.length < 8) {
+      return;
+    }
+
+    this.cepService.consultarCep(+cepNumber)
+      .subscribe(resp => {
+
+        if (resp.erro && resp.erro === true) {
+          this.enderecoForm.controls.cep.setErrors({ cepInvalido: true });
+        } else {
+          this.definirEndereco(resp);
+        }
+      });
+  }
+
+  definirEndereco(resp: ViaCepEnderecoModel): void {
+    this.enderecoForm.patchValue({
+      cep: resp.cep,
+      logradouro: resp.logradouro,
+      bairro: resp.bairro,
+      cidade: resp.localidade,
+      estado: resp.uf
+    });
+  }
+
+  getFormControlContatos(formGroupIndex: number, controlName: string): FormControl {
     const formGroup = this.contatos.controls[formGroupIndex] as FormGroup;
     return formGroup.get(controlName) as FormControl;
   }
