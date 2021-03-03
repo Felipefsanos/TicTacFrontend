@@ -37,7 +37,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             console.log(error);
             return throwError(errorTratado.message);
           case 404:
-            this.messageService.warn(errorTratado.message as string, 'OK');
+            this.messageService.warn(errorTratado ? errorTratado.message as string : 'Nada foi encontrado.' , 'OK');
             console.log(error);
             return throwError(errorTratado.message);
           case 422:
