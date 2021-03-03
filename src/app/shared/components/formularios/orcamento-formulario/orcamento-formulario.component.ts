@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { ClienteModel } from 'src/app/models/cliente.model';
-import { ContatoModel } from 'src/app/models/contato.model';
 import { EnderecoLocalModel } from 'src/app/models/endereco-local.model';
 import { OrcamentoModel } from 'src/app/models/orcamento.model';
 import { OrcamentoService } from 'src/app/services/orcamento.service';
@@ -19,67 +16,92 @@ import { MessageService } from 'src/app/shared/services/message.service';
 export class OrcamentoFormularioComponent implements OnInit {
 
   orcamentoModel = new OrcamentoModel();
-  informacoesClienteForm: FormGroup = new FormGroup({});
   orcamentoForm: FormGroup = new FormGroup({});
-  enderecoForm: FormGroup = new FormGroup({});
 
   constructor(private formBuilder: FormBuilder,
-              private orcamentoService: OrcamentoService,
-              private messageService: MessageService,
-              private cepService: CepService) {
-    this.construirFormularioInformacoesCliente();
+    private orcamentoService: OrcamentoService,
+    private messageService: MessageService,
+    private cepService: CepService) {
+    this.construirFormularios();
   }
 
   ngOnInit(): void {
   }
 
-  construirFormularioInformacoesCliente(): void {
+  construirFormularios(): void {
 
-    this.informacoesClienteForm = this.formBuilder.group({
-      nome: ['', [Validators.required, Validators.minLength(5)]],
-      cpfCnpj: [''],
-      canalCaptacaoId: ['', Validators.required],
-      contatos: this.formBuilder.array([
-        this.formBuilder.group({
-          telefone: ['', Validators.required],
-          nomeContato: ['', Validators.required],
-          email: ['', Validators.email],
-          ddd: ['']
-        })
-      ]),
-      observacao: ['']
-    });
-    this.enderecoForm = this.formBuilder.group({
-      cep: ['', Validators.required],
-      bairro: ['', Validators.required],
-      cidade: ['', Validators.required],
-      numero: [''],
-      estado: ['', Validators.required],
-      complemento: [''],
-      logradouro: ['', Validators.required],
-      tamanhoLocal: ['', Validators.required],
-      escada: ['', Validators.required],
-      elevador: ['', Validators.required],
-      restricaoHorario: ['', Validators.required],
-    });
     this.orcamentoForm = this.formBuilder.group({
-      dataEvento: ['', Validators.required],
-      horaEvento: ['', Validators.required],
-      tipoEvento: ['', Validators.required],
-      quantidadeAdultos: ['', Validators.required],
-      quantidadeCriancas: ['', Validators.required],
-      buffetPrincipal: ['', Validators.required],
-      observacao: [''],
+      orcamento: this.formBuilder.group({
+        dataEvento: ['', Validators.required],
+        horaEvento: ['', Validators.required],
+        tipoEvento: ['', Validators.required],
+        quantidadeAdultos: ['', Validators.required],
+        quantidadeCriancas: ['', Validators.required],
+        buffetPrincipal: ['', Validators.required],
+        observacao: ['']
+      }),
+      cliente: this.formBuilder.group({
+        nome: ['', [Validators.required, Validators.minLength(5)]],
+        cpfCnpj: [''],
+        canalCaptacaoId: ['', Validators.required],
+        contatos: this.formBuilder.array([
+          this.formBuilder.group({
+            telefone: ['', Validators.required],
+            nomeContato: ['', Validators.required],
+            email: ['', Validators.email],
+            ddd: ['']
+          })
+        ]),
+        observacao: ['']
+      }),
+      endereco: this.formBuilder.group({
+        cep: ['', Validators.required],
+        bairro: ['', Validators.required],
+        cidade: ['', Validators.required],
+        numero: [''],
+        estado: ['', Validators.required],
+        complemento: [''],
+        logradouro: ['', Validators.required],
+        tamanhoLocal: ['', Validators.required],
+        escada: ['', Validators.required],
+        elevador: ['', Validators.required],
+        restricaoHorario: ['', Validators.required]
+      }),
+      produtos: {}
     });
+
+
+    // this.informacoesClienteForm = this.formBuilder.group({
+    //   nome: ['', [Validators.required, Validators.minLength(5)]],
+    //   cpfCnpj: [''],
+    //   canalCaptacaoId: ['', Validators.required],
+    //   contatos: this.formBuilder.array([
+    //     this.formBuilder.group({
+    //       telefone: ['', Validators.required],
+    //       nomeContato: ['', Validators.required],
+    //       email: ['', Validators.email],
+    //       ddd: ['']
+    //     })
+    //   ]),
+    //   observacao: ['']
+    // });
+    // this.enderecoForm = this.formBuilder.group({
+    //   cep: ['', Validators.required],
+    //   bairro: ['', Validators.required],
+    //   cidade: ['', Validators.required],
+    //   numero: [''],
+    //   estado: ['', Validators.required],
+    //   complemento: [''],
+    //   logradouro: ['', Validators.required],
+    //   tamanhoLocal: ['', Validators.required],
+    //   escada: ['', Validators.required],
+    //   elevador: ['', Validators.required],
+    //   restricaoHorario: ['', Validators.required],
+    // });
+
   }
 
   OnSubmit(): void {
-    if (this.informacoesClienteForm.invalid) {
-      return;
-    }
-    if (this.enderecoForm.value && this.enderecoForm.invalid) {
-      return;
-    }
     if (this.orcamentoForm.invalid) {
       return;
     }
@@ -98,8 +120,6 @@ export class OrcamentoFormularioComponent implements OnInit {
 
   montarFormularioSubmit(): void {
     this.orcamentoModel = new OrcamentoModel(this.orcamentoForm.value);
-    this.orcamentoModel.local = new EnderecoLocalModel(this.enderecoForm.value);
-    this.orcamentoModel.cliente = new ClienteModel(this.informacoesClienteForm.value);
 
     // this.orcamentoModel.cliente.contatos = [];
     // for (const item of this.informacoesClienteForm.controls.contatos.value) {
@@ -122,7 +142,7 @@ export class OrcamentoFormularioComponent implements OnInit {
       .subscribe(resp => {
 
         if (resp.erro && resp.erro === true) {
-          this.enderecoForm.controls.cep.setErrors({ cepInvalido: true });
+          this.enderecoFormGroup.controls.cep.setErrors({ cepInvalido: true });
         } else {
           this.definirEndereco(resp);
         }
@@ -130,7 +150,7 @@ export class OrcamentoFormularioComponent implements OnInit {
   }
 
   definirEndereco(resp: ViaCepEnderecoModel): void {
-    this.enderecoForm.patchValue({
+    this.enderecoFormGroup.patchValue({
       cep: resp.cep,
       logradouro: resp.logradouro,
       bairro: resp.bairro,
@@ -145,7 +165,23 @@ export class OrcamentoFormularioComponent implements OnInit {
   }
 
   get contatos(): FormArray {
-    return this.informacoesClienteForm.get('contatos') as FormArray;
+    return this.clienteFormGroup.controls.contatos as FormArray;
+  }
+
+  get orcamentoFormGroup(): FormGroup {
+    return this.orcamentoForm.controls.orcamento as FormGroup;
+  }
+
+  get clienteFormGroup(): FormGroup {
+    return this.orcamentoForm.controls.cliente as FormGroup;
+  }
+
+  get enderecoFormGroup(): FormGroup {
+    return this.orcamentoForm.controls.endereco as FormGroup;
+  }
+
+  get produtosFormGroup(): FormGroup {
+    return this.orcamentoForm.controls.produtos as FormGroup;
   }
 
 }
