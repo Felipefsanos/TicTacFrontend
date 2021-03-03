@@ -33,6 +33,13 @@ table {
     }
 }
 
+.modal-header {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+}
+
 div.header-pages {
     width: 100%;
     background-color: var(--primary-color);

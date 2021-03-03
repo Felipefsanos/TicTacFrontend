@@ -22,6 +22,7 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { NgxMaskModule } from 'ngx-mask';
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
 registerLocaleData(ptBr);
 
@@ -53,7 +54,8 @@ registerLocaleData(ptBr);
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: LOCALE_ID, useValue: 'pt' },
-    { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' }
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true, maxHeight: '95%', maxWidth: '95%' } }
   ],
   bootstrap: [AppComponent]
 })

@@ -2,6 +2,8 @@ import { CanalCaptacaoModel } from './../../../../models/canal-captacao.model';
 import { CanalCaptacaoService } from './../../../../services/canal-captacao.service';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { CanalCaptacaoModalComponent } from '../../modals/canal-captacao-modal/canal-captacao-modal.component';
 
 @Component({
   selector: 'app-canal-captacao-listagem',
@@ -12,7 +14,8 @@ export class CanalCaptacaoComponent implements OnInit {
 
   dataSource = new MatTableDataSource<CanalCaptacaoModel>();
 
-  constructor(private canalCaptacaoService: CanalCaptacaoService) {
+  constructor(private canalCaptacaoService: CanalCaptacaoService,
+              private dialog: MatDialog) {
     this.refresh();
   }
 
@@ -29,6 +32,22 @@ export class CanalCaptacaoComponent implements OnInit {
       .subscribe(res => {
         this.dataSource.data = res;
       });
+  }
+
+  editar(canalCaptacao: CanalCaptacaoModel): void {
+    const dialogRef = this.dialog.open(CanalCaptacaoModalComponent,
+      { data:
+        {
+          titulo: 'Editar canal de captação',
+          canalCaptacao
+        }
+      });
+
+    dialogRef.afterClosed().subscribe((canalEditado: CanalCaptacaoModel) =>
+    {
+      // TODO: Enviar para a API.
+    });
+
   }
 
 

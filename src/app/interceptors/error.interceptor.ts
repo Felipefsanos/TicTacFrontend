@@ -14,11 +14,12 @@ import { ErrorModel } from '../shared/models/error/error.model';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
+        debugger;
 
         let errorTratado: ErrorModel = {};
         try {
@@ -32,6 +33,10 @@ export class ErrorInterceptor implements HttpInterceptor {
             this.messageService.warn(errorTratado.message as string, 'OK');
             console.log(error);
             return throwError(errorTratado.message as string);
+          case 400:
+            this.messageService.warn(errorTratado.message as string, 'OK');
+            console.log(error);
+            return throwError(errorTratado.message);
           case 404:
             this.messageService.warn(errorTratado ? errorTratado.message as string : 'Nada foi encontrado.' , 'OK');
             console.log(error);
