@@ -31,6 +31,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CanalCaptacaoModalComponent } from './components/modals/canal-captacao-modal/canal-captacao-modal.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { ConfirmacaoModalComponent } from './components/modals/confirmacao-modal/confirmacao-modal.component';
+import { CalculoOrcamentoModalComponent } from './components/modals/calculo-orcamento-modal/calculo-orcamento-modal.component';
+import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
 
 const routes: Routes = [
   {
@@ -54,7 +56,9 @@ const routes: Routes = [
     OrcamentoComponent,
     CanalCaptacaoComponent,
     CanalCaptacaoModalComponent,
-    ConfirmacaoModalComponent],
+    ConfirmacaoModalComponent,
+    CalculoOrcamentoModalComponent,
+    EnumToArrayPipe],
   imports: [
     CommonModule,
     MatToolbarModule,

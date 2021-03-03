@@ -1,0 +1,172 @@
+<div class="modal-header" mat-dialog-title>
+    Calcular Orçamento
+</div>
+<form [formGroup]="formulario">
+
+    <div class="mb-1 mt-1">
+        <h2>Infomações do cliente</h2>
+        <mat-divider></mat-divider>
+    </div>
+
+    <div formGroupName="cliente">
+
+
+
+        <div fxLayoutGap.gt-sm="10px" fxLayout.lt-lg="column" fxLayout="row">
+
+            <mat-form-field fxFlex="auto">
+                <mat-label>Nome</mat-label>
+                <input formControlName="nome" matInput>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Telefone</mat-label>
+                <input matInput disabled>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="auto">
+                <mat-label>Contato</mat-label>
+                <input matInput disabled>
+            </mat-form-field>
+
+        </div>
+
+        <div>
+            <mat-form-field fxFill>
+                <mat-label>Observações</mat-label>
+                <textarea formControlName="observacao" matInput readonly></textarea>
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <div class="mb-1 mt-1">
+        <h2>Infomações do evento</h2>
+        <mat-divider></mat-divider>
+    </div>
+
+    <div>
+
+        <div fxLayoutGap.gt-sm="10px" fxLayout.lt-lg="column" fxLayout="row">
+
+            <mat-checkbox type="checkbox" formControlName="buffetPrincipal">
+                Buffet Principal
+            </mat-checkbox>
+
+            <mat-form-field fxFlex="grow">
+                <mat-label>Data e hora</mat-label>
+                <input type="datetime" placeholder="dd/MM/yyyy" matInput formControlName="dataEvento">
+            </mat-form-field>
+
+            <mat-form-field fxFlex="grow">
+                <mat-label>Tipo evento</mat-label>
+                <input matInput disabled>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="grow">
+                <mat-label>Quantidade adultos</mat-label>
+                <input matInput disabled>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="grow">
+                <mat-label>Quantidade crianças</mat-label>
+                <input matInput disabled>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="grow">
+                <mat-label>Quantidade total</mat-label>
+                <input matInput disabled>
+            </mat-form-field>
+
+        </div>
+
+        <div>
+            <mat-form-field fxFill>
+                <mat-label>Observações</mat-label>
+                <textarea matInput disabled></textarea>
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <div class="mb-1 mt-1">
+        <h2>Infomações do local do evento</h2>
+        <mat-divider></mat-divider>
+    </div>
+
+    <div>
+
+        <div fxLayoutGap.gt-sm="10px" fxLayout.lt-lg="column" fxLayout="row">
+
+            <mat-form-field fxFlex="initial">
+                <mat-label>CEP</mat-label>
+                <input matInput disabled>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+                <mat-label>Logradouro</mat-label>
+                <input matInput disabled>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="initial">
+                <mat-label>Número</mat-label>
+                <input matInput disabled>
+            </mat-form-field>
+
+        </div>
+
+        <div fxLayoutGap.gt-sm="10px" fxLayout.lt-lg="column" fxLayout="row">
+
+
+            <mat-form-field fxFlex>
+                <mat-label>Complemento</mat-label>
+                <input matInput disabled>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+                <mat-label>Bairro</mat-label>
+                <input matInput disabled>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+                <mat-label>Cidade</mat-label>
+                <input matInput disabled>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="initial">
+                <mat-label>Estado</mat-label>
+                <input matInput disabled>
+            </mat-form-field>
+
+        </div>
+
+        <div fxLayoutGap.gt-sm="10px" fxLayout.lt-lg="column" fxLayout="row">
+
+
+            <mat-form-field fxFlex>
+                <mat-label>Tamanho do local</mat-label>
+                <input matInput disabled>
+            </mat-form-field>
+
+            <mat-checkbox [disabled]="true" [checked]="true">
+                Possui Elevador
+            </mat-checkbox>
+
+            <mat-checkbox [disabled]="true" [checked]="true">
+                Possui Escada
+            </mat-checkbox>
+
+            <mat-checkbox [disabled]="true" [checked]="true">
+                Possui Restrição de Horário
+            </mat-checkbox>
+
+        </div>
+
+    </div>
+
+    <div class="mb-1 mt-1">
+        <h2>Serviços contratados</h2>
+        <mat-divider></mat-divider>
+    </div>
+
+</form>

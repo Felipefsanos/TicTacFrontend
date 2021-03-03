@@ -36,10 +36,10 @@
                         <mat-form-field appearance="outline" fxFlex.gt-sm>
                             <mat-label>Canal De Capitacao</mat-label>
                             <mat-select matInput formControlName="canalCaptacaoId" placeholder="Canal De Captação">
-                                <mat-option value="" selected></mat-option>
-                                <mat-option value=1>Facebook</mat-option>
-                                <mat-option value=2>Instagram</mat-option>
-                                <mat-option value=3>Google</mat-option>
+                                <mat-option [value]="0" selected></mat-option>
+                                <mat-option [value]="1">Facebook</mat-option>
+                                <mat-option [value]="2">Instagram</mat-option>
+                                <mat-option [value]="3">Google</mat-option>
                             </mat-select>
                             <mat-error *ngIf="clienteFormGroup.controls.canalCaptacaoId.hasError('required')">Campo
                                 obrigatório
@@ -139,12 +139,9 @@
                     <mat-form-field appearance="outline" fxFlex>
                         <mat-label>Tipo De Evento</mat-label>
                         <mat-select matInput formControlName="tipoEvento" placeholder="Tipo De Evento">
-                            <mat-option value="" selected></mat-option>
-                            <mat-option value='Aniversario'>Aniversário</mat-option>
-                            <mat-option value='Infantil'>Infantil</mat-option>
-                            <mat-option value='Casamento'>Casamento</mat-option>
-                            <mat-option value='Formatura'>Formatura</mat-option>
-                            <mat-option value='Empresarial'>Empresarial</mat-option>
+                            <mat-option *ngFor="let tipoEvento of TiposEvento | keyvalue" [value]="tipoEvento.key">
+                                {{tipoEvento.value}}
+                            </mat-option>
                         </mat-select>
                         <mat-error *ngIf="orcamentoFormGroup.controls.tipoEvento.hasError('required')">Campo obrigatório
                         </mat-error>
@@ -153,9 +150,9 @@
                     <mat-form-field appearance="outline" fxFlex>
                         <mat-label>Buffet Principal</mat-label>
                         <mat-select matInput formControlName="buffetPrincipal" placeholder="Buffet Principal">
-                            <mat-option value="" selected></mat-option>
-                            <mat-option value=true>Sim</mat-option>
-                            <mat-option value=false>Não</mat-option>
+                            <mat-option [value]="undefined" selected></mat-option>
+                            <mat-option [value]="true">Sim</mat-option>
+                            <mat-option [value]="false">Não</mat-option>
                         </mat-select>
                         <mat-error *ngIf="orcamentoFormGroup.controls.buffetPrincipal.hasError('required')">Campo
                             obrigatório
@@ -316,8 +313,8 @@
                         <mat-form-field appearance="outline" fxFlex.gt-xs>
                             <mat-label>Possui Elevador</mat-label>
                             <mat-select matInput formControlName="elevador" placeholder="Possui Elevador">
-                                <mat-option value=true>Sim</mat-option>
-                                <mat-option value=false selected>Não</mat-option>
+                                <mat-option [value]="true">Sim</mat-option>
+                                <mat-option [value]="false" selected>Não</mat-option>
                             </mat-select>
                             <mat-error *ngIf="enderecoFormGroup.controls.elevador.hasError('required')">Campo
                                 obrigatório
@@ -331,8 +328,8 @@
                         <mat-form-field appearance="outline" fxFlex.gt-xs>
                             <mat-label>Possui Escada</mat-label>
                             <mat-select matInput formControlName="escada" placeholder="Possui escada">
-                                <mat-option value=true>Sim</mat-option>
-                                <mat-option value=false selected>Não</mat-option>
+                                <mat-option [value]="true">Sim</mat-option>
+                                <mat-option [value]="false" selected>Não</mat-option>
                             </mat-select>
                             <mat-error *ngIf="enderecoFormGroup.controls.escada.hasError('required')">Campo obrigatório
                             </mat-error>
@@ -342,8 +339,8 @@
                             <mat-label>Possui Restrição de Horário</mat-label>
                             <mat-select matInput formControlName="restricaoHorario"
                                 placeholder="Possui Restrição de Horário">
-                                <mat-option value=true>Sim</mat-option>
-                                <mat-option value=false selected>Não</mat-option>
+                                <mat-option [value]="true">Sim</mat-option>
+                                <mat-option [value]="false" selected>Não</mat-option>
                             </mat-select>
                             <mat-error *ngIf="enderecoFormGroup.controls.restricaoHorario.hasError('required')">Campo
                                 obrigatório
@@ -361,11 +358,11 @@
                 <mat-divider></mat-divider>
             </div>
 
-            <div formGroupName="produtos"></div>
+            <div formGroupName="servicos"></div>
 
             <div fxLayoutGap="10px">
                 <button mat-button matStepperPrevious>Voltar</button>
-                <button mat-raised-button color="primary" matStepperNext>Próximo</button>
+                <button mat-raised-button color="primary" (click)="abrirModalCalculoValorOrcamento()">Próximo</button>
             </div>
         </form>
     </mat-step>

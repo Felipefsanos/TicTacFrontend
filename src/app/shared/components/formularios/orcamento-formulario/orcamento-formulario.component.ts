@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { CalculoOrcamentoModalComponent } from './../../modals/calculo-orcamento-modal/calculo-orcamento-modal.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
-import { EnderecoLocalModel } from 'src/app/models/endereco-local.model';
+import { MatHorizontalStepper } from '@angular/material/stepper';
 import { OrcamentoModel } from 'src/app/models/orcamento.model';
 import { OrcamentoService } from 'src/app/services/orcamento.service';
+import { TiposEvento } from 'src/app/shared/models/tipos-evento-enum.model';
 import { ViaCepEnderecoModel } from 'src/app/shared/models/viacep-endereco.model';
 import { CepService } from 'src/app/shared/services/cep.service';
 import { MessageService } from 'src/app/shared/services/message.service';
@@ -15,13 +18,17 @@ import { MessageService } from 'src/app/shared/services/message.service';
 })
 export class OrcamentoFormularioComponent implements OnInit {
 
+  @ViewChild('stepper')
+  stepper?: MatHorizontalStepper;
+
   orcamentoModel = new OrcamentoModel();
   orcamentoForm: FormGroup = new FormGroup({});
 
   constructor(private formBuilder: FormBuilder,
-    private orcamentoService: OrcamentoService,
-    private messageService: MessageService,
-    private cepService: CepService) {
+              private orcamentoService: OrcamentoService,
+              private messageService: MessageService,
+              private cepService: CepService,
+              private dialog: MatDialog) {
     this.construirFormularios();
   }
 
@@ -30,83 +37,54 @@ export class OrcamentoFormularioComponent implements OnInit {
 
   construirFormularios(): void {
 
+    // TODO: Remover valores fixos, por teste
     this.orcamentoForm = this.formBuilder.group({
       orcamento: this.formBuilder.group({
-        dataEvento: ['', Validators.required],
-        horaEvento: ['', Validators.required],
-        tipoEvento: ['', Validators.required],
-        quantidadeAdultos: ['', Validators.required],
-        quantidadeCriancas: ['', Validators.required],
-        buffetPrincipal: ['', Validators.required],
-        observacao: ['']
+        dataEvento: [new Date(2021, 3, 3), Validators.required],
+        horaEvento: ['1705', Validators.required],
+        tipoEvento: ['Aniversario', Validators.required],
+        quantidadeAdultos: [5, Validators.required],
+        quantidadeCriancas: [5, Validators.required],
+        buffetPrincipal: [false, Validators.required],
+        observacao: ['Sem observações']
       }),
       cliente: this.formBuilder.group({
-        nome: ['', [Validators.required, Validators.minLength(5)]],
-        cpfCnpj: [''],
-        canalCaptacaoId: ['', Validators.required],
+        nome: ['Felipe Rodrigues Ferreira Santos', [Validators.required, Validators.minLength(5)]],
+        cpfCnpj: ['11089960603'],
+        canalCaptacaoId: [2, Validators.required],
         contatos: this.formBuilder.array([
           this.formBuilder.group({
-            telefone: ['', Validators.required],
-            nomeContato: ['', Validators.required],
-            email: ['', Validators.email],
-            ddd: ['']
+            telefone: ['31975155261', Validators.required],
+            nomeContato: ['Felipe Rodrigues', Validators.required],
+            email: ['lipe2008.lipao@gmail.com', Validators.email],
+            ddd: ['31']
           })
         ]),
-        observacao: ['']
+        observacao: ['Sem observações']
       }),
       endereco: this.formBuilder.group({
-        cep: ['', Validators.required],
-        bairro: ['', Validators.required],
-        cidade: ['', Validators.required],
-        numero: [''],
-        estado: ['', Validators.required],
-        complemento: [''],
-        logradouro: ['', Validators.required],
-        tamanhoLocal: ['', Validators.required],
-        escada: ['', Validators.required],
-        elevador: ['', Validators.required],
-        restricaoHorario: ['', Validators.required]
+        cep: ['32315020', Validators.required],
+        bairro: ['Eldorado', Validators.required],
+        cidade: ['Contagem', Validators.required],
+        numero: ['1885'],
+        estado: ['MG', Validators.required],
+        complemento: ['Casa 2'],
+        logradouro: ['Rua José Barra do Nascimento', Validators.required],
+        tamanhoLocal: [500, Validators.required],
+        escada: [true, Validators.required],
+        elevador: [false, Validators.required],
+        restricaoHorario: [false, Validators.required]
       }),
-      produtos: {}
+      servicos: {}
     });
-
-
-    // this.informacoesClienteForm = this.formBuilder.group({
-    //   nome: ['', [Validators.required, Validators.minLength(5)]],
-    //   cpfCnpj: [''],
-    //   canalCaptacaoId: ['', Validators.required],
-    //   contatos: this.formBuilder.array([
-    //     this.formBuilder.group({
-    //       telefone: ['', Validators.required],
-    //       nomeContato: ['', Validators.required],
-    //       email: ['', Validators.email],
-    //       ddd: ['']
-    //     })
-    //   ]),
-    //   observacao: ['']
-    // });
-    // this.enderecoForm = this.formBuilder.group({
-    //   cep: ['', Validators.required],
-    //   bairro: ['', Validators.required],
-    //   cidade: ['', Validators.required],
-    //   numero: [''],
-    //   estado: ['', Validators.required],
-    //   complemento: [''],
-    //   logradouro: ['', Validators.required],
-    //   tamanhoLocal: ['', Validators.required],
-    //   escada: ['', Validators.required],
-    //   elevador: ['', Validators.required],
-    //   restricaoHorario: ['', Validators.required],
-    // });
-
   }
 
   OnSubmit(): void {
+    return;
+
     if (this.orcamentoForm.invalid) {
       return;
     }
-
-    this.montarFormularioSubmit();
 
     this.orcamentoService.novoOrcamento(this.orcamentoModel)
       .subscribe(res => {
@@ -116,16 +94,6 @@ export class OrcamentoFormularioComponent implements OnInit {
           this.messageService.warn('Erro ao salvar orçamento!');
         }
       }, (error => this.messageService.warn('Favor validar: ' + error.error.message)));
-  }
-
-  montarFormularioSubmit(): void {
-    this.orcamentoModel = new OrcamentoModel(this.orcamentoForm.value);
-
-    // this.orcamentoModel.cliente.contatos = [];
-    // for (const item of this.informacoesClienteForm.controls.contatos.value) {
-    //   const contato = new ContatoModel()
-    //   this.orcamentoModel.cliente.contatos.push(item);
-    // }
   }
 
   buscarCep(cep: string): void {
@@ -159,6 +127,16 @@ export class OrcamentoFormularioComponent implements OnInit {
     });
   }
 
+  abrirModalCalculoValorOrcamento(): void{
+    if (this.orcamentoForm.invalid) {
+      return;
+    }
+
+    this.dialog.open(CalculoOrcamentoModalComponent, { data: this.orcamentoForm.value, width: '80%' });
+
+    this.stepper?.next();
+  }
+
   getFormControlContatos(formGroupIndex: number, controlName: string): FormControl {
     const formGroup = this.contatos.controls[formGroupIndex] as FormGroup;
     return formGroup.get(controlName) as FormControl;
@@ -184,4 +162,7 @@ export class OrcamentoFormularioComponent implements OnInit {
     return this.orcamentoForm.controls.produtos as FormGroup;
   }
 
+  get TiposEvento(): any {
+    return TiposEvento;
+  }
 }
