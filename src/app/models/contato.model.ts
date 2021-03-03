@@ -5,7 +5,6 @@ export class ContatoModel {
     nomeContato!: string;
 
     public constructor(init?: Partial<ContatoModel>) {
-        debugger;
         Object.assign(this, init);
 
         if (init && init.telefone) {
