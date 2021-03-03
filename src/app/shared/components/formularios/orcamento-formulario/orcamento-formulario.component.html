@@ -120,7 +120,8 @@
 
                 <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Hora do Evento</mat-label>
-                    <input matInput formControlName="horaEvento" placeholder="Hora do Evento" mask="Hh:m0" [showMaskTyped]="true">
+                    <input matInput formControlName="horaEvento" placeholder="Hora do Evento" mask="Hh:m0"
+                        [showMaskTyped]="true">
                     <mat-error *ngIf="orcamentoForm.controls.horaEvento.hasError('required')">Campo obrigatório
                     </mat-error>
                 </mat-form-field>
@@ -175,8 +176,7 @@
             <div>
                 <mat-form-field appearance="outline" fxFill>
                     <mat-label>Observações</mat-label>
-                    <textarea formControlName="observacao" placeholder="Observações sobre o cliente"
-                        matInput></textarea>
+                    <textarea formControlName="observacao" placeholder="Observações sobre o evento" matInput></textarea>
                 </mat-form-field>
             </div>
             <div fxLayoutGap="10px">
@@ -185,7 +185,7 @@
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="enderecoForm" mat-optional>
+    <mat-step [stepControl]="enderecoForm">
         <form [formGroup]="enderecoForm" class="mt-2">
             <ng-template matStepLabel>Local do Evento</ng-template>
 
@@ -272,6 +272,14 @@
 
             </div>
 
+            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-md="column" fxLayout="row">
+
+                <mat-form-field appearance="outline" fxFill>
+                    <mat-label>Complemento</mat-label>
+                    <input formControlName="complemento" placeholder="Complemento" matInput>
+                </mat-form-field>
+            </div>
+
             <div fxLayoutGap.gt-sm="10px" fxLayout.lt-lg="column" fxLayout="row">
 
                 <div fxLayoutGap.gt-xs="10px" fxLayout.lt-md="column" fxLayout="row" fxFlex>
@@ -322,13 +330,160 @@
 
             </div>
 
+
+            <div fxLayoutGap="10px">
+                <button mat-raised-button color="primary" type="submit" (click)="OnSubmit()">Criar Orçamento</button>
+                <button mat-button matStepperPrevious>Voltar</button>
+                <button mat-button (click)="stepper.reset()">Desfazer Cadastro</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <form [formGroup]="enderecoForm" class="mt-2">
+            <ng-template matStepLabel>Resumo</ng-template>
+
+            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-md="column" fxLayout="row">
+
+                <mat-form-field appearance="outline" fxFlex="initial">
+                    <mat-label>CEP</mat-label>
+                    <input #inputCep formControlName="cep" matInput placeholder="CEP do cliente" mask="00000-000"
+                        [showMaskTyped]="true" (blur)="buscarCep(inputCep.value)">
+                    <mat-error *ngIf="enderecoForm.controls.cep.hasError('required')">Campo obrigatório
+                    </mat-error>
+                    <mat-error *ngIf="enderecoForm.controls.cep.hasError('cepInvalido')">CEP inválido
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Logradouro</mat-label>
+                    <input formControlName="logradouro" matInput placeholder="Logradouro">
+                    <mat-error *ngIf="enderecoForm.controls.logradouro.hasError('required')">Campo obrigatório
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Número</mat-label>
+                    <input formControlName="numero" type="number" matInput placeholder="Número">
+                    <mat-error *ngIf="enderecoForm.controls.numero.hasError('required')">Campo obrigatório
+                    </mat-error>
+                </mat-form-field>
+
+
+
+            </div>
+
+            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-md="column" fxLayout="row">
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Bairro</mat-label>
+                    <input formControlName="bairro" matInput placeholder="Bairro">
+                    <mat-error *ngIf="enderecoForm.controls.bairro.hasError('required')">Campo obrigatório
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Cidade</mat-label>
+                    <input formControlName="cidade" matInput placeholder="Cidade do cliente">
+                    <mat-error *ngIf="enderecoForm.controls.cidade.hasError('required')">Campo obrigatório
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="initial">
+                    <mat-label>Estado</mat-label>
+                    <mat-select matInput formControlName="estado" placeholder="Estado">
+                        <mat-option value="" selected></mat-option>
+                        <mat-option value="AC">Acre</mat-option>
+                        <mat-option value="AL">Alagoas</mat-option>
+                        <mat-option value="AP">Amapá</mat-option>
+                        <mat-option value="AM">Amazonas</mat-option>
+                        <mat-option value="BA">Bahia</mat-option>
+                        <mat-option value="CE">Ceará</mat-option>
+                        <mat-option value="DF">Distrito Federal</mat-option>
+                        <mat-option value="ES">Espírito Santo</mat-option>
+                        <mat-option value="GO">Goiás</mat-option>
+                        <mat-option value="MA">Maranhão</mat-option>
+                        <mat-option value="MT">Mato Grosso</mat-option>
+                        <mat-option value="MS">Mato Grosso do Sul</mat-option>
+                        <mat-option value="MG">Minas Gerais</mat-option>
+                        <mat-option value="PA">Pará</mat-option>
+                        <mat-option value="PB">Paraíba</mat-option>
+                        <mat-option value="PR">Paraná</mat-option>
+                        <mat-option value="PE">Pernambuco</mat-option>
+                        <mat-option value="PI">Piauí</mat-option>
+                        <mat-option value="RJ">Rio de Janeiro</mat-option>
+                        <mat-option value="RN">Rio Grande do Norte</mat-option>
+                        <mat-option value="RS">Rio Grande do Sul</mat-option>
+                        <mat-option value="RO">Rondônia</mat-option>
+                        <mat-option value="RR">Roraima</mat-option>
+                        <mat-option value="SC">Santa Catarina</mat-option>
+                        <mat-option value="SP">São Paulo</mat-option>
+                        <mat-option value="SE">Sergipe</mat-option>
+                        <mat-option value="TO">Tocantins</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="enderecoForm.controls.estado.hasError('required')">Campo obrigatório
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+
             <div fxLayoutGap.gt-xs="10px" fxLayout.lt-md="column" fxLayout="row">
 
                 <mat-form-field appearance="outline" fxFill>
-                    <mat-label>Ponto de Referência</mat-label>
-                    <textarea formControlName="complemento" placeholder="Ponto de Referência" matInput></textarea>
+                    <mat-label>Complemento</mat-label>
+                    <input formControlName="complemento" placeholder="Complemento" matInput>
                 </mat-form-field>
             </div>
+
+            <div fxLayoutGap.gt-sm="10px" fxLayout.lt-lg="column" fxLayout="row">
+
+                <div fxLayoutGap.gt-xs="10px" fxLayout.lt-md="column" fxLayout="row" fxFlex>
+
+                    <mat-form-field appearance="outline" fxFlex.gt-xs>
+                        <mat-label>Tamanho do Local</mat-label>
+                        <input formControlName="tamanhoLocal" type="number" matInput placeholder="Tamanho do Local">
+                        <mat-error *ngIf="enderecoForm.controls.tamanhoLocal.hasError('required')">Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" fxFlex.gt-xs>
+                        <mat-label>Possui Elevador</mat-label>
+                        <mat-select matInput formControlName="elevador" placeholder="Possui Elevador">
+                            <mat-option value=true>Sim</mat-option>
+                            <mat-option value=false selected>Não</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="enderecoForm.controls.elevador.hasError('required')">Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+                <div fxLayoutGap.gt-sm="10px" fxLayout.lt-md="column" fxLayout="row" fxFlex>
+
+                    <mat-form-field appearance="outline" fxFlex.gt-xs>
+                        <mat-label>Possui Escada</mat-label>
+                        <mat-select matInput formControlName="escada" placeholder="Possui escada">
+                            <mat-option value=true>Sim</mat-option>
+                            <mat-option value=false selected>Não</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="enderecoForm.controls.escada.hasError('required')">Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" fxFlex.gt-xs>
+                        <mat-label>Possui Restrição de Horário</mat-label>
+                        <mat-select matInput formControlName="restricaoHorario"
+                            placeholder="Possui Restrição de Horário">
+                            <mat-option value=true>Sim</mat-option>
+                            <mat-option value=false selected>Não</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="enderecoForm.controls.restricaoHorario.hasError('required')">Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+            </div>
+
+
             <div fxLayoutGap="10px">
                 <button mat-raised-button color="primary" type="submit" (click)="OnSubmit()">Criar Orçamento</button>
                 <button mat-button matStepperPrevious>Voltar</button>
