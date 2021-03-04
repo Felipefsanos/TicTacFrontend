@@ -7,11 +7,8 @@ import { ConfimacaoModalModel } from 'src/app/shared/models/confirmacao-modal.mo
   templateUrl: './confirmacao-modal.component.html',
   styleUrls: ['./confirmacao-modal.component.scss']
 })
-export class ConfirmacaoModalComponent implements OnInit {
+export class ConfirmacaoModalComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: ConfimacaoModalModel) { }
-
-  ngOnInit(): void {
-  }
 
 }

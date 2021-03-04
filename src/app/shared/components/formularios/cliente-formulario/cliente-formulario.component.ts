@@ -1,26 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
 
- 
-
 @Component({
   selector: 'app-cliente-formulario',
   templateUrl: './cliente-formulario.component.html',
   styleUrls: ['./cliente-formulario.component.scss']
 })
 
-export class ClienteFormularioComponent implements OnInit {
+export class ClienteFormularioComponent {
 
- 
   informacoesClienteForm: FormGroup = new FormGroup({});
   informacoesEnderecoForm: FormGroup = new FormGroup({});
 
   constructor(private formBuilder: FormBuilder)
   {
     this.construirFormularioInformacoesCliente();
-  }
-
-  ngOnInit(): void {
   }
 
   construirFormularioInformacoesCliente(): void {
@@ -49,10 +43,6 @@ export class ClienteFormularioComponent implements OnInit {
 
   printForm(): void {
     console.log(this.informacoesClienteForm);
-  }
-
-  OnSubmit() : void {
-   debugger;
   }
 
   getErrorMessageContatos(formGroupIndex: number, controlName: string): FormControl {

@@ -17,7 +17,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ]),
   ],
 })
-export class OrcamentoComponent implements OnInit {
+export class OrcamentoComponent {
   columnsToDisplay: string[] = ['id', 'dataEvento', 'tipoEvento', 'observacao', 'valor'];
   columnsToName: string[] = ['Número', 'Data do Evento', 'Tipo do Evento', 'Observação', 'Valor'];
   dataSource = new MatTableDataSource<OrcamentoModel>();
@@ -38,9 +38,6 @@ export class OrcamentoComponent implements OnInit {
   }
   excluir(id: number): void {
 
-  }
-
-  ngOnInit(): void {
   }
 
   refresh(): void {

@@ -5,11 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './expired-session.component.html',
   styleUrls: ['./expired-session.component.scss']
 })
-export class ExpiredSessionComponent implements OnInit {
+export class ExpiredSessionComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

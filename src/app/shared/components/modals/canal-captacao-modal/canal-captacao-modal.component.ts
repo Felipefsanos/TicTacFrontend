@@ -9,7 +9,7 @@ import { ConfirmacaoModalComponent } from '../confirmacao-modal/confirmacao-moda
   templateUrl: './canal-captacao-modal.component.html',
   styleUrls: ['./canal-captacao-modal.component.scss']
 })
-export class CanalCaptacaoModalComponent implements OnInit {
+export class CanalCaptacaoModalComponent {
 
   titulo?: string;
   canalCaptacao?: CanalCaptacaoModel;
@@ -26,9 +26,6 @@ export class CanalCaptacaoModalComponent implements OnInit {
       id: [{ value: this.canalCaptacao.id, disabled: true }, Validators.required],
       canal: [this.canalCaptacao.canal, Validators.required]
     });
-  }
-
-  ngOnInit(): void {
   }
 
   enviarFormulario(): void {

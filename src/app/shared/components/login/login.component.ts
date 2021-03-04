@@ -1,3 +1,4 @@
+
 import { TokenService } from './../../services/token.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -11,7 +12,7 @@ import { MessageService } from '../../services/message.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   loginForm!: FormGroup;
 
@@ -21,10 +22,6 @@ export class LoginComponent implements OnInit {
               private loginService: LoginService,
               private tokenService: TokenService) {
     this.construirFormulario();
-  }
-
-  ngOnInit(): void {
-
   }
 
   construirFormulario(): void {

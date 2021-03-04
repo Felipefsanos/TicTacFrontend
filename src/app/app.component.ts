@@ -20,7 +20,7 @@ import { MatSidenav } from '@angular/material/sidenav';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnDestroy {
 
   title = 'Tic tac Admin';
   opened = false;
@@ -33,25 +33,23 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private mobileQueryListener: () => void;
 
-  private transformer = (node: MenuItem, level: number) => {
-    return {
+  private transformer = (node: MenuItem, level: number) => ({
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
       icon: !!node.icon ? node.icon : '',
       url: !!node.url ? node.url : '',
       level,
-    };
-  }
+    });
 
-  // tslint:disable-next-line: member-ordering
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   treeControl = new FlatTreeControl<MenuFlatNode>(
     node => node.level, node => node.expandable);
 
-  // tslint:disable-next-line: member-ordering
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   treeFlattener = new MatTreeFlattener(
     this.transformer, node => node.level, node => node.expandable, node => node.children);
 
-  // tslint:disable-next-line: member-ordering
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   dataSourceMenu = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   constructor(private changeDetectorRef: ChangeDetectorRef,
@@ -97,9 +95,6 @@ export class AppComponent implements OnInit, OnDestroy {
       }
       this.router.navigate([url]);
     }
-  }
-
-  ngOnInit(): void {
   }
 
   ngOnDestroy(): void {

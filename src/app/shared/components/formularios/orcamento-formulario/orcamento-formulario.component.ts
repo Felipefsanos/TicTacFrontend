@@ -15,7 +15,7 @@ import { MessageService } from 'src/app/shared/services/message.service';
   styleUrls: ['./orcamento-formulario.component.scss'],
 
 })
-export class OrcamentoFormularioComponent implements OnInit {
+export class OrcamentoFormularioComponent {
 
   @ViewChild('stepper')
   stepper?: MatHorizontalStepper;
@@ -28,9 +28,6 @@ export class OrcamentoFormularioComponent implements OnInit {
               private messageService: MessageService,
               private cepService: CepService) {
     this.construirFormularios();
-  }
-
-  ngOnInit(): void {
   }
 
   construirFormularios(): void {
@@ -77,8 +74,7 @@ export class OrcamentoFormularioComponent implements OnInit {
     });
   }
 
-  OnSubmit(): void {
-    return;
+  onSubmit(): void {
 
     if (this.orcamentoForm.invalid) {
       return;
@@ -158,7 +154,7 @@ export class OrcamentoFormularioComponent implements OnInit {
     return this.orcamentoForm.controls.produtos as FormGroup;
   }
 
-  get TiposEvento(): any {
+  get tiposEvento(): any {
     return TiposEvento;
   }
 }

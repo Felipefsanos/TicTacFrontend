@@ -139,7 +139,7 @@
                     <mat-form-field appearance="outline" fxFlex>
                         <mat-label>Tipo De Evento</mat-label>
                         <mat-select matInput formControlName="tipoEvento" placeholder="Tipo De Evento">
-                            <mat-option *ngFor="let tipoEvento of TiposEvento | keyvalue" [value]="tipoEvento.key">
+                            <mat-option *ngFor="let tipoEvento of tiposEvento | keyvalue" [value]="tipoEvento.key">
                                 {{tipoEvento.value}}
                             </mat-option>
                         </mat-select>

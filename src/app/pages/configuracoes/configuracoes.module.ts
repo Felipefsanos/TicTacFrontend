@@ -8,8 +8,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   {
-    path: 'canal-captacao',
+    path: 'canais-captacao',
     component: CanalCaptacaoComponent
+  },
+  {
+    path: 'usuarios',
+    loadChildren: () => import('./usuarios/usuarios.module').then(m => m.UsuariosModule)
   }
 ];
 

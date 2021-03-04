@@ -13,7 +13,7 @@ const routes: Routes = [
     component: NovoOrcamentoComponent
   },
   {
-    path: 'listagem',
+    path: '',
     component: ListaOrcamentosComponent
   }
 ];

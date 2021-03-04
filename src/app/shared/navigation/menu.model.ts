@@ -18,7 +18,7 @@ export const menuItems: MenuItem[] = [
             {
                 id: 4,
                 name: 'Lista de Orçamentos',
-                url: 'p/orcamentos/listagem'
+                url: 'p/orcamentos'
             }
         ]
     },
@@ -29,7 +29,23 @@ export const menuItems: MenuItem[] = [
             {
                 id: 6,
                 name: 'Canais de Captação',
-                url: 'p/configuracoes/canal-captacao'
+                url: 'p/configuracoes/canais-captacao'
+            },
+            {
+                id: 5,
+                name: 'Usuários',
+                children: [
+                    {
+                        id: 6,
+                        name: 'Novo Usuário',
+                        url: 'p/configuracoes/usuarios/novo-usuario'
+                    },
+                    {
+                        id: 6,
+                        name: 'Usuários',
+                        url: 'p/configuracoes/usuarios'
+                    }
+                ]
             },
         ]
     },

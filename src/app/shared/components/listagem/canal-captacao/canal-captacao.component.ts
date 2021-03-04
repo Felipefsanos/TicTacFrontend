@@ -10,16 +10,13 @@ import { CanalCaptacaoModalComponent } from '../../modals/canal-captacao-modal/c
   templateUrl: './canal-captacao.component.html',
   styleUrls: ['./canal-captacao.component.scss']
 })
-export class CanalCaptacaoComponent implements OnInit {
+export class CanalCaptacaoComponent {
 
   dataSource = new MatTableDataSource<CanalCaptacaoModel>();
 
   constructor(private canalCaptacaoService: CanalCaptacaoService,
               private dialog: MatDialog) {
     this.refresh();
-  }
-
-  ngOnInit(): void {
   }
 
   applyFilter(event: Event): void {

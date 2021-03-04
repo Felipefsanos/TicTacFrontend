@@ -32,6 +32,7 @@ import { CanalCaptacaoModalComponent } from './components/modals/canal-captacao-
 import { MatDividerModule } from '@angular/material/divider';
 import { ConfirmacaoModalComponent } from './components/modals/confirmacao-modal/confirmacao-modal.component';
 import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
+import { UsuarioFormularioComponent } from './components/formularios/usuario-formulario/usuario-formulario.component';
 
 const routes: Routes = [
   {
@@ -56,7 +57,8 @@ const routes: Routes = [
     CanalCaptacaoComponent,
     CanalCaptacaoModalComponent,
     ConfirmacaoModalComponent,
-    EnumToArrayPipe],
+    EnumToArrayPipe,
+    UsuarioFormularioComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -92,7 +94,8 @@ const routes: Routes = [
     OrcamentoFormularioComponent,
     OrcamentoComponent,
     CanalCaptacaoComponent,
-    MatDialogModule
+    MatDialogModule,
+    UsuarioFormularioComponent
   ]
 })
 export class SharedModule { }
