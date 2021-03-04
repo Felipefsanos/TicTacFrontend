@@ -362,14 +362,14 @@
 
             <div fxLayoutGap="10px">
                 <button mat-button matStepperPrevious>Voltar</button>
-                <button mat-raised-button color="primary" (click)="abrirModalCalculoValorOrcamento()">Próximo</button>
+                <button mat-raised-button color="primary" matStepperNext>Próximo</button>
             </div>
         </form>
     </mat-step>
     <mat-step>
-        <ng-template matStepLabel>Resumo</ng-template>
+        <ng-template matStepLabel>Valores</ng-template>
 
-        Sucesso e informações adicionais
+        Resumo de valores e cálculo do valor total
 
     </mat-step>
 </mat-horizontal-stepper>

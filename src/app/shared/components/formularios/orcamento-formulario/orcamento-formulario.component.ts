@@ -1,4 +1,3 @@
-import { CalculoOrcamentoModalComponent } from './../../modals/calculo-orcamento-modal/calculo-orcamento-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
@@ -27,8 +26,7 @@ export class OrcamentoFormularioComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private orcamentoService: OrcamentoService,
               private messageService: MessageService,
-              private cepService: CepService,
-              private dialog: MatDialog) {
+              private cepService: CepService) {
     this.construirFormularios();
   }
 
@@ -131,8 +129,6 @@ export class OrcamentoFormularioComponent implements OnInit {
     if (this.orcamentoForm.invalid) {
       return;
     }
-
-    this.dialog.open(CalculoOrcamentoModalComponent, { data: this.orcamentoForm.value, width: '80%' });
 
     this.stepper?.next();
   }
