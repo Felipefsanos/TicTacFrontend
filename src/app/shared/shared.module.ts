@@ -33,6 +33,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ConfirmacaoModalComponent } from './components/modals/confirmacao-modal/confirmacao-modal.component';
 import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
 import { UsuarioFormularioComponent } from './components/formularios/usuario-formulario/usuario-formulario.component';
+import { LoginModalComponent } from './components/modals/login-modal/login-modal.component';
 
 const routes: Routes = [
   {
@@ -58,7 +59,8 @@ const routes: Routes = [
     CanalCaptacaoModalComponent,
     ConfirmacaoModalComponent,
     EnumToArrayPipe,
-    UsuarioFormularioComponent],
+    UsuarioFormularioComponent,
+    LoginModalComponent],
   imports: [
     CommonModule,
     MatToolbarModule,

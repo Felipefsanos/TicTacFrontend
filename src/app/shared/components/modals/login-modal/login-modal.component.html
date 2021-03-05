@@ -1,0 +1,39 @@
+<div class="modal-header" mat-dialog-title>
+    Criar senha
+</div>
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+
+        <mat-form-field appearance="outline">
+            <mat-label>Login</mat-label>
+            <input readonly formControlName="login" matInput>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Senha antiga</mat-label>
+            <input type="password" formControlName="senhaAntiga" matInput>
+            <mat-error *ngIf="senhaAntiga.hasError('required')">Campo obrigatório</mat-error>
+            <mat-error *ngIf="senhaAntiga.hasError('minlength')">Senha deve ter mais de 8 caracteres</mat-error>
+            <mat-error *ngIf="senhaAntiga.hasError('mustMatch')">Senha incorreta</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Nova senha</mat-label>
+            <input type="password" formControlName="novaSenha" matInput>
+            <mat-error *ngIf="novaSenha.hasError('required')">Campo obrigatório</mat-error>
+            <mat-error *ngIf="novaSenha.hasError('minlength')">Senha deve ter mais de 8 caracteres</mat-error>
+            <mat-error *ngIf="novaSenha.hasError('match')">Senha nova não pode ser igual a antiga</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Confirmar senha</mat-label>
+            <input type="password" formControlName="confirmaSenha" matInput>
+            <mat-error *ngIf="confirmaSenha.hasError('required')">Campo obrigatório</mat-error>
+            <mat-error *ngIf="confirmaSenha.hasError('minlength')">Senha deve ter mais de 8 caracteres</mat-error>
+            <mat-error *ngIf="confirmaSenha.hasError('mustMatch')">As senhas não conferem</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button type="submit" class="w-100" color="primary">Criar</button>
+
+    </div>
+</form>

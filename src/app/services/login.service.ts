@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseService } from './base/service-base.service';
 import { TokenService } from '../shared/services/token.service';
+import { TrocaSenhaModel } from '../models/troca-senha.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,10 @@ export class LoginService extends BaseService {
 
   logout(): void {
     this.tokenService.removeToken();
+  }
+
+  trocarSenha(trocaSenha: TrocaSenhaModel): Observable<any> {
+    return this.put(`usuarios/trocar-senha/${trocaSenha.login}`, trocaSenha);
   }
 
 }
