@@ -7,15 +7,20 @@
     <table mat-table [dataSource]="dataSource">
 
         <!-- Position Column -->
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> Código </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef> Nome </th>
+            <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="canal">
-            <th mat-header-cell *matHeaderCellDef> Descrição </th>
-            <td mat-cell *matCellDef="let element"> {{element.canal}} </td>
+        <ng-container matColumnDef="cpf">
+            <th mat-header-cell *matHeaderCellDef> CPF </th>
+            <td mat-cell *matCellDef="let element"> {{element.cpf}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="telefone">
+            <th mat-header-cell *matHeaderCellDef> Telefone </th>
+            <td mat-cell *matCellDef="let element"> {{element.telefone}} </td>
         </ng-container>
 
         <ng-container matColumnDef="acoes">
@@ -30,8 +35,8 @@
             </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="['id', 'canal', 'acoes']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['id', 'canal', 'acoes'];"></tr>
+        <tr mat-header-row *matHeaderRowDef="['nome', 'cpf', 'telefone', 'acoes']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['nome', 'cpf', 'telefone', 'acoes'];"></tr>
 
         <tr class="mat-row" *matNoDataRow>
             <td class="mat-cell" colspan="4">Nenhum Registro Encontrado!"</td>

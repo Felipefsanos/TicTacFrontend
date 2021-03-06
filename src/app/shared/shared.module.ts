@@ -34,6 +34,9 @@ import { ConfirmacaoModalComponent } from './components/modals/confirmacao-modal
 import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
 import { UsuarioFormularioComponent } from './components/formularios/usuario-formulario/usuario-formulario.component';
 import { LoginModalComponent } from './components/modals/login-modal/login-modal.component';
+import { UsuariosComponent } from './components/listagem/usuarios/usuarios.component';
+import { UsuarioModalComponent } from './components/modals/usuario-modal/usuario-modal.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const routes: Routes = [
   {
@@ -60,7 +63,9 @@ const routes: Routes = [
     ConfirmacaoModalComponent,
     EnumToArrayPipe,
     UsuarioFormularioComponent,
-    LoginModalComponent],
+    LoginModalComponent,
+    UsuariosComponent,
+    UsuarioModalComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -87,7 +92,8 @@ const routes: Routes = [
     MatDialogModule,
     MatTableModule,
     MatTooltipModule,
-    MatDividerModule
+    MatDividerModule,
+    MatPaginatorModule
   ],
   exports: [
     LoginComponent,
@@ -97,7 +103,8 @@ const routes: Routes = [
     OrcamentoComponent,
     CanalCaptacaoComponent,
     MatDialogModule,
-    UsuarioFormularioComponent
+    UsuarioFormularioComponent,
+    UsuariosComponent
   ]
 })
 export class SharedModule { }

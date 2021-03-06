@@ -1,9 +1,10 @@
 import { OrcamentoModel } from './../../../../models/orcamento.model';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrcamentoService } from 'src/app/services/orcamento.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-orcamento',
@@ -17,7 +18,11 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ]),
   ],
 })
-export class OrcamentoComponent {
+export class OrcamentoComponent implements AfterViewInit {
+
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+
   columnsToDisplay: string[] = ['id', 'dataEvento', 'tipoEvento', 'observacao', 'valor'];
   columnsToName: string[] = ['Número', 'Data do Evento', 'Tipo do Evento', 'Observação', 'Valor'];
   dataSource = new MatTableDataSource<OrcamentoModel>();
@@ -26,6 +31,10 @@ export class OrcamentoComponent {
   constructor(private orcamentoService: OrcamentoService,
               private messageService: MessageService) {
     this.refresh();
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
   }
 
   applyFilter(event: Event): void {

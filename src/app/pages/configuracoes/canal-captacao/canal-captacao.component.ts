@@ -5,11 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './canal-captacao.component.html',
   styleUrls: ['./canal-captacao.component.scss']
 })
-export class CanalCaptacaoComponent implements OnInit {
+export class CanalCaptacaoComponent{
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

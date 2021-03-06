@@ -1,0 +1,37 @@
+<div class="modal-header" mat-dialog-title>
+    Editar usuário
+</div>
+<form [formGroup]="form" (ngSubmit)="enviarFormulario()">
+    <mat-dialog-content>
+        <div fxLayout="column">
+
+            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Cpf</mat-label>
+                    <input matInput formControlName="cpf">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Nome</mat-label>
+                    <input matInput formControlName="nome" required>
+                    <mat-error *ngIf="form.controls.nome.hasError('required')">Campo obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex.gt-xs="grow">
+                    <mat-label>Telefone</mat-label>
+                    <input formControlName="telefone" matInput required matInput mask="(00) 0000-0000||(00) 0 0000-0000"
+                        [showMaskTyped]="true">
+                    <mat-error *ngIf="form.controls.telefone.hasError('required')">Campo obrigatório</mat-error>
+                    <mat-error *ngIf="form.controls.telefone.hasError('mask')">Telefone inválido</mat-error>
+
+                </mat-form-field>
+            </div>
+
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayout="row-reverse" fxLayoutGap="10px">
+        <button mat-raised-button color="primary" type="submit" mat-dialog-close>Confirmar</button>
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Cancelar</button>
+    </mat-dialog-actions>
+</form>

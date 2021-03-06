@@ -17,7 +17,7 @@
                         <input formControlName="nome" matInput placeholder="Nome do cliente">
                         <mat-error *ngIf="clienteFormGroup.controls.nome.hasError('required')">Nome do cliente é
                             obrigatório</mat-error>
-                        <mat-error *ngIf="clienteFormGroup.controls.nome.hasError('minLength')">Nome do cliente tem
+                        <mat-error *ngIf="clienteFormGroup.controls.nome.hasError('minlength')">Nome do cliente tem
                             que ter mais de 5 caracteres</mat-error>
                     </mat-form-field>
 

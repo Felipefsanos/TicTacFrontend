@@ -17,4 +17,8 @@ export class CanalCaptacaoService extends BaseService{
   obterCanaisCaptacao(): Observable<CanalCaptacaoModel[]> {
     return this.get('canais-captacao');
   }
+
+  alterarCanalCaptacao(id: number, canalEditado: CanalCaptacaoModel): Observable<CanalCaptacaoModel[]> {
+    return this.put(`canais-captacao/${id}`, canalEditado);
+  }
 }

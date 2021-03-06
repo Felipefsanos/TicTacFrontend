@@ -17,7 +17,6 @@ export class CanalCaptacaoModalComponent {
 
   constructor(private formBuilder: FormBuilder,
               public dialogRef: MatDialogRef<CanalCaptacaoModalComponent>,
-              private dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.titulo = data.titulo;
     this.canalCaptacao = data.canalCaptacao as CanalCaptacaoModel;
@@ -29,7 +28,7 @@ export class CanalCaptacaoModalComponent {
   }
 
   enviarFormulario(): void {
-    console.log(this.form);
+
     if (this.form.invalid) {
       return;
     }
