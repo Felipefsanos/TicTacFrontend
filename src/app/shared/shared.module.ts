@@ -37,6 +37,7 @@ import { LoginModalComponent } from './components/modals/login-modal/login-modal
 import { UsuariosComponent } from './components/listagem/usuarios/usuarios.component';
 import { UsuarioModalComponent } from './components/modals/usuario-modal/usuario-modal.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ProdutoFormularioComponent } from './components/formularios/produto-formulario/produto-formulario.component';
 
 const routes: Routes = [
   {
@@ -65,7 +66,8 @@ const routes: Routes = [
     UsuarioFormularioComponent,
     LoginModalComponent,
     UsuariosComponent,
-    UsuarioModalComponent],
+    UsuarioModalComponent,
+    ProdutoFormularioComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -99,12 +101,14 @@ const routes: Routes = [
     LoginComponent,
     LoadingComponent,
     ClienteFormularioComponent,
+    ProdutoFormularioComponent,
     OrcamentoFormularioComponent,
     OrcamentoComponent,
     CanalCaptacaoComponent,
     MatDialogModule,
     UsuarioFormularioComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    ProdutoFormularioComponent
   ]
 })
 export class SharedModule { }

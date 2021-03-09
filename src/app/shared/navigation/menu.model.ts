@@ -49,4 +49,20 @@ export const menuItems: MenuItem[] = [
             },
         ]
     },
+    {
+        id: 7,
+        name: 'Produtos e Serviços',
+        children: [
+            {
+                id: 8,
+                name: 'Novo Produto',
+                url: 'p/produtos/novoProduto'
+            },
+            {
+                id: 9,
+                name: 'Novo Serviço',
+                url: 'p/orcamentos'
+            }
+        ]
+    },
 ];

@@ -1,0 +1,86 @@
+<mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
+    <mat-step [stepControl]="produtoForm" mat-optional>
+      <form [formGroup]="produtoForm">
+        <ng-template matStepLabel>Endereço</ng-template>
+        <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+            <mat-form-field appearance="outline" >
+                <mat-label>CEP</mat-label>
+                <input formControlName="cep" matInput placeholder="CEP do cliente"
+                mask="00000-000" [showMaskTyped]="true">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Estado</mat-label>
+                <mat-select matInput formControlName="estado" placeholder="Estado">
+                    <mat-option value="" selected></mat-option>
+                    <mat-option value="AC">Acre</mat-option>
+                    <mat-option value="AL">Alagoas</mat-option>
+                    <mat-option value="AP">Amapá</mat-option>
+                    <mat-option value="AM">Amazonas</mat-option>
+                    <mat-option value="BA">Bahia</mat-option>
+                    <mat-option value="CE">Ceará</mat-option>
+                    <mat-option value="DF">Distrito Federal</mat-option>
+                    <mat-option value="ES">Espírito Santo</mat-option>
+                    <mat-option value="GO">Goiás</mat-option>
+                    <mat-option value="MA">Maranhão</mat-option>
+                    <mat-option value="MT">Mato Grosso</mat-option>
+                    <mat-option value="MS">Mato Grosso do Sul</mat-option>
+                    <mat-option value="MG">Minas Gerais</mat-option>
+                    <mat-option value="PA">Pará</mat-option>
+                    <mat-option value="PB">Paraíba</mat-option>
+                    <mat-option value="PR">Paraná</mat-option>
+                    <mat-option value="PE">Pernambuco</mat-option>
+                    <mat-option value="PI">Piauí</mat-option>
+                    <mat-option value="RJ">Rio de Janeiro</mat-option>
+                    <mat-option value="RN">Rio Grande do Norte</mat-option>
+                    <mat-option value="RS">Rio Grande do Sul</mat-option>
+                    <mat-option value="RO">Rondônia</mat-option>
+                    <mat-option value="RR">Roraima</mat-option>
+                    <mat-option value="SC">Santa Catarina</mat-option>
+                    <mat-option value="SP">São Paulo</mat-option>
+                    <mat-option value="SE">Sergipe</mat-option>
+                    <mat-option value="TO">Tocantins</mat-option>
+                  </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex.gt-xs>
+                <mat-label>Cidade</mat-label>
+                <input formControlName="cidade" matInput placeholder="Cidade do cliente">
+            </mat-form-field>
+        </div>
+        <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+           
+            <mat-form-field appearance="outline" fxFlex.gt-xs>
+                <mat-label>Bairro</mat-label>
+                <input formControlName="bairro" matInput placeholder="Bairro">
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex.gt-xs>
+                <mat-label>Logradouro</mat-label>
+                <input formControlName="logradouro" matInput placeholder="Logradouro">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Número</mat-label>
+                <input formControlName="numero" matInput placeholder="Número">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline" fxFill>
+                <mat-label>Ponto de Referência</mat-label>
+                <textarea formControlName="complemento" placeholder="Ponto de Referência"
+                    matInput></textarea>
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-button matStepperPrevious>Voltar</button>
+            <button mat-button matStepperNext>Próximo</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>Tudo Pronto!! Podemos Continuar o cadastro ?</p>
+        <div>
+            <button mat-raised-button color="primary" type="submit">Sim</button>
+            <button mat-button  matStepperPrevious>Voltar</button>
+            <button mat-button  (click)="stepper.reset()">Desfazer Cadastro</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>
