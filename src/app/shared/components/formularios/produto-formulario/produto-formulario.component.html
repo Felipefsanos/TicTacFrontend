@@ -1,86 +1,77 @@
-<mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
-    <mat-step [stepControl]="produtoForm" mat-optional>
-      <form [formGroup]="produtoForm">
-        <ng-template matStepLabel>Endereço</ng-template>
-        <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
-            <mat-form-field appearance="outline" >
-                <mat-label>CEP</mat-label>
-                <input formControlName="cep" matInput placeholder="CEP do cliente"
-                mask="00000-000" [showMaskTyped]="true">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Estado</mat-label>
-                <mat-select matInput formControlName="estado" placeholder="Estado">
-                    <mat-option value="" selected></mat-option>
-                    <mat-option value="AC">Acre</mat-option>
-                    <mat-option value="AL">Alagoas</mat-option>
-                    <mat-option value="AP">Amapá</mat-option>
-                    <mat-option value="AM">Amazonas</mat-option>
-                    <mat-option value="BA">Bahia</mat-option>
-                    <mat-option value="CE">Ceará</mat-option>
-                    <mat-option value="DF">Distrito Federal</mat-option>
-                    <mat-option value="ES">Espírito Santo</mat-option>
-                    <mat-option value="GO">Goiás</mat-option>
-                    <mat-option value="MA">Maranhão</mat-option>
-                    <mat-option value="MT">Mato Grosso</mat-option>
-                    <mat-option value="MS">Mato Grosso do Sul</mat-option>
-                    <mat-option value="MG">Minas Gerais</mat-option>
-                    <mat-option value="PA">Pará</mat-option>
-                    <mat-option value="PB">Paraíba</mat-option>
-                    <mat-option value="PR">Paraná</mat-option>
-                    <mat-option value="PE">Pernambuco</mat-option>
-                    <mat-option value="PI">Piauí</mat-option>
-                    <mat-option value="RJ">Rio de Janeiro</mat-option>
-                    <mat-option value="RN">Rio Grande do Norte</mat-option>
-                    <mat-option value="RS">Rio Grande do Sul</mat-option>
-                    <mat-option value="RO">Rondônia</mat-option>
-                    <mat-option value="RR">Roraima</mat-option>
-                    <mat-option value="SC">Santa Catarina</mat-option>
-                    <mat-option value="SP">São Paulo</mat-option>
-                    <mat-option value="SE">Sergipe</mat-option>
-                    <mat-option value="TO">Tocantins</mat-option>
-                  </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="outline" fxFlex.gt-xs>
-                <mat-label>Cidade</mat-label>
-                <input formControlName="cidade" matInput placeholder="Cidade do cliente">
-            </mat-form-field>
-        </div>
-        <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
-           
-            <mat-form-field appearance="outline" fxFlex.gt-xs>
-                <mat-label>Bairro</mat-label>
-                <input formControlName="bairro" matInput placeholder="Bairro">
-            </mat-form-field>
-            <mat-form-field appearance="outline" fxFlex.gt-xs>
-                <mat-label>Logradouro</mat-label>
-                <input formControlName="logradouro" matInput placeholder="Logradouro">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Número</mat-label>
-                <input formControlName="numero" matInput placeholder="Número">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field appearance="outline" fxFill>
-                <mat-label>Ponto de Referência</mat-label>
-                <textarea formControlName="complemento" placeholder="Ponto de Referência"
-                    matInput></textarea>
-            </mat-form-field>
-        </div>
-        <div>
-            <button mat-button matStepperPrevious>Voltar</button>
-            <button mat-button matStepperNext>Próximo</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        <p>Tudo Pronto!! Podemos Continuar o cadastro ?</p>
-        <div>
-            <button mat-raised-button color="primary" type="submit">Sim</button>
-            <button mat-button  matStepperPrevious>Voltar</button>
-            <button mat-button  (click)="stepper.reset()">Desfazer Cadastro</button>
-        </div>
-    </mat-step>
-</mat-horizontal-stepper>
+<mat-card>
+    <form fxLayout="column" [formGroup]="produtoForm" (ngSubmit)="onSubmit()">
+        <mat-card-content>
+            <div class="mb-2 mt-2">
+                <h2>Produto</h2>
+                <mat-divider></mat-divider>
+            </div>
+            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Nome</mat-label>
+                    <input matInput formControlName="nome" placeholder="Nome">
+                    <mat-error *ngIf="nome.hasError('required')">Campo obrigatório</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Valor</mat-label>
+                    <input matInput formControlName="valor" type="number" placeholder="Valor">
+                    <mat-error *ngIf="valor.hasError('required')">Campo obrigatório</mat-error>
+                </mat-form-field>
+
+            </div>
+            <div>
+                <mat-form-field appearance="outline" fxFill>
+                    <mat-label>Descrição</mat-label>
+                    <textarea formControlName="descricao" placeholder="Descrição Produto" matInput></textarea>
+                    <mat-error *ngIf="descricao.hasError('required')">Campo obrigatório</mat-error>
+
+                </mat-form-field>
+            </div>
+            <div class="mb-2 mt-2">
+                <button mat-icon-button aria-label="Editar Registro" matTooltip="Editar Canal"
+                (click)="addCreds()">
+                <mat-icon>create</mat-icon>
+            </button>
+                <h2>SubProduto</h2>
+                 
+                <mat-divider></mat-divider>
+            </div>
+            <ng-container formArrayName="subProdutos">
+                <ng-container *ngFor="let subProduto of subProdutos.controls; let i=index">
+                    <ng-container formGroupName="{{i}}">
+                        <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Nome</mat-label>
+                                <input matInput placeholder="Nome Subproduto" formControlName="nome">
+                                <mat-error *ngIf="getErrorMessageSubProdutos(i, 'nome').hasError('required')">
+                                    Nome obrigatório
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex.gt-xs>
+                                <mat-label>Valor</mat-label>
+                                <input matInput placeholder="valor" formControlName="valor">
+                                <mat-error *ngIf="getErrorMessageSubProdutos(i, 'valor').hasError('valor')">
+                                    valor inválido
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field appearance="outline" fxFill>
+                                <mat-label>Descrição</mat-label>
+                                <textarea formControlName="descricao" placeholder="Descrição Produto"
+                                    matInput></textarea>
+                                <mat-error *ngIf="descricao.hasError('required')">Campo obrigatório</mat-error>
+
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                </ng-container>
+
+            </ng-container>
+
+
+        </mat-card-content>
+        <mat-card-actions fxLayout="row-reverse">
+            <button mat-raised-button color="primary">Cadastar</button>
+        </mat-card-actions>
+    </form>
+</mat-card>

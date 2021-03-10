@@ -51,7 +51,7 @@ export const menuItems: MenuItem[] = [
     },
     {
         id: 7,
-        name: 'Produtos e Serviços',
+        name: 'Cadastros',
         children: [
             {
                 id: 8,

@@ -108,7 +108,8 @@ const routes: Routes = [
     MatDialogModule,
     UsuarioFormularioComponent,
     UsuariosComponent,
-    ProdutoFormularioComponent
+    ProdutoFormularioComponent,
+    
   ]
 })
 export class SharedModule { }
