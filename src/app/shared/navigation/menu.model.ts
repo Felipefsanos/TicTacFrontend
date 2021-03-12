@@ -55,11 +55,22 @@ export const menuItems: MenuItem[] = [
         children: [
             {
                 id: 8,
-                name: 'Novo Produto',
-                url: 'p/produtos/novoProduto'
+                name: 'Produto',
+                children: [
+                    {
+                        id: 9,
+                        name: 'Novo Produto',
+                        url: 'p/produtos/novoProduto'
+                    },
+                    {
+                        id: 10,
+                        name: 'Novo SubProduto',
+                        url: 'p/produtos/novoSubProduto'
+                    },
+                ]
             },
             {
-                id: 9,
+                id: 11,
                 name: 'Novo Serviço',
                 url: 'p/orcamentos'
             }
