@@ -35,38 +35,38 @@ export class OrcamentoFormularioComponent {
     // TODO: Remover valores fixos, por teste
     this.orcamentoForm = this.formBuilder.group({
       orcamento: this.formBuilder.group({
-        dataEvento: [new Date(2021, 3, 3), Validators.required],
-        horaEvento: ['1705', Validators.required],
-        tipoEvento: ['Aniversario', Validators.required],
-        quantidadeAdultos: [5, Validators.required],
-        quantidadeCriancas: [5, Validators.required],
+        dataEvento: ['', Validators.required],
+        horaEvento: ['', Validators.required],
+        tipoEvento: ['', Validators.required],
+        quantidadeAdultos: ['', Validators.required],
+        quantidadeCriancas: ['', Validators.required],
         buffetPrincipal: [false, Validators.required],
-        observacao: ['Sem observações']
+        observacao: ['']
       }),
       cliente: this.formBuilder.group({
-        nome: ['Felipe Rodrigues Ferreira Santos', [Validators.required, Validators.minLength(5)]],
-        cpfCnpj: ['11089960603'],
-        canalCaptacaoId: [2, Validators.required],
+        nome: ['', [Validators.required, Validators.minLength(5)]],
+        cpfCnpj: [''],
+        canalCaptacaoId: ['', Validators.required],
         contatos: this.formBuilder.array([
           this.formBuilder.group({
-            telefone: ['31975155261', Validators.required],
-            nomeContato: ['Felipe Rodrigues', Validators.required],
-            email: ['lipe2008.lipao@gmail.com', Validators.email],
-            ddd: ['31']
+            telefone: ['', Validators.required],
+            nomeContato: ['', Validators.required],
+            email: ['', Validators.email],
+            ddd: ['']
           })
         ]),
-        observacao: ['Sem observações']
+        observacao: ['']
       }),
       endereco: this.formBuilder.group({
-        cep: ['32315020', Validators.required],
-        bairro: ['Eldorado', Validators.required],
-        cidade: ['Contagem', Validators.required],
-        numero: ['1885'],
-        estado: ['MG', Validators.required],
-        complemento: ['Casa 2'],
-        logradouro: ['Rua José Barra do Nascimento', Validators.required],
-        tamanhoLocal: [500, Validators.required],
-        escada: [true, Validators.required],
+        cep: ['', Validators.required],
+        bairro: ['', Validators.required],
+        cidade: ['', Validators.required],
+        numero: [''],
+        estado: ['', Validators.required],
+        complemento: [''],
+        logradouro: ['', Validators.required],
+        tamanhoLocal: ['', Validators.required],
+        escada: [false, Validators.required],
         elevador: [false, Validators.required],
         restricaoHorario: [false, Validators.required]
       }),
