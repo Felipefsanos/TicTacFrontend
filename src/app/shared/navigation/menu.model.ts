@@ -51,7 +51,7 @@ export const menuItems: MenuItem[] = [
     },
     {
         id: 7,
-        name: 'Cadastros',
+        name: 'Produtos',
         children: [
             {
                 id: 8,
@@ -60,20 +60,31 @@ export const menuItems: MenuItem[] = [
                     {
                         id: 9,
                         name: 'Novo Produto',
-                        url: 'p/produtos/novoProduto'
+                        url: 'p/produtos/novo-produto'
                     },
                     {
                         id: 10,
                         name: 'Novo SubProduto',
-                        url: 'p/produtos/novoSubProduto'
+                        url: 'p/produtos/novo-sub-produto'
                     },
                 ]
-            },
-            {
-                id: 11,
-                name: 'Novo Serviço',
-                url: 'p/orcamentos'
             }
         ]
     },
+    {
+        id: 7,
+        name: 'Prestadores',
+        children: [
+            {
+                id: 11,
+                name: 'Novo Prestador',
+                url: 'p/prestadores/novo'
+            },
+            {
+                id: 11,
+                name: 'Prestadores',
+                url: 'p/prestadores'
+            }
+        ]
+    }
 ];

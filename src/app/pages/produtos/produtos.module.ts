@@ -11,7 +11,7 @@ import { NovoSubProdutoComponent } from './novo-sub-produto/novo-sub-produto.com
 
 const routes: Routes = [
   {
-    path: 'novoProduto',
+    path: 'novo-produto',
     component: NovoProdutoComponent
   },
   {

@@ -11,8 +11,7 @@ import { OrcamentoModel } from '../models/orcamento.model';
 })
 export class OrcamentoService extends BaseService {
 
-  constructor(protected http: HttpClient)
-  {
+  constructor(protected http: HttpClient) {
     super(http);
   }
 
@@ -20,11 +19,15 @@ export class OrcamentoService extends BaseService {
     return this.post('orcamentos', orcamentoModel);
   }
 
-  obterOrcamentos(): Observable<OrcamentoModel[]>{
+  obterOrcamentos(): Observable<OrcamentoModel[]> {
     return this.get('orcamentos');
   }
 
-  obterOrcamento(id: number): Observable<OrcamentoModel>{
-    return this.get('orcamentos/' + id );
+  obterOrcamento(id: number): Observable<OrcamentoModel> {
+    return this.get(`orcamentos/${id}`);
+  }
+
+  removerOrcamento(id: number): Observable<any> {
+    return this.delete(`orcamentos/${id}`);
   }
 }

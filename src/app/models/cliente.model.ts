@@ -1,4 +1,4 @@
-import { ContatoModel } from './contato.model';
+import { ContatoModel } from './base/contato.model';
 
 export class ClienteModel {
     id?: number;

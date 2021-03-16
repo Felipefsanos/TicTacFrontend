@@ -39,6 +39,8 @@ import { UsuarioModalComponent } from './components/modals/usuario-modal/usuario
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProdutoFormularioComponent } from './components/formularios/produto-formulario/produto-formulario.component';
 import { SubProdutoFormularioComponent } from './components/formularios/sub-produto-formulario/sub-produto-formulario.component';
+import { OrcamentoModalComponent } from './components/modals/orcamento-modal/orcamento-modal.component';
+import { PrestadorFormularioComponent } from './components/formularios/prestador-formulario/prestador-formulario.component';
 
 const routes: Routes = [
   {
@@ -69,7 +71,9 @@ const routes: Routes = [
     UsuariosComponent,
     UsuarioModalComponent,
     ProdutoFormularioComponent,
-    SubProdutoFormularioComponent],
+    SubProdutoFormularioComponent,
+    OrcamentoModalComponent,
+    PrestadorFormularioComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -111,7 +115,8 @@ const routes: Routes = [
     UsuarioFormularioComponent,
     UsuariosComponent,
     ProdutoFormularioComponent,
-    SubProdutoFormularioComponent
+    SubProdutoFormularioComponent,
+    PrestadorFormularioComponent
   ]
 })
 export class SharedModule { }

@@ -1,0 +1,178 @@
+<mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
+    <mat-step [stepControl]="formulario.controls.nome && formulario.controls.cpf || contatos">
+        <form [formGroup]="formulario">
+            <ng-template matStepLabel>Contato</ng-template>
+            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Nome</mat-label>
+                    <input formControlName="nome" matInput placeholder="Nome do prestador">
+                    <mat-error *ngIf="formulario.controls.nome.hasError('required')">Nome do prestador é
+                        obrigatório</mat-error>
+                    <mat-error *ngIf="formulario.controls.nome.hasError('minlength')">Nome do prestador tem
+                        que ter mais de 3 caracteres</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>CPF</mat-label>
+                    <input formControlName="cpf" matInput placeholder="CPF" mask="000.000.000-00"
+                        [showMaskTyped]="true">
+                    <mat-error *ngIf="formulario.controls.cpf.hasError('required')">CPF é
+                        obrigatório</mat-error>
+                    <mat-error *ngIf="formulario.controls.cpf.hasError('mask')">CPF inválido
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxLayoutGap.gt-sm="10px" fxLayout.lt-md="column" fxLayout="row">
+                <ng-container formArrayName="contatos">
+                    <ng-container *ngFor="let contato of contatos.controls; let i=index">
+                        <ng-container formGroupName="{{i}}">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Telefone</mat-label>
+                                <input matInput placeholder="Telefone do prestador" formControlName="telefone"
+                                    mask="(00) 0000-0000||(00) 0 0000-0000" [showMaskTyped]="true">
+                                <mat-error *ngIf="getErrorMessageContatos(i, 'telefone').hasError('required')">
+                                    Telefone obrigatório
+                                </mat-error>
+                                <mat-error *ngIf="getErrorMessageContatos(i, 'telefone').hasError('mask')">
+                                    Telefone inválido
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex.gt-xs>
+                                <mat-label>Contato</mat-label>
+                                <input matInput placeholder="Nome do contato do telefone" formControlName="contato">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex.gt-xs>
+                                <mat-label>Email</mat-label>
+                                <input matInput placeholder="exemplo@tictac.com" formControlName="email">
+                                <mat-error *ngIf="getErrorMessageContatos(i, 'email').hasError('email')">
+                                    Email inválido
+                                </mat-error>
+                            </mat-form-field>
+
+                        </ng-container>
+                    </ng-container>
+
+                </ng-container>
+            </div>
+            <div>
+                <button mat-raised-button color="primary" matStepperNext>Próximo</button>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="endereco" mat-optional>
+        <form [formGroup]="endereco">
+            <ng-template matStepLabel>Endereço</ng-template>
+            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-md="column" fxLayout="row">
+
+                <mat-form-field appearance="outline" fxFlex="initial">
+                    <mat-label>CEP</mat-label>
+                    <input #inputCep formControlName="cep" matInput placeholder="CEP do cliente" mask="00000-000"
+                        [showMaskTyped]="true" (blur)="buscarCep(inputCep.value)">
+                    <mat-error *ngIf="endereco.controls.cep.hasError('required')">Campo obrigatório
+                    </mat-error>
+                    <mat-error *ngIf="endereco.controls.cep.hasError('cepInvalido')">CEP inválido
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Logradouro</mat-label>
+                    <input formControlName="logradouro" matInput placeholder="Logradouro">
+                    <mat-error *ngIf="endereco.controls.logradouro.hasError('required')">Campo obrigatório
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Número</mat-label>
+                    <input formControlName="numero" type="number" matInput placeholder="Número">
+                    <mat-error *ngIf="endereco.controls.numero.hasError('required')">Campo obrigatório
+                    </mat-error>
+                </mat-form-field>
+
+
+
+            </div>
+
+            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-md="column" fxLayout="row">
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Bairro</mat-label>
+                    <input formControlName="bairro" matInput placeholder="Bairro">
+                    <mat-error *ngIf="endereco.controls.bairro.hasError('required')">Campo obrigatório
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Cidade</mat-label>
+                    <input formControlName="cidade" matInput placeholder="Cidade do cliente">
+                    <mat-error *ngIf="endereco.controls.cidade.hasError('required')">Campo obrigatório
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="initial">
+                    <mat-label>Estado</mat-label>
+                    <mat-select matInput formControlName="estado" placeholder="Estado">
+                        <mat-option value="" selected></mat-option>
+                        <mat-option value="AC">Acre</mat-option>
+                        <mat-option value="AL">Alagoas</mat-option>
+                        <mat-option value="AP">Amapá</mat-option>
+                        <mat-option value="AM">Amazonas</mat-option>
+                        <mat-option value="BA">Bahia</mat-option>
+                        <mat-option value="CE">Ceará</mat-option>
+                        <mat-option value="DF">Distrito Federal</mat-option>
+                        <mat-option value="ES">Espírito Santo</mat-option>
+                        <mat-option value="GO">Goiás</mat-option>
+                        <mat-option value="MA">Maranhão</mat-option>
+                        <mat-option value="MT">Mato Grosso</mat-option>
+                        <mat-option value="MS">Mato Grosso do Sul</mat-option>
+                        <mat-option value="MG">Minas Gerais</mat-option>
+                        <mat-option value="PA">Pará</mat-option>
+                        <mat-option value="PB">Paraíba</mat-option>
+                        <mat-option value="PR">Paraná</mat-option>
+                        <mat-option value="PE">Pernambuco</mat-option>
+                        <mat-option value="PI">Piauí</mat-option>
+                        <mat-option value="RJ">Rio de Janeiro</mat-option>
+                        <mat-option value="RN">Rio Grande do Norte</mat-option>
+                        <mat-option value="RS">Rio Grande do Sul</mat-option>
+                        <mat-option value="RO">Rondônia</mat-option>
+                        <mat-option value="RR">Roraima</mat-option>
+                        <mat-option value="SC">Santa Catarina</mat-option>
+                        <mat-option value="SP">São Paulo</mat-option>
+                        <mat-option value="SE">Sergipe</mat-option>
+                        <mat-option value="TO">Tocantins</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="endereco.controls.estado.hasError('required')">Campo obrigatório
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+
+            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-md="column" fxLayout="row">
+
+                <mat-form-field appearance="outline" fxFill>
+                    <mat-label>Complemento</mat-label>
+                    <input formControlName="complemento" placeholder="Complemento" matInput>
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-button matStepperPrevious>Voltar</button>
+                <button mat-raised-button color="primary" matStepperNext>Próximo</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+            <i class="fas fa-user-check fa-10x" ></i>
+            <p>Confimar o cadastro do prestador</p>
+            <p>{{formulario.controls.nome.value}}?</p>
+        </div>
+        <div class="mt-2" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+            <button mat-raised-button color="primary" (click)="onSubmit()">Sim</button>
+            <button mat-button matStepperPrevious>Voltar</button>
+            <button mat-button (click)="stepper.reset(); formulario.reset()">Cancelar Cadastro</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>
