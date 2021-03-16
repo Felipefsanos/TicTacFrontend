@@ -25,49 +25,14 @@
                     <mat-error *ngIf="descricao.hasError('required')">Campo obrigatório</mat-error>
 
                 </mat-form-field>
+                <mat-form-field appearance="outline" fxFill>
+                    <mat-label>SubProdutos</mat-label>
+                    <mat-select formControlName="subprodutos" placeholder="Subprodutos" multiple>
+                      <mat-option *ngFor="let item of subProdutosList" [value]="item.valor">{{item.text}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
             </div>
-            <div class="mb-2 mt-2">
-                <button mat-icon-button aria-label="Editar Registro" matTooltip="Editar Canal"
-                (click)="addCreds()">
-                <mat-icon>create</mat-icon>
-            </button>
-            
-                <h2>SubProduto</h2>
-                 
-                <mat-divider></mat-divider>
-            </div>
-            <ng-container formArrayName="subProdutos">
-                <ng-container *ngFor="let subProduto of subProdutos.controls; let i=index">
-                    <ng-container formGroupName="{{i}}">
-                        <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Nome</mat-label>
-                                <input matInput placeholder="Nome Subproduto" formControlName="nome">
-                                <mat-error *ngIf="getErrorMessageSubProdutos(i, 'nome').hasError('required')">
-                                    Nome obrigatório
-                                </mat-error>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" fxFlex.gt-xs>
-                                <mat-label>Valor</mat-label>
-                                <input matInput placeholder="valor" formControlName="valor">
-                                <mat-error *ngIf="getErrorMessageSubProdutos(i, 'valor').hasError('valor')">
-                                    valor inválido
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div>
-                            <mat-form-field appearance="outline" fxFill>
-                                <mat-label>Descrição</mat-label>
-                                <textarea formControlName="descricao" placeholder="Descrição Produto"
-                                    matInput></textarea>
-                                <mat-error *ngIf="descricao.hasError('required')">Campo obrigatório</mat-error>
-
-                            </mat-form-field>
-                        </div>
-                    </ng-container>
-                </ng-container>
-
-            </ng-container>
+ 
 
 
         </mat-card-content>

@@ -1,5 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { ProdutoService } from 'src/app/services/produto.service';
+import { SubProdutoService } from 'src/app/services/sub-produto.service';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
   selector: 'app-sub-produto-formulario',
@@ -9,8 +13,11 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 export class SubProdutoFormularioComponent implements OnInit {
 
   subProdutoForm: FormGroup = new FormGroup({});
+  produtos: any | undefined = [{text:'Selecione...',valor:0}]
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private produtoService: ProdutoService, 
+    private subProdutoService: SubProdutoService,
+    private messageService: MessageService) {
     this.construirFormularioInformacoesCliente();
   }
 
@@ -18,7 +25,7 @@ export class SubProdutoFormularioComponent implements OnInit {
     this.subProdutoForm = this.formBuilder.group({
       nome: [''],
       descricao: [''],
-      valor: [''],
+      produto:['']
     });
   }
   ngOnInit(): void {
@@ -26,6 +33,32 @@ export class SubProdutoFormularioComponent implements OnInit {
 
   onSubmit(): void {
     console.log(this.subProdutoForm);
+  }
+
+  obterProdutos(codigosubProduto: number): void {
+    debugger;
+    if(codigosubProduto <= 0)
+    {
+      this.produtoService.obterProdutos().subscribe(
+        res=> {
+          this.produtos = [];
+          for( const item of res){
+           this.produtos.push([{text: item.nome ,valor: item.id}]);
+          }
+        },(error: HttpErrorResponse) => {
+            this.messageService.warn("Erro para acessar service:" + error.error.menssage)
+        })
+    }else{
+      this.produtoService.obterProduto(codigosubProduto).subscribe(
+        resp => {
+          this.produtos = [];
+          for( const item of resp){
+           this.produtos.push([{text: item.nome ,valor: item.id}]);
+          }
+        },(error: HttpErrorResponse) => {
+          this.messageService.warn("Erro para acessar service:" + error.error.menssage)
+      })
+    }
   }
   get nome(): FormControl {
     return this.subProdutoForm.controls.nome as FormControl;

@@ -11,12 +11,6 @@
                     <input matInput formControlName="nome" placeholder="Nome">
                     <mat-error *ngIf="nome.hasError('required')">Campo obrigatório</mat-error>
                 </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex.gt-xs>
-                    <mat-label>Valor</mat-label>
-                    <input matInput formControlName="valor" type="number" placeholder="Valor">
-                    <mat-error *ngIf="valor.hasError('required')">Campo obrigatório</mat-error>
-                </mat-form-field>
-
             </div>
             <div>
                 <mat-form-field appearance="outline" fxFill>
@@ -25,6 +19,14 @@
                     <mat-error *ngIf="descricao.hasError('required')">Campo obrigatório</mat-error>
 
                 </mat-form-field>
+            </div>
+            <div>
+            <mat-form-field appearance="outline" fxFill>
+                <mat-label>SubProdutos</mat-label>
+                <mat-select formControlName="produto" placeholder="Vincular a produtos" multiple>
+                  <mat-option *ngFor="let item of produtos" [value]="item.valor">{{item.text}}</mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
 
         </mat-card-content>
