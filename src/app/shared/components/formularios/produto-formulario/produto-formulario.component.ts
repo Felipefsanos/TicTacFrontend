@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProdutoService } from 'src/app/services/produto.service';
 import { SubProdutoService } from 'src/app/services/sub-produto.service';
@@ -10,9 +10,9 @@ import { MessageService } from 'src/app/shared/services/message.service';
   templateUrl: './produto-formulario.component.html',
   styleUrls: ['./produto-formulario.component.scss']
 })
-export class ProdutoFormularioComponent implements OnInit {
+export class ProdutoFormularioComponent implements OnInit , AfterViewInit {
 
-  subProdutosList: any | undefined = [{text: 'Selecione...', valor: 0}];
+  subProdutosArray: any;
   produtoForm: FormGroup = new FormGroup({});
 
   constructor(private formBuilder: FormBuilder, private produtoService: ProdutoService, 
@@ -21,6 +21,7 @@ export class ProdutoFormularioComponent implements OnInit {
     this.construirFormularioInformacoesCliente();
   }
 
+  
   construirFormularioInformacoesCliente() {
     this.produtoForm = this.formBuilder.group({
       nome: ['',Validators.required],
@@ -31,24 +32,25 @@ export class ProdutoFormularioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.obterSubProdutos(0);
   }
- 
+  ngAfterViewInit(): void {
+    this.obterSubProdutos()
+  }
 
   getErrorMessageSubProdutos(formGroupIndex: number, controlName: string): FormControl {
     const formGroup = this.subProdutos.controls[formGroupIndex] as FormGroup;
     return formGroup.get(controlName) as FormControl;
   }
 
-  obterSubProdutos(codigoProduto: number): void {
+  obterSubProdutos(codigoProduto?: number): void {
     debugger;
-    if(codigoProduto <= 0)
+    if(codigoProduto == null)
     {
       this.subProdutoService.obterSubProdutos().subscribe(
         res=> {
-          this.subProdutosList = [];
+          this.subProdutosArray = [];
           for( const item of res){
-           this.subProdutosList.push([{text: item.nome ,valor: item.id}]);
+            this.subProdutosArray.push([{text: item.nome ,valor: item.id}]);
           }
         },(error: HttpErrorResponse) => {
             this.messageService.warn("Erro para acessar service:" + error.error.menssage)
@@ -56,9 +58,9 @@ export class ProdutoFormularioComponent implements OnInit {
     }else{
       this.subProdutoService.obterSubProduto(codigoProduto).subscribe(
         resp => {
-          this.subProdutosList = [];
+          this.subProdutosArray = [];
           for( const item of resp){
-           this.subProdutosList.push([{text: item.nome ,valor: item.id}]);
+            this.subProdutosArray.push([{text: item.nome ,valor: item.id}]);
           }
         },(error: HttpErrorResponse) => {
           this.messageService.warn("Erro para acessar service:" + error.error.menssage)
