@@ -28,4 +28,8 @@ export class ProdutoService extends BaseService {
   obterProduto(id: number): Observable<ProdutoModel[]>{
     return this.get('produtos/' + id );
   }
+
+  excluirProduto(id: number): Observable<any>{
+    return this.delete('produtos/' + id );
+  }
 }

@@ -43,6 +43,7 @@ import { OrcamentoModalComponent } from './components/modals/orcamento-modal/orc
 import { PrestadorFormularioComponent } from './components/formularios/prestador-formulario/prestador-formulario.component';
 import { PrestadoresComponent } from './components/listagem/prestadores/prestadores.component';
 import { PrestadorModalComponent } from './components/modals/prestador-modal/prestador-modal.component';
+import { ProdutoComponent } from './components/listagem/produto/produto.component';
 
 const routes: Routes = [
   {
@@ -77,7 +78,8 @@ const routes: Routes = [
     OrcamentoModalComponent,
     PrestadorFormularioComponent,
     PrestadoresComponent,
-    PrestadorModalComponent],
+    PrestadorModalComponent,
+    ProdutoComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -119,6 +121,7 @@ const routes: Routes = [
     UsuarioFormularioComponent,
     UsuariosComponent,
     ProdutoFormularioComponent,
+    ProdutoComponent,
     SubProdutoFormularioComponent,
     PrestadorFormularioComponent,
     PrestadoresComponent
