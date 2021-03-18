@@ -1,6 +1,6 @@
 import { SubProdutoModel } from './../../../../models/sub-produto.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProdutoService } from 'src/app/services/produto.service';
 import { SubProdutoService } from 'src/app/services/sub-produto.service';
@@ -11,7 +11,7 @@ import { MessageService } from 'src/app/shared/services/message.service';
   templateUrl: './produto-formulario.component.html',
   styleUrls: ['./produto-formulario.component.scss']
 })
-export class ProdutoFormularioComponent implements OnInit {
+export class ProdutoFormularioComponent implements OnInit  {
 
   subProdutosList: SubProdutoModel[] | undefined = [];
   produtoForm: FormGroup = new FormGroup({});

@@ -25,41 +25,24 @@ export class SubProdutoFormularioComponent implements OnInit {
     this.subProdutoForm = this.formBuilder.group({
       nome: [''],
       descricao: [''],
-      produto:['']
+      quantidade:['']
     });
   }
   ngOnInit(): void {
   }
 
   onSubmit(): void {
-    console.log(this.subProdutoForm);
-  }
-
-  obterProdutos(codigosubProduto: number): void {
-    debugger;
-    if(codigosubProduto <= 0)
-    {
-      this.produtoService.obterProdutos().subscribe(
-        res=> {
-          this.produtos = [];
-          for( const item of res){
-           this.produtos.push([{text: item.nome ,valor: item.id}]);
-          }
-        },(error: HttpErrorResponse) => {
-            this.messageService.warn("Erro para acessar service:" + error.error.menssage)
-        })
-    }else{
-      this.produtoService.obterProduto(codigosubProduto).subscribe(
-        resp => {
-          this.produtos = [];
-          for( const item of resp){
-           this.produtos.push([{text: item.nome ,valor: item.id}]);
-          }
-        },(error: HttpErrorResponse) => {
+    this.subProdutoService.criarSubProduto(this.subProdutoForm.value).subscribe(
+      res=> {
+        this.produtos = [];
+        for( const item of res){
+         this.produtos.push([{text: item.nome ,valor: item.id}]);
+        }
+      },(error: HttpErrorResponse) => {
           this.messageService.warn("Erro para acessar service:" + error.error.menssage)
       })
-    }
   }
+ 
   get nome(): FormControl {
     return this.subProdutoForm.controls.nome as FormControl;
   }

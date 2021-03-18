@@ -44,6 +44,7 @@ import { PrestadorFormularioComponent } from './components/formularios/prestador
 import { PrestadoresComponent } from './components/listagem/prestadores/prestadores.component';
 import { PrestadorModalComponent } from './components/modals/prestador-modal/prestador-modal.component';
 import { ProdutoComponent } from './components/listagem/produto/produto.component';
+import { ProdutoModelComponent } from './components/modals/produto-model/produto-model.component';
 
 const routes: Routes = [
   {
@@ -79,7 +80,8 @@ const routes: Routes = [
     PrestadorFormularioComponent,
     PrestadoresComponent,
     PrestadorModalComponent,
-    ProdutoComponent],
+    ProdutoComponent,
+    ProdutoModelComponent],
   imports: [
     CommonModule,
     MatToolbarModule,

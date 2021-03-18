@@ -1,8 +1,8 @@
 import { ProdutoModel } from "./produto.model";
 
 export class SubProdutoModel{
-    id!: number;
+    id?: number;
     descricao?: string;
-    nome!: string;
-    subProdutos?: ProdutoModel[];
+    nome?: string;
+    quantidade?: string;
 }

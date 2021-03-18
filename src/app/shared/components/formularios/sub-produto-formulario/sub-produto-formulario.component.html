@@ -11,6 +11,11 @@
                     <input matInput formControlName="nome" placeholder="Nome">
                     <mat-error *ngIf="nome.hasError('required')">Campo obrigatório</mat-error>
                 </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Quantidade</mat-label>
+                    <input matInput type="number" formControlName="quantidade" placeholder="Quantidade">
+                    <mat-error *ngIf="nome.hasError('required')">Campo obrigatório</mat-error>
+                </mat-form-field>
             </div>
             <div>
                 <mat-form-field appearance="outline" fxFill>
@@ -20,15 +25,6 @@
 
                 </mat-form-field>
             </div>
-            <div>
-            <mat-form-field appearance="outline" fxFill>
-                <mat-label>SubProdutos</mat-label>
-                <mat-select formControlName="produto" placeholder="Vincular a produtos" multiple>
-                  <mat-option *ngFor="let item of produtos" [value]="item.valor">{{item.text}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
         </mat-card-content>
         <mat-card-actions fxLayout="row-reverse">
             <button mat-raised-button color="primary">Cadastar</button>
