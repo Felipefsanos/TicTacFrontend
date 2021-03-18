@@ -5,8 +5,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NovoPrestadorComponent } from './novo-prestador/novo-prestador.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ListaPrestadoresComponent } from './lista-prestadores/lista-prestadores.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: ListaPrestadoresComponent
+  },
   {
     path: 'novo',
     component: NovoPrestadorComponent
@@ -14,7 +19,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [NovoPrestadorComponent],
+  declarations: [NovoPrestadorComponent, ListaPrestadoresComponent],
   imports: [
     CommonModule,
     SharedModule,

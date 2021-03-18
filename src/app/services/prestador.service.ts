@@ -20,6 +20,18 @@ export class PrestadorService extends BaseService{
     return this.post('prestadores', prestadorModel);
   }
 
+  editarPrestador(id: number, prestadorEditado: PrestadorModel): Observable<any> {
+    return this.put(`prestadores/${id}`, prestadorEditado);
+  }
+
+  obterPrestadores(): Observable<PrestadorModel[]> {
+    return this.get('prestadores');
+  }
+
+  excluirPrestador(id: number): Observable<any> {
+    return this.delete(`prestadores/${id}`);
+  }
+
   private tratarCampos(prestadorModel: PrestadorModel) {
     prestadorModel.endereco.cep = +(prestadorModel.endereco.cep?.toString().replace('-', ''));
 

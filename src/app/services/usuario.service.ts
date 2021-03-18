@@ -25,4 +25,5 @@ export class UsuarioService extends BaseService {
   editarUsuario(id: number, usuarioModel: UsuarioModel): Observable<any> {
     return this.put(`usuarios/${id}`, usuarioModel);
   }
+
 }

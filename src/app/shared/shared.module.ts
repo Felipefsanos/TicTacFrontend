@@ -41,6 +41,8 @@ import { ProdutoFormularioComponent } from './components/formularios/produto-for
 import { SubProdutoFormularioComponent } from './components/formularios/sub-produto-formulario/sub-produto-formulario.component';
 import { OrcamentoModalComponent } from './components/modals/orcamento-modal/orcamento-modal.component';
 import { PrestadorFormularioComponent } from './components/formularios/prestador-formulario/prestador-formulario.component';
+import { PrestadoresComponent } from './components/listagem/prestadores/prestadores.component';
+import { PrestadorModalComponent } from './components/modals/prestador-modal/prestador-modal.component';
 
 const routes: Routes = [
   {
@@ -73,7 +75,9 @@ const routes: Routes = [
     ProdutoFormularioComponent,
     SubProdutoFormularioComponent,
     OrcamentoModalComponent,
-    PrestadorFormularioComponent],
+    PrestadorFormularioComponent,
+    PrestadoresComponent,
+    PrestadorModalComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -116,7 +120,8 @@ const routes: Routes = [
     UsuariosComponent,
     ProdutoFormularioComponent,
     SubProdutoFormularioComponent,
-    PrestadorFormularioComponent
+    PrestadorFormularioComponent,
+    PrestadoresComponent
   ]
 })
 export class SharedModule { }

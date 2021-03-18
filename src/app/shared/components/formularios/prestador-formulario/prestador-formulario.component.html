@@ -164,15 +164,29 @@
     </mat-step>
     <mat-step>
         <ng-template matStepLabel>Done</ng-template>
-        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
-            <i class="fas fa-user-check fa-10x" ></i>
-            <p>Confimar o cadastro do prestador</p>
-            <p>{{formulario.controls.nome.value}}?</p>
+        <div *ngIf="!edicao">
+            <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+                <i class="fas fa-user-check fa-10x"></i>
+                <p>Confimar o cadastro do prestador</p>
+                <p>{{formulario.controls.nome.value}}?</p>
+            </div>
+            <div class="mt-2" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+                <button mat-raised-button color="primary" (click)="onSubmit()">Sim</button>
+                <button mat-button matStepperPrevious>Voltar</button>
+                <button mat-button (click)="stepper.reset(); formulario.reset()">Cancelar Cadastro</button>
+            </div>
         </div>
-        <div class="mt-2" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
-            <button mat-raised-button color="primary" (click)="onSubmit()">Sim</button>
-            <button mat-button matStepperPrevious>Voltar</button>
-            <button mat-button (click)="stepper.reset(); formulario.reset()">Cancelar Cadastro</button>
+
+        <div *ngIf="edicao">
+            <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+                <i class="fas fa-user-edit fa-10x"></i>
+                <p>Atualizar o cadastro do prestador</p>
+                <p>{{formulario.controls.nome.value}}?</p>
+            </div>
+            <div class="mt-2" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+                <button mat-raised-button color="primary" (click)="onSubmit()">Sim</button>
+                <button mat-button matStepperPrevious>Voltar</button>
+            </div>
         </div>
     </mat-step>
 </mat-horizontal-stepper>

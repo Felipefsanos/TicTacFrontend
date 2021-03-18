@@ -1,5 +1,5 @@
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
-import { Component, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl, FormGroupDirective } from '@angular/forms';
+import { Component, EventEmitter, Input, Output, ViewChild, OnInit } from '@angular/core';
 import { CepService } from 'src/app/shared/services/cep.service';
 import { ViaCepEnderecoModel } from 'src/app/shared/models/viacep-endereco.model';
 import { PrestadorService } from 'src/app/services/prestador.service';
@@ -12,40 +12,55 @@ import { MatStepper } from '@angular/material/stepper';
   templateUrl: './prestador-formulario.component.html',
   styleUrls: ['./prestador-formulario.component.scss']
 })
-export class PrestadorFormularioComponent {
+export class PrestadorFormularioComponent implements OnInit {
+
+  @Input()
+  prestador?: PrestadorModel;
+
+  @Output()
+  formularioEnviado = new EventEmitter<PrestadorModel>();
+
+  edicao = false;;
 
   @ViewChild('stepper')
   stepper?: MatStepper;
 
-  formulario: FormGroup;
+  @ViewChild (FormGroupDirective)
+  formGroupDirective!: FormGroupDirective;
+
+  formulario = new FormGroup({});
 
   constructor(private formBuilder: FormBuilder,
     private cepService: CepService,
     private prestadorService: PrestadorService,
-    private messageService: MessageService)
-  {
-    this.formulario = formBuilder.group({
-      nome: ['', [Validators.required, Validators.minLength(3)]],
-      cpf: ['', Validators.required],
+    private messageService: MessageService) {
+  }
+
+  ngOnInit(): void {
+    this.edicao = this.prestador ? true : false;
+
+    this.formulario = this.formBuilder.group({
+      nome: [this.prestador?.nome, [Validators.required, Validators.minLength(3)]],
+      cpf: [{ value: this.prestador?.cpf, disabled: this.edicao }, Validators.required],
       endereco: this.formBuilder.group({
-        cep: ['', Validators.required],
-        bairro: ['', Validators.required],
-        cidade: ['', Validators.required],
-        numero: [''],
-        estado: ['', Validators.required],
-        complemento: [''],
-        logradouro: ['', Validators.required]
+        cep: [this.prestador?.endereco.cep, Validators.required],
+        bairro: [this.prestador?.endereco.bairro, Validators.required],
+        cidade: [this.prestador?.endereco.cidade, Validators.required],
+        numero: [this.prestador?.endereco.numero],
+        estado: [this.prestador?.endereco.estado, Validators.required],
+        complemento: [this.prestador?.endereco.complemento],
+        logradouro: [this.prestador?.endereco.logradouro, Validators.required]
       }),
       contatos: this.formBuilder.array([
         this.formBuilder.group({
-          telefone: ['', Validators.required],
-          contato: [''],
-          email: ['', Validators.email]
+          telefone: [`${this.prestador?.contatos[0].ddd}${this.prestador?.contatos[0].telefone}`, Validators.required],
+          contato: [this.prestador?.contatos[0].nomeContato],
+          email: [this.prestador?.contatos[0].email, Validators.email]
         }),
         this.formBuilder.group({
-          telefone: ['', Validators.required],
-          contato: [''],
-          email: ['', Validators.email]
+          telefone: [`${this.prestador?.contatos[1].ddd}${this.prestador?.contatos[1].telefone}`, Validators.required],
+          contato: [this.prestador?.contatos[1].nomeContato],
+          email: [this.prestador?.contatos[1].email, Validators.email]
         })
       ])
     });
@@ -56,12 +71,11 @@ export class PrestadorFormularioComponent {
       return;
     }
 
-    this.prestadorService.criarPrestador(this.formulario.value as PrestadorModel)
-        .subscribe(() => {
-          this.messageService.success('Prestador criado com sucesso');
-          this.formulario.reset();
-          this.stepper?.reset();
-        });
+    this.formularioEnviado.emit(this.formulario.value as PrestadorModel);
+
+    this.stepper?.reset();
+    this.formGroupDirective.resetForm();
+
   }
 
   buscarCep(cep: string): void {

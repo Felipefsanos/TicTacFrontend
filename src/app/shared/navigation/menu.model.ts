@@ -17,7 +17,7 @@ export const menuItems: MenuItem[] = [
             },
             {
                 id: 4,
-                name: 'Lista de Orçamentos',
+                name: 'Orçamentos',
                 url: 'p/orcamentos'
             }
         ]
