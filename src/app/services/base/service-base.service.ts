@@ -9,23 +9,23 @@ export class BaseService {
     constructor(protected http: HttpClient) {
     }
 
-    protected get(url: string, params?: any): Observable<any> {
+    protected get(url: string, parameters?: any): Observable<any> {
         return this.http.get(this.baseUrl + url,
-            { params: new HttpParams(params) });
+            { params: parameters });
     }
 
-    protected post(url: string, body?: any, params?: any): Observable<any> {
+    protected post(url: string, body?: any, parameters?: any): Observable<any> {
         return this.http.post(this.baseUrl + url, body,
-            {  params: new HttpParams(params) });
+            {  params: parameters });
     }
 
-    protected put(url: string, body?: any, params?: any): Observable<any> {
+    protected put(url: string, body?: any, parameters?: any): Observable<any> {
         return this.http.put(this.baseUrl + url, body,
-            {  params: new HttpParams(params) });
+            {  params: parameters });
     }
 
-    protected delete(url: string, params?: any): Observable<any> {
+    protected delete(url: string, parameters?: any): Observable<any> {
         return this.http.delete(this.baseUrl + url,
-            {  params: new HttpParams(params) });
+            {  params: parameters });
     }
 }

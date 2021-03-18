@@ -22,8 +22,8 @@ export class SubProdutoService extends BaseService {
     return this.post('sub-produtos', orcamentoModel);
   }
 
-  obterSubProdutos(): Observable<SubProdutoModel[]>{
-    return this.get('sub-produtos');
+  obterSubProdutos(relacionados: boolean): Observable<SubProdutoModel[]>{
+    return this.get('sub-produtos', { relacionados });
   }
 
   obterSubProduto(id: number): Observable<SubProdutoModel[]>{

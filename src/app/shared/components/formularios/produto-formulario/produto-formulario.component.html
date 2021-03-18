@@ -28,7 +28,7 @@
                 <mat-form-field appearance="outline" fxFill>
                     <mat-label>SubProdutos</mat-label>
                     <mat-select formControlName="subprodutos" placeholder="Subprodutos" multiple>
-                      <mat-option *ngFor="let item of subProdutosList" [value]="item.valor">{{item.text}}</mat-option>
+                      <mat-option *ngFor="let subProduto of subProdutosList" [value]="subProduto.id">{{subProduto.descricao}}</mat-option>
                     </mat-select>
                   </mat-form-field>
             </div>
