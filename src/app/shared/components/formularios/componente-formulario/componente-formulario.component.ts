@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { ComponenteModel } from 'src/app/models/componente.model';
+import { ComponenteService } from 'src/app/services/componente.service';
 import { ProdutoService } from 'src/app/services/produto.service';
-import { SubProdutoService } from 'src/app/services/sub-produto.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
@@ -13,46 +14,46 @@ import { MessageService } from 'src/app/shared/services/message.service';
 export class ComponenteFormularioComponent implements OnInit {
 
 
-  subProdutoForm: FormGroup = new FormGroup({});
+  componenteForm: FormGroup = new FormGroup({});
   produtos: any | undefined = [{text:'Selecione...',valor:0}]
 
   constructor(private formBuilder: FormBuilder, private produtoService: ProdutoService, 
-    private subProdutoService: SubProdutoService,
+    private componenteService: ComponenteService,
     private messageService: MessageService) {
     this.construirFormularioInformacoesCliente();
   }
 
   construirFormularioInformacoesCliente() {
-    this.subProdutoForm = this.formBuilder.group({
-      nome: [''],
+    this.componenteForm = this.formBuilder.group({
+      nome: ['', Validators.required],
       descricao: [''],
-      quantidade:['']
+      quantidade:['',Validators.required]
     });
   }
   ngOnInit(): void {
   }
 
   onSubmit(): void {
-    this.subProdutoService.criarSubProduto(this.subProdutoForm.value).subscribe(
-      res=> {
-        this.produtos = [];
-        for( const item of res){
-         this.produtos.push([{text: item.nome ,valor: item.id}]);
-        }
-      },(error: HttpErrorResponse) => {
-          this.messageService.warn("Erro para acessar service:" + error.error.menssage)
-      })
+    if(this.componenteForm.invalid){
+      return;
+    }
+
+    this.componenteService.criarComponente(this.componenteForm.value as ComponenteModel)
+        .subscribe(() => {
+          this.messageService.success('Componente criado com sucesso!');
+          this.componenteForm.reset('');
+        });
   }
  
   get nome(): FormControl {
-    return this.subProdutoForm.controls.nome as FormControl;
+    return this.componenteForm.controls.nome as FormControl;
   }
 
   get valor(): FormControl {
-    return this.subProdutoForm.controls.valor as FormControl;
+    return this.componenteForm.controls.valor as FormControl;
   }
   get descricao(): FormControl {
-    return this.subProdutoForm.controls.descricao as FormControl;
+    return this.componenteForm.controls.descricao as FormControl;
   }
 
 }

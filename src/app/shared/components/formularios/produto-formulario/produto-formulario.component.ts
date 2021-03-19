@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ComponenteModel } from 'src/app/models/componente.model';
+import { ComponenteService } from 'src/app/services/componente.service';
 import { ProdutoService } from 'src/app/services/produto.service';
-import { SubProdutoService } from 'src/app/services/sub-produto.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class ProdutoFormularioComponent implements OnInit  {
   produtoForm: FormGroup = new FormGroup({});
 
   constructor(private formBuilder: FormBuilder, private produtoService: ProdutoService,
-    private subProdutoService: SubProdutoService,
+    private componenteService: ComponenteService,
     private messageService: MessageService) {
     this.construirFormularioInformacoesCliente();
   }
@@ -42,10 +42,10 @@ export class ProdutoFormularioComponent implements OnInit  {
 
   obterSubProdutos(): void {
 
-      this.subProdutoService.obterSubProdutos(false).subscribe(
+      this.componenteService.obterComponentes(false).subscribe(
         res=> {
           debugger;
-          res.forEach(subProduto => this.componenteList?.push(subProduto));
+          res.forEach(componete => this.componenteList?.push(componete));
         },(error: HttpErrorResponse) => {
             this.messageService.warn('Erro para acessar service:' + error.error.menssage);
         });
