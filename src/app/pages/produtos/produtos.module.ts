@@ -7,6 +7,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ListagemProdutoComponent } from './listagem-produto/listagem-produto.component';
 import { NovoComponenteComponent } from './novo-componente/novo-componente.component';
+import { ListagemComponenteComponent } from './listagem-componente/listagem-componente.component';
 
 
 
@@ -23,10 +24,15 @@ const routes: Routes = [
     path: 'listagem-produto',
     component: ListagemProdutoComponent
   }
+  ,
+  {
+    path: 'listagem-componentes',
+    component: ListagemComponenteComponent
+  }
 ];
 
 @NgModule({
-  declarations: [NovoProdutoComponent,  ListagemProdutoComponent, NovoComponenteComponent],
+  declarations: [NovoProdutoComponent,  ListagemProdutoComponent, NovoComponenteComponent, ListagemComponenteComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

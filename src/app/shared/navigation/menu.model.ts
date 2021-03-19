@@ -82,7 +82,7 @@ export const menuItems: MenuItem[] = [
                     {
                         id: 10,
                         name: 'Lista Componente',
-                        url: 'p/produtos/novo-produto'
+                        url: 'p/produtos/listagem-componentes'
                     },
                 ],
                 
