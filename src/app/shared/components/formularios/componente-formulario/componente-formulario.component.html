@@ -1,0 +1,33 @@
+<mat-card>
+    <form fxLayout="column" [formGroup]="subProdutoForm" (ngSubmit)="onSubmit()">
+        <mat-card-content>
+            <div class="mb-2 mt-2">
+                <h2> SubProduto</h2>
+                <mat-divider></mat-divider>
+            </div>
+            <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Nome</mat-label>
+                    <input matInput formControlName="nome" placeholder="Nome">
+                    <mat-error *ngIf="nome.hasError('required')">Campo obrigatório</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex.gt-xs>
+                    <mat-label>Quantidade</mat-label>
+                    <input matInput type="number" formControlName="quantidade" placeholder="Quantidade">
+                    <mat-error *ngIf="nome.hasError('required')">Campo obrigatório</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline" fxFill>
+                    <mat-label>Descrição</mat-label>
+                    <textarea formControlName="descricao" placeholder="Descrição Produto" matInput></textarea>
+                    <mat-error *ngIf="descricao.hasError('required')">Campo obrigatório</mat-error>
+
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+        <mat-card-actions fxLayout="row-reverse">
+            <button mat-raised-button color="primary">Cadastar</button>
+        </mat-card-actions>
+    </form>
+</mat-card>
