@@ -6,11 +6,12 @@ import { SubProdutoService } from 'src/app/services/sub-produto.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
-  selector: 'app-sub-produto-formulario',
-  templateUrl: './sub-produto-formulario.component.html',
-  styleUrls: ['./sub-produto-formulario.component.scss']
+  selector: 'app-componente-formulario',
+  templateUrl: './componente-formulario.component.html',
+  styleUrls: ['./componente-formulario.component.scss']
 })
-export class SubProdutoFormularioComponent implements OnInit {
+export class ComponenteFormularioComponent implements OnInit {
+
 
   subProdutoForm: FormGroup = new FormGroup({});
   produtos: any | undefined = [{text:'Selecione...',valor:0}]
@@ -53,4 +54,5 @@ export class SubProdutoFormularioComponent implements OnInit {
   get descricao(): FormControl {
     return this.subProdutoForm.controls.descricao as FormControl;
   }
+
 }

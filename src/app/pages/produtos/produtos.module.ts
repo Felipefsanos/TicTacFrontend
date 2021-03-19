@@ -5,8 +5,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { NovoSubProdutoComponent } from './novo-sub-produto/novo-sub-produto.component';
 import { ListagemProdutoComponent } from './listagem-produto/listagem-produto.component';
+import { NovoComponenteComponent } from './novo-componente/novo-componente.component';
 
 
 
@@ -16,8 +16,8 @@ const routes: Routes = [
     component: NovoProdutoComponent
   },
   {
-    path: 'novo-sub-produto',
-    component: NovoSubProdutoComponent
+    path: 'componente',
+    component: NovoComponenteComponent
   },
   {
     path: 'listagem-produto',
@@ -26,7 +26,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [NovoProdutoComponent, NovoSubProdutoComponent, ListagemProdutoComponent],
+  declarations: [NovoProdutoComponent,  ListagemProdutoComponent, NovoComponenteComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

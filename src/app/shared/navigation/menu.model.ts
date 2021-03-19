@@ -55,7 +55,7 @@ export const menuItems: MenuItem[] = [
         children: [
             {
                 id: 8,
-                name: 'Produtos/Subprodutos',
+                name: 'Produtos',
                 children: [
                     {
                         id: 9,
@@ -66,19 +66,28 @@ export const menuItems: MenuItem[] = [
                         id: 9,
                         name: 'Lista Produto',
                         url: 'p/produtos/listagem-produto'
+                    } 
+                ],
+                
+            },
+            {
+                id: 8,
+                name: 'Componentes',
+                children: [
+                    {
+                        id: 10,
+                        name: 'Componetes',
+                        url: 'p/produtos/componente'
                     },
                     {
                         id: 10,
-                        name: 'Novo SubProduto',
-                        url: 'p/produtos/novo-sub-produto'
-                    },
-                    {
-                        id: 10,
-                        name: 'Lista SubProduto',
+                        name: 'Lista Componente',
                         url: 'p/produtos/novo-produto'
                     },
-                ]
+                ],
+                
             }
+            
         ]
     },
     {

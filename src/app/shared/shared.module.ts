@@ -38,13 +38,13 @@ import { UsuariosComponent } from './components/listagem/usuarios/usuarios.compo
 import { UsuarioModalComponent } from './components/modals/usuario-modal/usuario-modal.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProdutoFormularioComponent } from './components/formularios/produto-formulario/produto-formulario.component';
-import { SubProdutoFormularioComponent } from './components/formularios/sub-produto-formulario/sub-produto-formulario.component';
 import { OrcamentoModalComponent } from './components/modals/orcamento-modal/orcamento-modal.component';
 import { PrestadorFormularioComponent } from './components/formularios/prestador-formulario/prestador-formulario.component';
 import { PrestadoresComponent } from './components/listagem/prestadores/prestadores.component';
 import { PrestadorModalComponent } from './components/modals/prestador-modal/prestador-modal.component';
 import { ProdutoComponent } from './components/listagem/produto/produto.component';
 import { ProdutoModelComponent } from './components/modals/produto-model/produto-model.component';
+import { ComponenteFormularioComponent } from './components/formularios/componente-formulario/componente-formulario.component';
 
 const routes: Routes = [
   {
@@ -75,7 +75,7 @@ const routes: Routes = [
     UsuariosComponent,
     UsuarioModalComponent,
     ProdutoFormularioComponent,
-    SubProdutoFormularioComponent,
+    ComponenteFormularioComponent,
     OrcamentoModalComponent,
     PrestadorFormularioComponent,
     PrestadoresComponent,
@@ -124,7 +124,7 @@ const routes: Routes = [
     UsuariosComponent,
     ProdutoFormularioComponent,
     ProdutoComponent,
-    SubProdutoFormularioComponent,
+    ComponenteFormularioComponent,
     PrestadorFormularioComponent,
     PrestadoresComponent
   ]

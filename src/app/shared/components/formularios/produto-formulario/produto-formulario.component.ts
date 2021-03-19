@@ -1,7 +1,7 @@
-import { SubProdutoModel } from './../../../../models/sub-produto.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ComponenteModel } from 'src/app/models/componente.model';
 import { ProdutoService } from 'src/app/services/produto.service';
 import { SubProdutoService } from 'src/app/services/sub-produto.service';
 import { MessageService } from 'src/app/shared/services/message.service';
@@ -13,7 +13,7 @@ import { MessageService } from 'src/app/shared/services/message.service';
 })
 export class ProdutoFormularioComponent implements OnInit  {
 
-  subProdutosList: SubProdutoModel[] | undefined = [];
+  componenteList: ComponenteModel[] | undefined = [];
   produtoForm: FormGroup = new FormGroup({});
 
   constructor(private formBuilder: FormBuilder, private produtoService: ProdutoService,
@@ -27,7 +27,7 @@ export class ProdutoFormularioComponent implements OnInit  {
       nome: ['',Validators.required],
       descricao: ['',Validators.required],
       valor: ['',Validators.required],
-      subprodutos:  ['']
+      componente:  ['']
     });
   }
 
@@ -36,7 +36,7 @@ export class ProdutoFormularioComponent implements OnInit  {
   }
 
   getErrorMessageSubProdutos(formGroupIndex: number, controlName: string): FormControl {
-    const formGroup = this.subProdutos.controls[formGroupIndex] as FormGroup;
+    const formGroup = this.componente.controls[formGroupIndex] as FormGroup;
     return formGroup.get(controlName) as FormControl;
   }
 
@@ -45,7 +45,7 @@ export class ProdutoFormularioComponent implements OnInit  {
       this.subProdutoService.obterSubProdutos(false).subscribe(
         res=> {
           debugger;
-          res.forEach(subProduto => this.subProdutosList?.push(subProduto));
+          res.forEach(subProduto => this.componenteList?.push(subProduto));
         },(error: HttpErrorResponse) => {
             this.messageService.warn('Erro para acessar service:' + error.error.menssage);
         });
@@ -65,7 +65,7 @@ export class ProdutoFormularioComponent implements OnInit  {
   get descricao(): FormControl {
     return this.produtoForm.controls.descricao as FormControl;
   }
-  get subProdutos(): FormArray {
-    return this.produtoForm.get('subProdutos') as FormArray;
+  get componente(): FormArray {
+    return this.produtoForm.get('componente') as FormArray;
   }
 }

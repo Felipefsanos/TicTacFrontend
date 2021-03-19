@@ -1,6 +1,6 @@
 import { ProdutoModel } from "./produto.model";
 
-export class SubProdutoModel{
+export class ComponenteModel{
     id?: number;
     descricao?: string;
     nome?: string;

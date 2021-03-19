@@ -1,4 +1,4 @@
-import { SubProdutoModel } from "./sub-produto.model";
+import { ComponenteModel } from "./componente.model";
 
  export class ProdutoModel{
 
@@ -6,6 +6,6 @@ import { SubProdutoModel } from "./sub-produto.model";
     descricao?: string;
     nome?: string;
     valor?: number;
-    subProdutos?: SubProdutoModel[];
+    subProdutos?: ComponenteModel[];
 
 }
