@@ -16,7 +16,7 @@ export class ComponenteService extends BaseService {
   }
 
   excluirComponente(id: number): Observable<any> {
-    return this.delete('componente', id);
+    return this.delete('componente/' + id );
   }
   criarComponente(orcamentoModel: ComponenteModel): Observable<any> {
     return this.post('componente', orcamentoModel);
@@ -25,11 +25,12 @@ export class ComponenteService extends BaseService {
   obterComponentes(relacionados: boolean): Observable<ComponenteModel[]>{
     return this.get('componente', { relacionados });
   }
+
   obterTodosComponentes(): Observable<ComponenteModel[]>{
     return this.get('componente');
   }
 
-  obterComponente(id?: number): Observable<ComponenteModel[]>{
-    return this.get('componente/' + id );
+  editarPrestador(id: number, componenteModel: ComponenteModel): Observable<any> {
+    return this.put(`componente/${id}`, componenteModel);
   }
 }

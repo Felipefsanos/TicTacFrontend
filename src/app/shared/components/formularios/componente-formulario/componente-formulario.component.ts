@@ -1,6 +1,7 @@
+import { MatStepper } from '@angular/material/stepper';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 import { ComponenteModel } from 'src/app/models/componente.model';
 import { ComponenteService } from 'src/app/services/componente.service';
 import { ProdutoService } from 'src/app/services/produto.service';
@@ -11,8 +12,21 @@ import { MessageService } from 'src/app/shared/services/message.service';
   templateUrl: './componente-formulario.component.html',
   styleUrls: ['./componente-formulario.component.scss']
 })
-export class ComponenteFormularioComponent implements OnInit {
+export class ComponenteFormularioComponent implements OnInit  {
 
+
+  @Input()
+  componente?: ComponenteModel;
+
+  @Output()
+  formularioEnviado = new EventEmitter<ComponenteModel>();
+
+  edicao = false;;
+
+  @ViewChild (FormGroupDirective)
+  formGroupDirective!: FormGroupDirective;
+
+  formulario = new FormGroup({});
 
   componenteForm: FormGroup = new FormGroup({});
   produtos: any | undefined = [{text:'Selecione...',valor:0}]
@@ -22,15 +36,15 @@ export class ComponenteFormularioComponent implements OnInit {
     private messageService: MessageService) {
     this.construirFormularioInformacoesCliente();
   }
-
+  ngOnInit(): void {}
   construirFormularioInformacoesCliente() {
+    this.edicao = this.componente ? true : false;
+    
     this.componenteForm = this.formBuilder.group({
-      nome: ['', Validators.required],
-      descricao: [''],
-      quantidade:['',Validators.required]
+      nome: [this.componente?.nome, Validators.required],
+      descricao: [this.componente?.descricao],
+      quantidade:[this.componente?.quantidade,Validators.required]
     });
-  }
-  ngOnInit(): void {
   }
 
   onSubmit(): void {

@@ -44,6 +44,7 @@ import { PrestadoresComponent } from './components/listagem/prestadores/prestado
 import { PrestadorModalComponent } from './components/modals/prestador-modal/prestador-modal.component';
 import { ProdutoComponent } from './components/listagem/produto/produto.component';
 import { ProdutoModelComponent } from './components/modals/produto-model/produto-model.component';
+import { ComponenteModelComponent } from './components/modals/componente-model/componente-model.component';
 import { ComponenteFormularioComponent } from './components/formularios/componente-formulario/componente-formulario.component';
 import { ComponenteComponent } from './components/listagem/componente/componente.component';
 
@@ -66,6 +67,7 @@ const routes: Routes = [
     LoadingComponent,
     ClienteFormularioComponent,
     OrcamentoFormularioComponent,
+    ComponenteFormularioComponent,
     OrcamentoComponent,
     CanalCaptacaoComponent,
     CanalCaptacaoModalComponent,
@@ -76,14 +78,15 @@ const routes: Routes = [
     UsuariosComponent,
     UsuarioModalComponent,
     ProdutoFormularioComponent,
-    ComponenteFormularioComponent,
     OrcamentoModalComponent,
     PrestadorFormularioComponent,
     PrestadoresComponent,
     PrestadorModalComponent,
     ProdutoComponent,
     ProdutoModelComponent,
-    ComponenteComponent],
+    ComponenteComponent,
+    ComponenteModelComponent
+  ],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -119,6 +122,7 @@ const routes: Routes = [
     ClienteFormularioComponent,
     ProdutoFormularioComponent,
     OrcamentoFormularioComponent,
+    ComponenteFormularioComponent,
     OrcamentoComponent,
     CanalCaptacaoComponent,
     MatDialogModule,
@@ -126,7 +130,6 @@ const routes: Routes = [
     UsuariosComponent,
     ProdutoFormularioComponent,
     ProdutoComponent,
-    ComponenteFormularioComponent,
     PrestadorFormularioComponent,
     PrestadoresComponent,
     ComponenteComponent

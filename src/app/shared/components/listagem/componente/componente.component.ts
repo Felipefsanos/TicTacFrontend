@@ -2,10 +2,12 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ComponenteModel } from 'src/app/models/componente.model';
 import { ProdutoModel } from 'src/app/models/produto.model';
 import { ComponenteService } from 'src/app/services/componente.service';
 import { ProdutoService } from 'src/app/services/produto.service';
 import { MessageService } from 'src/app/shared/services/message.service';
+import { ComponenteModelComponent } from '../../modals/componente-model/componente-model.component';
 
 @Component({
   selector: 'app-componente',
@@ -41,28 +43,28 @@ export class ComponenteComponent implements AfterViewInit {
       });
   }
 
-  // editar(produto: ProdutoModel): void {
-  //   const dialogRef = this.dialog.open(PrestadorModalComponent,
-  //     { data:
-  //       {
-  //         produto
-  //       }
-  //     });
+  editar(componente: ComponenteModel): void {
+    const dialogRef = this.dialog.open(ComponenteModelComponent,
+      { data:
+        {
+          componente
+        }
+      });
 
-  //   dialogRef.afterClosed().subscribe((formValue: any) =>
-  //   {
-  //     if(formValue) {
-  //       const produtoEditado = new ProdutoModel(formValue);
+    dialogRef.afterClosed().subscribe((formValue: any) =>
+    {
+      if(formValue) {
+        const ComponenteEditado = new ComponenteModel(formValue);
 
-  //       this.produtoService.(prestador.id as number, prestadorEditado)
-  //           .subscribe(() => {
-  //             this.messageService.success('Usuário alterado com sucesso!');
-  //             this.refresh();
-  //           });
-  //     }
-  //   });
+        this.componenteService.editarPrestador(ComponenteEditado.id as number, ComponenteEditado)
+            .subscribe(() => {
+              this.messageService.success('Usuário alterado com sucesso!');
+              this.refresh();
+            });
+      }
+    });
 
-  // }
+  }
 
   excluir(id: number) {
     this.componenteService.excluirComponente(id)
