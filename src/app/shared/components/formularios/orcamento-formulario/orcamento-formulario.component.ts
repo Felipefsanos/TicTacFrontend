@@ -163,13 +163,21 @@ export class OrcamentoFormularioComponent implements OnInit {
         this.produtosAnimaximoForm.push(
           this.formBuilder.group({
             quantidade: [1, Validators.required],
-            idProduto: [produto.id, Validators.required],
+            id: [produto.id, Validators.required],
             produto: [produto.nome, Validators.required],
             descricao: [produto.descricao, Validators.required],
             valor: [produto.valor, Validators.required]
           })
         );
       });
+    });
+  }
+
+  removerProdutosAnimaximo(idProduto: number): void {
+    (this.produtosAnimaximoForm.value as ProdutoModel[]).forEach((produto, index) => {
+      if (produto.id === idProduto) {
+        this.produtosAnimaximoForm.removeAt(index);
+      }
     });
   }
 

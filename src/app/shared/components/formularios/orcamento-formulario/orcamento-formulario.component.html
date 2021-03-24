@@ -387,7 +387,7 @@
                                     <input matInput formControlName="valor" readonly>
                                 </mat-form-field>
 
-                                <button mat-icon-button color="primary">
+                                <button mat-icon-button color="primary" (click)="removerProdutosAnimaximo(produto.value.id)">
                                     <mat-icon>delete</mat-icon>
                                 </button>
                             </div>
