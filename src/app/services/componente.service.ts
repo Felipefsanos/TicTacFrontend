@@ -30,7 +30,7 @@ export class ComponenteService extends BaseService {
     return this.get('componente');
   }
 
-  editarPrestador(id: number, componenteModel: ComponenteModel): Observable<any> {
+  editarComponente(id: number, componenteModel: ComponenteModel): Observable<any> {
     return this.put(`componente/${id}`, componenteModel);
   }
 }

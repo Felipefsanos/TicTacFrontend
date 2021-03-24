@@ -32,4 +32,8 @@ export class ProdutoService extends BaseService {
   excluirProduto(id: number): Observable<any>{
     return this.delete('produtos/' + id );
   }
+
+  editarProduto(id: number, produtoModel: ProdutoModel): Observable<any> {
+    return this.put(`produtos/${id}`, produtoModel);
+  }
 }

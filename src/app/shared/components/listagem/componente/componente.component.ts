@@ -56,7 +56,11 @@ export class ComponenteComponent implements AfterViewInit {
       if(formValue) {
         const componenteEditado = new ComponenteModel(formValue);
 
+<<<<<<< HEAD
         this.componenteService.editarPrestador(componenteEditado.id as number, componenteEditado)
+=======
+        this.componenteService.editarComponente(ComponenteEditado.id as number, ComponenteEditado)
+>>>>>>> 556dec06a3129737b61a1a651d740e2e5d897e61
             .subscribe(() => {
               this.messageService.success('Usuário alterado com sucesso!');
               this.refresh();
