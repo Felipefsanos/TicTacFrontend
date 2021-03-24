@@ -10,11 +10,11 @@ import { OrcamentoModalComponent } from '../orcamento-modal/orcamento-modal.comp
 })
 export class ComponenteModelComponent  {
 
-  componete: ComponenteModel;
+  componente: ComponenteModel;
 
   constructor(private dialogRef: MatDialogRef<ComponenteModelComponent>,
               @Inject(MAT_DIALOG_DATA) private data: any) {
-    this.componete = this.data.componete;
+    this.componente = this.data.componente;
   }
 
   editarPrestador(componente: ComponenteModel): void {

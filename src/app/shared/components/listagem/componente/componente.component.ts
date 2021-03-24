@@ -15,7 +15,7 @@ import { ComponenteModelComponent } from '../../modals/componente-model/componen
   styleUrls: ['./componente.component.scss']
 })
 export class ComponenteComponent implements AfterViewInit {
-  
+
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
@@ -54,9 +54,9 @@ export class ComponenteComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe((formValue: any) =>
     {
       if(formValue) {
-        const ComponenteEditado = new ComponenteModel(formValue);
+        const componenteEditado = new ComponenteModel(formValue);
 
-        this.componenteService.editarPrestador(ComponenteEditado.id as number, ComponenteEditado)
+        this.componenteService.editarPrestador(componenteEditado.id as number, componenteEditado)
             .subscribe(() => {
               this.messageService.success('Usuário alterado com sucesso!');
               this.refresh();

@@ -1,0 +1,7 @@
+<div class="modal-header" mat-dialog-title>
+    Selecionar Produtos
+</div>
+<div>
+    <app-produto [selecao]="true" (produtosSelecionados)="enviarProdutosSelecionados($event)"></app-produto>
+</div>
+

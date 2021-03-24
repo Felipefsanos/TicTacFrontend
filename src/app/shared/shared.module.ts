@@ -47,6 +47,8 @@ import { ProdutoModelComponent } from './components/modals/produto-model/produto
 import { ComponenteModelComponent } from './components/modals/componente-model/componente-model.component';
 import { ComponenteFormularioComponent } from './components/formularios/componente-formulario/componente-formulario.component';
 import { ComponenteComponent } from './components/listagem/componente/componente.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { SelecionaProdutoModalComponent } from './components/modals/seleciona-produto-modal/seleciona-produto-modal.component';
 
 const routes: Routes = [
   {
@@ -85,7 +87,8 @@ const routes: Routes = [
     ProdutoComponent,
     ProdutoModelComponent,
     ComponenteComponent,
-    ComponenteModelComponent
+    ComponenteModelComponent,
+    SelecionaProdutoModalComponent
   ],
   imports: [
     CommonModule,
@@ -114,7 +117,8 @@ const routes: Routes = [
     MatTableModule,
     MatTooltipModule,
     MatDividerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatAutocompleteModule
   ],
   exports: [
     LoginComponent,
@@ -132,7 +136,8 @@ const routes: Routes = [
     ProdutoComponent,
     PrestadorFormularioComponent,
     PrestadoresComponent,
-    ComponenteComponent
+    ComponenteComponent,
+    SelecionaProdutoModalComponent
   ]
 })
 export class SharedModule { }

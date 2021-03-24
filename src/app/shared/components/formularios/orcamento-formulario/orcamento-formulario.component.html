@@ -196,9 +196,9 @@
 
         </form>
     </mat-step>
-    <mat-step [stepControl]="enderecoFormGroup && produtosFormGroup">
+    <mat-step [stepControl]="enderecoFormGroup && servicosTicTacForm && produtosAnimaximoForm">
         <form [formGroup]="orcamentoForm" class="mt-2">
-            <ng-template matStepLabel>Local / Servicos</ng-template>
+            <ng-template matStepLabel>Local / Produtos / Servicos</ng-template>
 
             <div class="mb-2 mt-2">
                 <h2>Local do Evento</h2>
@@ -353,14 +353,78 @@
 
             </div>
 
-            <div class="mb-2 mt-2">
-                <h2>Servicos</h2>
+            <div formGroupName="servicos">
+
+                <div class="mb-2 mt-2" fxLayout="row" fxLayoutAlign="space-between center">
+                    <h2 class="no-margin">Produtos Animáximo</h2>
+                    <button mat-fab color="primary" (click)="adicionarProdutosAnimaximo()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+
                 <mat-divider></mat-divider>
+
+                <div fxLayout="row" fxLayoutAlign="space-around center" class="mt-2">
+
+                    <div formArrayName="animaximo" class="w-100">
+                        <div *ngFor="let produto of produtosAnimaximoForm.controls; let i=index">
+
+                            <div [formGroupName]="i" fxLayout="row-wrap" fxLayoutAlign="center center"
+                                fxLayoutGap="10px">
+
+                                <mat-form-field appearance="outline" fxFlex>
+                                    <mat-label>Produto</mat-label>
+                                    <input matInput formControlName="produto" readonly>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex>
+                                    <mat-label>Descricao</mat-label>
+                                    <input matInput formControlName="descricao" readonly>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex="initial">
+                                    <mat-label>Valor</mat-label>
+                                    <input matInput formControlName="valor" readonly>
+                                </mat-form-field>
+
+                                <button mat-icon-button color="primary">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mb-2 mt-2" fxLayout="row" fxLayoutAlign="space-between center">
+                    <h2 class="no-margin">Serviços TicTac</h2>
+                    <button mat-fab color="primary" (click)="adicionarProdutosAnimaximo()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+
+                <mat-divider></mat-divider>
+
+                <div fxLayout="row" fxLayoutAlign="space-around center" class="mt-2">
+
+                    <div formArrayName="animaximo">
+                        <div *ngFor="let produto of produtosAnimaximoForm.controls; let i=index">
+
+                            <div [formGroupName]="i">
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
-            <div formGroupName="servicos"></div>
-
-            <div fxLayoutGap="10px">
+            <div fxLayoutGap="10px" class="mt-2">
                 <button mat-button matStepperPrevious>Voltar</button>
                 <button mat-raised-button color="primary" matStepperNext>Próximo</button>
             </div>

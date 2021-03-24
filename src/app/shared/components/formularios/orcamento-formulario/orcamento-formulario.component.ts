@@ -1,3 +1,5 @@
+import { SelecionaProdutoModalComponent } from './../../modals/seleciona-produto-modal/seleciona-produto-modal.component';
+import { ProdutoModel } from './../../../../models/produto.model';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
@@ -8,6 +10,8 @@ import { TiposEvento } from 'src/app/shared/models/tipos-evento-enum.model';
 import { ViaCepEnderecoModel } from 'src/app/shared/models/viacep-endereco.model';
 import { CepService } from 'src/app/shared/services/cep.service';
 import { MessageService } from 'src/app/shared/services/message.service';
+import { ServicoModel } from 'src/app/models/servico.model';
+import { ProdutoService } from 'src/app/services/produto.service';
 
 @Component({
   selector: 'app-orcamento-formulario',
@@ -15,19 +19,29 @@ import { MessageService } from 'src/app/shared/services/message.service';
   styleUrls: ['./orcamento-formulario.component.scss'],
 
 })
-export class OrcamentoFormularioComponent {
+export class OrcamentoFormularioComponent implements OnInit {
 
   @ViewChild('stepper')
   stepper?: MatHorizontalStepper;
+  lastFilter = '';
 
   orcamentoModel = new OrcamentoModel();
   orcamentoForm: FormGroup = new FormGroup({});
 
+  produtosAnimaxo: ProdutoModel[] = [];
+  servicosTicTac: ServicoModel[] = [];
+
   constructor(private formBuilder: FormBuilder,
               private orcamentoService: OrcamentoService,
               private messageService: MessageService,
-              private cepService: CepService) {
+              private cepService: CepService,
+              private produtosService: ProdutoService,
+              private dialog: MatDialog) {
     this.construirFormularios();
+  }
+
+  ngOnInit(): void {
+    this.produtosService.obterProdutos().subscribe(prod => this.produtosAnimaxo = prod);
   }
 
   construirFormularios(): void {
@@ -35,22 +49,22 @@ export class OrcamentoFormularioComponent {
     // TODO: Remover valores fixos, por teste
     this.orcamentoForm = this.formBuilder.group({
       orcamento: this.formBuilder.group({
-        dataEvento: ['', Validators.required],
-        horaEvento: ['', Validators.required],
-        tipoEvento: ['', Validators.required],
-        quantidadeAdultos: ['', Validators.required],
-        quantidadeCriancas: ['', Validators.required],
+        dataEvento: [new Date(), Validators.required],
+        horaEvento: ['1500', Validators.required],
+        tipoEvento: ['Aniversario', Validators.required],
+        quantidadeAdultos: [5, Validators.required],
+        quantidadeCriancas: [5, Validators.required],
         buffetPrincipal: [false, Validators.required],
         observacao: ['']
       }),
       cliente: this.formBuilder.group({
-        nome: ['', [Validators.required, Validators.minLength(5)]],
+        nome: ['Felipe', [Validators.required, Validators.minLength(5)]],
         cpfCnpj: [''],
-        canalCaptacaoId: ['', Validators.required],
+        canalCaptacaoId: ['Instagram', Validators.required],
         contatos: this.formBuilder.array([
           this.formBuilder.group({
-            telefone: ['', Validators.required],
-            nomeContato: ['', Validators.required],
+            telefone: ['31975155261', Validators.required],
+            nomeContato: ['Felipe', Validators.required],
             email: ['', Validators.email],
             ddd: ['']
           })
@@ -70,7 +84,14 @@ export class OrcamentoFormularioComponent {
         elevador: [false, Validators.required],
         restricaoHorario: [false, Validators.required]
       }),
-      servicos: {}
+      servicos: this.formBuilder.group({
+        animaximo: this.formBuilder.array([]),
+        tictac: this.formBuilder.array([{
+          quantidade: [1, Validators.required],
+          idServico: ['', Validators.required],
+          servico: ['', Validators.required]
+        }])
+      })
     });
   }
 
@@ -134,6 +155,28 @@ export class OrcamentoFormularioComponent {
     return formGroup.get(controlName) as FormControl;
   }
 
+  adicionarProdutosAnimaximo(): void {
+    const dialogRef = this.dialog.open(SelecionaProdutoModalComponent, { width: '90%'});
+
+    dialogRef.afterClosed().subscribe((produtos: ProdutoModel[]) => {
+      produtos.forEach(produto => {
+        this.produtosAnimaximoForm.push(
+          this.formBuilder.group({
+            quantidade: [1, Validators.required],
+            idProduto: [produto.id, Validators.required],
+            produto: [produto.nome, Validators.required],
+            descricao: [produto.descricao, Validators.required],
+            valor: [produto.valor, Validators.required]
+          })
+        );
+      });
+    });
+  }
+
+  adicionarServicoTicTac(): void {
+
+  }
+
   get contatos(): FormArray {
     return this.clienteFormGroup.controls.contatos as FormArray;
   }
@@ -150,8 +193,12 @@ export class OrcamentoFormularioComponent {
     return this.orcamentoForm.controls.endereco as FormGroup;
   }
 
-  get produtosFormGroup(): FormGroup {
-    return this.orcamentoForm.controls.produtos as FormGroup;
+  get produtosAnimaximoForm(): FormArray {
+    return (this.orcamentoForm.controls.servicos as FormGroup).get('animaximo') as FormArray;
+  }
+
+  get servicosTicTacForm(): FormArray {
+    return (this.orcamentoForm.controls.servicos as FormGroup).get('tictac') as FormArray;
   }
 
   get tiposEvento(): any {

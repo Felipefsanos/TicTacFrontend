@@ -12,7 +12,7 @@ import { MessageService } from 'src/app/shared/services/message.service';
   templateUrl: './componente-formulario.component.html',
   styleUrls: ['./componente-formulario.component.scss']
 })
-export class ComponenteFormularioComponent implements OnInit  {
+export class ComponenteFormularioComponent implements OnInit{
 
 
   @Input()
@@ -29,17 +29,19 @@ export class ComponenteFormularioComponent implements OnInit  {
   formulario = new FormGroup({});
 
   componenteForm: FormGroup = new FormGroup({});
-  produtos: any | undefined = [{text:'Selecione...',valor:0}]
 
-  constructor(private formBuilder: FormBuilder, private produtoService: ProdutoService, 
+  constructor(private formBuilder: FormBuilder,
     private componenteService: ComponenteService,
     private messageService: MessageService) {
+  }
+
+  ngOnInit(): void {
     this.construirFormularioInformacoesCliente();
   }
-  ngOnInit(): void {}
+
   construirFormularioInformacoesCliente() {
     this.edicao = this.componente ? true : false;
-    
+
     this.componenteForm = this.formBuilder.group({
       nome: [this.componente?.nome, Validators.required],
       descricao: [this.componente?.descricao],
@@ -58,7 +60,7 @@ export class ComponenteFormularioComponent implements OnInit  {
           this.componenteForm.reset('');
         });
   }
- 
+
   get nome(): FormControl {
     return this.componenteForm.controls.nome as FormControl;
   }

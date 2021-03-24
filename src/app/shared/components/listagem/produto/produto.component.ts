@@ -1,15 +1,11 @@
 import { ProdutoService } from 'src/app/services/produto.service';
 import { ProdutoModel } from './../../../../models/produto.model';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { AfterViewInit, Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { MaskApplierService, MaskPipe } from 'ngx-mask';
-import { ConfimacaoModalModel } from 'src/app/shared/models/confirmacao-modal.model';
 import { MessageService } from 'src/app/shared/services/message.service';
-import { ConfirmacaoModalComponent } from '../../modals/confirmacao-modal/confirmacao-modal.component';
-import { OrcamentoModalComponent } from '../../modals/orcamento-modal/orcamento-modal.component';
-import { PrestadorModalComponent } from '../../modals/prestador-modal/prestador-modal.component';
+import { SelectionModel } from '@angular/cdk/collections';
+
 
 @Component({
   selector: 'app-produto',
@@ -18,15 +14,21 @@ import { PrestadorModalComponent } from '../../modals/prestador-modal/prestador-
 })
 export class ProdutoComponent implements AfterViewInit {
 
- 
+  @Input()
+  selecao = false;
+
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
+  @Output()
+  produtosSelecionados = new EventEmitter<ProdutoModel[]>();
+
   dataSource = new MatTableDataSource<ProdutoModel>();
+  displayedColumns: string[] = [];
+  listaProdutosSelecionados = new SelectionModel<ProdutoModel>(true, []);
 
   constructor(private produtoService: ProdutoService,
-              private messageService: MessageService,
-              private dialog: MatDialog) {
+    private messageService: MessageService) {
     this.refresh();
   }
 
@@ -39,11 +41,38 @@ export class ProdutoComponent implements AfterViewInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  isAllSelected(): boolean {
+    const numSelected = this.listaProdutosSelecionados.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle(): void {
+    if (this.isAllSelected()) {
+      this.listaProdutosSelecionados.clear();
+    } else {
+      this.dataSource.data.forEach(row => this.listaProdutosSelecionados.select(row));
+    }
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: ProdutoModel): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.listaProdutosSelecionados.isSelected(row) ? 'deselect' : 'select'} row ${row.id ? row.id + 1 : 0}`;
+  }
+
   refresh(): void {
     this.produtoService.obterProdutos()
       .subscribe(res => {
         this.dataSource.data = res;
       });
+  }
+
+  submitSelecao(): void {
+    this.produtosSelecionados.emit(this.listaProdutosSelecionados.selected);
   }
 
   // editar(produto: ProdutoModel): void {
@@ -71,10 +100,17 @@ export class ProdutoComponent implements AfterViewInit {
 
   excluir(id: number) {
     this.produtoService.excluirProduto(id)
-        .subscribe(() => {
-          this.messageService.success('Prestador excluído com sucesso!');
-          this.refresh();
-        });
+      .subscribe(() => {
+        this.messageService.success('Prestador excluído com sucesso!');
+        this.refresh();
+      });
+  }
+
+  getDisplayedColumns(): string[] {
+    if (this.selecao) {
+      return this.displayedColumns = ['select', 'nome', 'descricao', 'valor'];
+    }
+    return this.displayedColumns = ['id', 'nome', 'descricao', 'valor', 'acoes'];
   }
 
 

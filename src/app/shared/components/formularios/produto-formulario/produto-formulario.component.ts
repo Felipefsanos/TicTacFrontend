@@ -44,7 +44,6 @@ export class ProdutoFormularioComponent implements OnInit  {
 
       this.componenteService.obterComponentes(false).subscribe(
         res=> {
-          debugger;
           res.forEach(componete => this.componenteList?.push(componete));
         },(error: HttpErrorResponse) => {
             this.messageService.warn('Erro para acessar service:' + error.error.menssage);
@@ -52,7 +51,6 @@ export class ProdutoFormularioComponent implements OnInit  {
   }
 
   onSubmit(): void {
-    console.log(this.produtoForm);
   }
 
   get nome(): FormControl {
