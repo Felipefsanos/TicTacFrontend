@@ -4,7 +4,6 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChil
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { MaskApplierService, MaskPipe } from 'ngx-mask';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { ProdutoModelComponent } from '../../modals/produto-modal/produto-modal.component';
 import { SelectionModel } from '@angular/cdk/collections';

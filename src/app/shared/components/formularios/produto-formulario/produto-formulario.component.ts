@@ -19,7 +19,7 @@ export class ProdutoFormularioComponent implements OnInit  {
 
   @Output()
   formularioEnviado = new EventEmitter<ProdutoModel>();
-  
+
   @ViewChild (FormGroupDirective)
   formGroupDirective!: FormGroupDirective;
 
@@ -35,7 +35,6 @@ export class ProdutoFormularioComponent implements OnInit  {
   }
 
   construirFormularioInformacoesCliente() {
-    debugger;
     this.edicao = this.produto ? true : false;
 
     this.produtoForm = this.formBuilder.group({
