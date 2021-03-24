@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ComponenteModel } from 'src/app/models/componente.model';
+import { ProdutoModel } from 'src/app/models/produto.model';
 import { ComponenteService } from 'src/app/services/componente.service';
 import { ProdutoService } from 'src/app/services/produto.service';
 import { MessageService } from 'src/app/shared/services/message.service';
@@ -13,6 +14,17 @@ import { MessageService } from 'src/app/shared/services/message.service';
 })
 export class ProdutoFormularioComponent implements OnInit  {
 
+  @Input()
+  produto?: ProdutoModel;
+
+  @Output()
+  formularioEnviado = new EventEmitter<ProdutoModel>();
+  
+  @ViewChild (FormGroupDirective)
+  formGroupDirective!: FormGroupDirective;
+
+  edicao = false;
+
   componenteList: ComponenteModel[] | undefined = [];
   produtoForm: FormGroup = new FormGroup({});
 
@@ -23,11 +35,14 @@ export class ProdutoFormularioComponent implements OnInit  {
   }
 
   construirFormularioInformacoesCliente() {
+    debugger;
+    this.edicao = this.produto ? true : false;
+
     this.produtoForm = this.formBuilder.group({
-      nome: ['',Validators.required],
-      descricao: ['',Validators.required],
-      valor: ['',Validators.required],
-      componente:  ['']
+      nome: [this.produto?.nome,Validators.required],
+      descricao: [this.produto?.descricao,Validators.required],
+      valor: [this.produto?.valor,Validators.required],
+      componentes:  [this.produto?.componentes]
     });
   }
 
@@ -52,7 +67,15 @@ export class ProdutoFormularioComponent implements OnInit  {
   }
 
   onSubmit(): void {
-    console.log(this.produtoForm);
+    if(this.produtoForm.invalid){
+      return;
+    }
+    debugger;
+    this.produtoService.criarProduto(this.produtoForm.value as ProdutoModel)
+        .subscribe(() => {
+          this.messageService.success('Produto criado com sucesso!');
+          this.formGroupDirective.resetForm();
+        });
   }
 
   get nome(): FormControl {

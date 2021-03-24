@@ -23,18 +23,14 @@
                     <mat-label>Descrição</mat-label>
                     <textarea formControlName="descricao" placeholder="Descrição Produto" matInput></textarea>
                     <mat-error *ngIf="descricao.hasError('required')">Campo obrigatório</mat-error>
-
                 </mat-form-field>
                 <mat-form-field appearance="outline" fxFill>
                     <mat-label>componentes</mat-label>
-                    <mat-select formControlName="componente" placeholder="Componentes" multiple>
+                    <mat-select formControlName="componentes" placeholder="Componentes" multiple>
                       <mat-option *ngFor="let componentes of componenteList" [value]="componentes.id">{{componentes.descricao}}</mat-option>
                     </mat-select>
                   </mat-form-field>
             </div>
- 
-
-
         </mat-card-content>
         <mat-card-actions fxLayout="row-reverse">
             <button mat-raised-button color="primary">Cadastar</button>

@@ -6,7 +6,7 @@ import { ComponenteModel } from "./componente.model";
     descricao?: string;
     nome?: string;
     valor?: number;
-    subProdutos?: ComponenteModel[];
+    componentes?: ComponenteModel[];
     public constructor(init?: Partial<ComponenteModel>) {
         Object.assign(this, init);
     }

@@ -1,1 +1,6 @@
-<p>produto-model works!</p>
+<div class="modal-header" mat-dialog-title>
+    Editar Produto
+</div>
+<div>
+    <app-produto-formulario [produto]="produtoModel" (formularioEnviado)="editarPrestador($event)"></app-produto-formulario>
+</div>
