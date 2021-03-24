@@ -37,6 +37,7 @@ export class PrestadorFormularioComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.edicao = this.prestador ? true : false;
 
     this.formulario = this.formBuilder.group({
