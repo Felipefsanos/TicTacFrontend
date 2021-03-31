@@ -10,9 +10,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class SelecionaProdutoModalComponent {
 
   constructor(private dialogRef: MatDialogRef<SelecionaProdutoModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: ProdutoModel[]) { }
+              @Inject(MAT_DIALOG_DATA) public data: ProdutoModel[])
+              {
+              }
 
-  enviarProdutosSelecionados(event: ProdutoModel[]): void {
+  enviarProdutosSelecionados(event: any): void {
     this.dialogRef.close(event);
   }
 

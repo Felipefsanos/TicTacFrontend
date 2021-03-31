@@ -5,11 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './novo-orcamento.component.html',
   styleUrls: ['./novo-orcamento.component.scss']
 })
-export class NovoOrcamentoComponent implements OnInit {
+export class NovoOrcamentoComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

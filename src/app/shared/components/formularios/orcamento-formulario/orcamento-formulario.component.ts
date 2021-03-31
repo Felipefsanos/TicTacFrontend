@@ -32,11 +32,11 @@ export class OrcamentoFormularioComponent implements OnInit {
   servicosTicTac: ServicoModel[] = [];
 
   constructor(private formBuilder: FormBuilder,
-              private orcamentoService: OrcamentoService,
-              private messageService: MessageService,
-              private cepService: CepService,
-              private produtosService: ProdutoService,
-              private dialog: MatDialog) {
+    private orcamentoService: OrcamentoService,
+    private messageService: MessageService,
+    private cepService: CepService,
+    private produtosService: ProdutoService,
+    private dialog: MatDialog) {
     this.construirFormularios();
   }
 
@@ -142,7 +142,7 @@ export class OrcamentoFormularioComponent implements OnInit {
     });
   }
 
-  abrirModalCalculoValorOrcamento(): void{
+  abrirModalCalculoValorOrcamento(): void {
     if (this.orcamentoForm.invalid) {
       return;
     }
@@ -156,20 +156,22 @@ export class OrcamentoFormularioComponent implements OnInit {
   }
 
   adicionarProdutosAnimaximo(): void {
-    const dialogRef = this.dialog.open(SelecionaProdutoModalComponent, { width: '90%'});
+    const dialogRef = this.dialog.open(SelecionaProdutoModalComponent, { data: this.produtosAnimaximoForm.value, width: '90%' });
 
     dialogRef.afterClosed().subscribe((produtos: ProdutoModel[]) => {
-      produtos.forEach(produto => {
-        this.produtosAnimaximoForm.push(
-          this.formBuilder.group({
-            quantidade: [1, Validators.required],
-            id: [produto.id, Validators.required],
-            produto: [produto.nome, Validators.required],
-            descricao: [produto.descricao, Validators.required],
-            valor: [produto.valor, Validators.required]
-          })
-        );
-      });
+      if (produtos) {
+        produtos.forEach(produto => {
+          this.produtosAnimaximoForm.push(
+            this.formBuilder.group({
+              quantidade: [1, Validators.required],
+              id: [produto.id, Validators.required],
+              produto: [produto.nome, Validators.required],
+              descricao: [produto.descricao, Validators.required],
+              valor: [produto.valor, Validators.required]
+            })
+          );
+        });
+      }
     });
   }
 

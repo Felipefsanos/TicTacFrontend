@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { ProdutoModelComponent } from '../../modals/produto-modal/produto-modal.component';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-produto',
@@ -18,11 +19,14 @@ export class ProdutoComponent implements AfterViewInit {
   @Input()
   selecao = false;
 
+  @Input()
+  produtosSelecionados?: ProdutoModel[];
+
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
   @Output()
-  produtosSelecionados = new EventEmitter<ProdutoModel[]>();
+  selecaoFinalizada = new EventEmitter<ProdutoModel[]>();
 
   dataSource = new MatTableDataSource<ProdutoModel>();
   displayedColumns: string[] = [];
@@ -31,10 +35,10 @@ export class ProdutoComponent implements AfterViewInit {
   constructor(private produtoService: ProdutoService,
     private messageService: MessageService,
     private matDialog: MatDialog) {
-    this.refresh();
   }
 
   ngAfterViewInit(): void {
+    this.refresh();
     this.dataSource.paginator = this.paginator;
   }
 
@@ -58,23 +62,26 @@ export class ProdutoComponent implements AfterViewInit {
     }
   }
 
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: ProdutoModel): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    return `${this.listaProdutosSelecionados.isSelected(row) ? 'deselect' : 'select'} row ${row.id ? row.id + 1 : 0}`;
-  }
-
   refresh(): void {
     this.produtoService.obterProdutos()
       .subscribe(res => {
-        this.dataSource.data = res;
+        if (this.selecao && this.produtosSelecionados && this.produtosSelecionados?.length > 0) {
+          const produtosReduzidos: ProdutoModel[] = [];
+          for (const produto of res)
+          {
+            if(!this.produtosSelecionados.some(x => x.id === produto.id)) {
+              produtosReduzidos.push(produto);
+            }
+          }
+          this.dataSource.data = produtosReduzidos;
+        } else {
+          this.dataSource.data = res;
+        }
       });
   }
 
   submitSelecao(): void {
-    this.produtosSelecionados.emit(this.listaProdutosSelecionados.selected);
+    this.selecaoFinalizada.emit(this.listaProdutosSelecionados.selected);
   }
 
   // editar(produto: ProdutoModel): void {
@@ -112,6 +119,7 @@ export class ProdutoComponent implements AfterViewInit {
     });
 
   }
+
   excluir(id: number) {
     this.produtoService.excluirProduto(id)
       .subscribe(() => {
