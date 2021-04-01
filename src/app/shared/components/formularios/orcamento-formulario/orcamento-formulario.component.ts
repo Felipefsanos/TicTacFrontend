@@ -12,6 +12,7 @@ import { CepService } from 'src/app/shared/services/cep.service';
 import { MessageService } from 'src/app/shared/services/message.service';
 import { ServicoModel } from 'src/app/models/servico.model';
 import { ProdutoService } from 'src/app/services/produto.service';
+import { SelecionaServicoModalComponent } from '../../modals/seleciona-servico-modal/seleciona-servico-modal.component';
 
 @Component({
   selector: 'app-orcamento-formulario',
@@ -86,11 +87,7 @@ export class OrcamentoFormularioComponent implements OnInit {
       }),
       servicos: this.formBuilder.group({
         animaximo: this.formBuilder.array([]),
-        tictac: this.formBuilder.array([{
-          quantidade: [1, Validators.required],
-          idServico: ['', Validators.required],
-          servico: ['', Validators.required]
-        }])
+        tictac: this.formBuilder.array([])
       })
     });
   }
@@ -184,7 +181,22 @@ export class OrcamentoFormularioComponent implements OnInit {
   }
 
   adicionarServicoTicTac(): void {
+    const dialogRef = this.dialog.open(SelecionaServicoModalComponent, { data: this.servicosTicTacForm.value, width: '90%' });
 
+    dialogRef.afterClosed().subscribe((servicos: ServicoModel[]) => {
+      if (servicos) {
+        servicos.forEach(produto => {
+          this.servicosTicTacForm.push(
+            this.formBuilder.group({
+              quantidade: [1, Validators.required],
+              id: [produto.id, Validators.required],
+              produto: [produto.nomeServico, Validators.required],
+              descricao: [produto.descricao, Validators.required],
+            })
+          );
+        });
+      }
+    });
   }
 
   get contatos(): FormArray {

@@ -38,7 +38,6 @@ import { UsuariosComponent } from './components/listagem/usuarios/usuarios.compo
 import { UsuarioModalComponent } from './components/modals/usuario-modal/usuario-modal.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProdutoFormularioComponent } from './components/formularios/produto-formulario/produto-formulario.component';
-import { OrcamentoModalComponent } from './components/modals/orcamento-modal/orcamento-modal.component';
 import { PrestadorFormularioComponent } from './components/formularios/prestador-formulario/prestador-formulario.component';
 import { PrestadoresComponent } from './components/listagem/prestadores/prestadores.component';
 import { PrestadorModalComponent } from './components/modals/prestador-modal/prestador-modal.component';
@@ -49,6 +48,9 @@ import { ComponenteFormularioComponent } from './components/formularios/componen
 import { ComponenteComponent } from './components/listagem/componente/componente.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SelecionaProdutoModalComponent } from './components/modals/seleciona-produto-modal/seleciona-produto-modal.component';
+import { SelecionaServicoModalComponent } from './components/modals/seleciona-servico-modal/seleciona-servico-modal.component';
+import { ServicosComponent } from './components/listagem/servicos/servicos.component';
+import { ServicoModalComponent } from './components/modals/servico-modal/servico-modal.component';
 
 const routes: Routes = [
   {
@@ -80,7 +82,6 @@ const routes: Routes = [
     UsuariosComponent,
     UsuarioModalComponent,
     ProdutoFormularioComponent,
-    OrcamentoModalComponent,
     PrestadorFormularioComponent,
     PrestadoresComponent,
     PrestadorModalComponent,
@@ -88,7 +89,10 @@ const routes: Routes = [
     ProdutoModalComponent,
     ComponenteComponent,
     ComponenteModelComponent,
-    SelecionaProdutoModalComponent
+    SelecionaProdutoModalComponent,
+    SelecionaServicoModalComponent,
+    ServicosComponent,
+    ServicoModalComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,9 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon">close</mat-icon>
+</button>
+<div class="modal-header" mat-dialog-title>
+    Selecionar Serviços
+</div>
+<div>
+    <app-servicos [selecao]="true" [produtosSelecionados]="data" (selecaoFinalizada)="enviarServicosSelecionados($event)"></app-servicos> 
+</div>

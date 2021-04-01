@@ -1,4 +1,4 @@
-import { ComponenteModel } from "./componente.model";
+import { ComponenteModel } from './componente.model';
 
  export class ProdutoModel{
 
