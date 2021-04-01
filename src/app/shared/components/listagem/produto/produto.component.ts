@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MessageService } from 'src/app/shared/services/message.service';
-import { ProdutoModelComponent } from '../../modals/produto-modal/produto-modal.component';
+import { ProdutoModalComponent } from '../../modals/produto-modal/produto-modal.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatCheckbox } from '@angular/material/checkbox';
 
@@ -98,7 +98,7 @@ export class ProdutoComponent implements AfterViewInit {
   //       const produtoEditado = new ProdutoModel(formValue);
 
   editar(produtoModel: ProdutoModel): void {
-    const dialogRef = this.matDialog.open(ProdutoModelComponent,
+    const dialogRef = this.matDialog.open(ProdutoModalComponent,
       {
         data:
         {

@@ -43,7 +43,7 @@ import { PrestadorFormularioComponent } from './components/formularios/prestador
 import { PrestadoresComponent } from './components/listagem/prestadores/prestadores.component';
 import { PrestadorModalComponent } from './components/modals/prestador-modal/prestador-modal.component';
 import { ProdutoComponent } from './components/listagem/produto/produto.component';
-import { ProdutoModelComponent } from './components/modals/produto-modal/produto-modal.component';
+import { ProdutoModalComponent } from './components/modals/produto-modal/produto-modal.component';
 import { ComponenteModelComponent } from './components/modals/componente-model/componente-model.component';
 import { ComponenteFormularioComponent } from './components/formularios/componente-formulario/componente-formulario.component';
 import { ComponenteComponent } from './components/listagem/componente/componente.component';
@@ -85,7 +85,7 @@ const routes: Routes = [
     PrestadoresComponent,
     PrestadorModalComponent,
     ProdutoComponent,
-    ProdutoModelComponent,
+    ProdutoModalComponent,
     ComponenteComponent,
     ComponenteModelComponent,
     SelecionaProdutoModalComponent

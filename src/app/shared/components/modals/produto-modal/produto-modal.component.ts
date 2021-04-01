@@ -7,11 +7,11 @@ import { ProdutoModel } from 'src/app/models/produto.model';
   templateUrl: './produto-modal.component.html',
   styleUrls: ['./produto-modal.component.scss']
 })
-export class ProdutoModelComponent {
+export class ProdutoModalComponent {
 
   produtoModel: ProdutoModel;
 
-  constructor(private dialogRef: MatDialogRef<ProdutoModelComponent>,
+  constructor(private dialogRef: MatDialogRef<ProdutoModalComponent>,
               @Inject(MAT_DIALOG_DATA) private data: any) {
     this.produtoModel = this.data.produto;
   }
