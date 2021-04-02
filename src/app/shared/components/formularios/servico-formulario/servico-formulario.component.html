@@ -1,0 +1,59 @@
+<form [formGroup]="formulario">
+    <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
+
+        <mat-form-field appearance="outline" fxFlex.gt-xs>
+            <mat-label>Nome</mat-label>
+            <input formControlName="nomeServico" matInput placeholder="Nome do serviço">
+            <mat-error *ngIf="formulario.controls.nomeServico.hasError('required')">Nome do serviço é
+                obrigatório</mat-error>
+            <mat-error *ngIf="formulario.controls.nomeServico.hasError('minLength')">Nome do serviço tem
+                que ter mais de 5 caracteres</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Tipo de Serviço</mat-label>
+            <mat-select matInput formControlName="tipoServico" placeholder="Tipo de serviço">
+                <mat-option *ngFor="let tipoServico of tiposServicos | keyvalue" [value]="tipoServico.key">
+                    {{tipoServico.value}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formulario.controls.tipoServico.hasError('required')">Campo obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Tipo Alimentação</mat-label>
+            <mat-select matInput formControlName="tipoAlimentacao" placeholder="Tipo de alimentação do carrinho">
+                <mat-option *ngFor="let tipoAlimentacao of tiposAlimentacao | keyvalue" [value]="tipoAlimentacao.key">
+                    {{tipoAlimentacao.value}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formulario.controls.tipoAlimentacao.hasError('required')">Campo obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Tipo Carrinho</mat-label>
+            <mat-select matInput formControlName="tipoCarrinho" placeholder="modelo do carrinho" [(value)]="valorInicialCarrinhos">
+                <mat-option *ngFor="let tipoCarrinho of tipoCarrinhos | keyvalue" [value]="tipoCarrinho.key">
+                    {{tipoCarrinho.value}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formulario.controls.tipoServico.hasError('required')">Campo obrigatório
+            </mat-error>
+        </mat-form-field>
+
+    </div>
+    
+    <div>
+        <mat-form-field appearance="outline" fxFill>
+            <mat-label>Descrição</mat-label>
+            <textarea formControlName="descricao" placeholder="Descrição do serviço"
+                matInput></textarea>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button mat-button>Cancelar</button>
+        <button mat-button>Salvar</button>
+    </div>
+</form>

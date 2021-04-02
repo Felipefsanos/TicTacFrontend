@@ -51,6 +51,7 @@ import { SelecionaProdutoModalComponent } from './components/modals/seleciona-pr
 import { SelecionaServicoModalComponent } from './components/modals/seleciona-servico-modal/seleciona-servico-modal.component';
 import { ServicosComponent } from './components/listagem/servicos/servicos.component';
 import { ServicoModalComponent } from './components/modals/servico-modal/servico-modal.component';
+import { ServicoFormularioComponent } from './components/formularios/servico-formulario/servico-formulario.component';
 
 const routes: Routes = [
   {
@@ -92,7 +93,8 @@ const routes: Routes = [
     SelecionaProdutoModalComponent,
     SelecionaServicoModalComponent,
     ServicosComponent,
-    ServicoModalComponent
+    ServicoModalComponent,
+    ServicoFormularioComponent
   ],
   imports: [
     CommonModule,
@@ -141,7 +143,8 @@ const routes: Routes = [
     PrestadorFormularioComponent,
     PrestadoresComponent,
     ComponenteComponent,
-    SelecionaProdutoModalComponent
+    SelecionaProdutoModalComponent,
+    ServicoFormularioComponent
   ]
 })
 export class SharedModule { }

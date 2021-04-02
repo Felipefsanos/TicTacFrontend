@@ -1,0 +1,25 @@
+// eslint-disable-next-line no-shadow
+export enum TipoServicos {
+    indefinido = 'Indefinido',
+    pipoca = 'Pipoca',
+    algodaoDoce = 'Algodão Doce',
+    pizza = 'Pizza',
+    hotDog = 'HotDog',
+    batata = 'Batata',
+    hamburger = 'Hamburger',
+    fastFood = 'FastFood',
+    crepe = 'Crepe',
+    caldosCanjica = 'Caldos e Canjicas',
+    pastelzinho = 'Pastelzinho',
+    macarrão = 'Macarrão',
+    milho = 'Milho',
+    saladinha = 'Saladinha',
+    sorvete = 'Sorvete',
+    picolé = 'Picolé',
+    churrasco = 'Churrasco',
+    acai = 'Açaí',
+    churros = 'Churros',
+    miniChurros = 'Mini Churros',
+    brigadeiro = 'Brigadeiro',
+    bebidas = 'Bebidas'
+}

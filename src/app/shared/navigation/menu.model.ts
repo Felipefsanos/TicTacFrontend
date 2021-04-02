@@ -63,12 +63,11 @@ export const menuItems: MenuItem[] = [
                         url: 'p/produtos/novo-produto'
                     },
                     {
-                        id: 9,
+                        id: 15,
                         name: 'Lista Produto',
                         url: 'p/produtos/listagem-produto'
-                    } 
+                    }
                 ],
-                
             },
             {
                 id: 8,
@@ -80,14 +79,29 @@ export const menuItems: MenuItem[] = [
                         url: 'p/produtos/componente'
                     },
                     {
-                        id: 10,
+                        id: 13,
                         name: 'Lista Componente',
                         url: 'p/produtos/listagem-componentes'
                     },
                 ],
-                
+            },
+            {
+                id: 14,
+                name: 'Servicos',
+                children: [
+                    {
+                        id: 16,
+                        name: 'Novo Serviço',
+                        url: 'p/servicos/novo'
+                    },
+                    {
+                        id: 17,
+                        name: 'Serviços',
+                        url: 'p/servicos/'
+                    }
+                ]
             }
-            
+
         ]
     },
     {
@@ -100,7 +114,7 @@ export const menuItems: MenuItem[] = [
                 url: 'p/prestadores/novo'
             },
             {
-                id: 11,
+                id: 12,
                 name: 'Prestadores',
                 url: 'p/prestadores'
             }
