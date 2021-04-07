@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 // eslint-disable-next-line no-shadow
 export enum TiposAlimentacao {
-    nenhum = 'Nenhum',
-    eletrico = 'Elétrico',
-    gas = 'Gás'
+    Nenhum = 'Nenhum',
+    Eletrico = 'Elétrico',
+    Gas = 'Gás'
 }

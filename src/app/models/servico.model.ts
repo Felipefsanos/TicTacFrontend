@@ -6,9 +6,9 @@ export class ServicoModel {
     id?: number;
     nomeServico!: string;
     descricao?: string;
-    tipoAlimentacao!: TipoServicos;
+    tipoAlimentacao!: TiposAlimentacao;
     tipoCarrinho!: TipoCarrinhos;
-    tipoServico!: TiposAlimentacao;
+    tipoServico!: TipoServicos;
 
     public constructor(init?: Partial<ServicoModel>) {
         Object.assign(this, init);

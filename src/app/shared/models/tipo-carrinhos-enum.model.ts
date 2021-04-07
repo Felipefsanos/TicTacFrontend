@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 // eslint-disable-next-line no-shadow
 export enum TipoCarrinhos {
-    indefinido = 'Indefinido',
-    tradicional = 'Tradicional',
-    vintage = 'Vintage'
+    Indefinido = 'Indefinido',
+    Tradicional = 'Tradicional',
+    Vintage = 'Vintage'
 }

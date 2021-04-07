@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ServicoModel } from 'src/app/models/servico.model';
 import { ServicoService } from 'src/app/services/servico.service';
 import { MessageService } from 'src/app/shared/services/message.service';
-import { SelecionaServicoModalComponent } from '../../modals/seleciona-servico-modal/seleciona-servico-modal.component';
+import { ServicoModalComponent } from '../../modals/servico-modal/servico-modal.component';
 
 @Component({
   selector: 'app-servicos',
@@ -19,7 +19,7 @@ export class ServicosComponent implements AfterViewInit {
   selecao = false;
 
   @Input()
-  produtosSelecionados?: ServicoModel[];
+  servicosSelecionados?: ServicoModel[];
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -29,7 +29,7 @@ export class ServicosComponent implements AfterViewInit {
 
   dataSource = new MatTableDataSource<ServicoModel>();
   displayedColumns: string[] = [];
-  listaProdutosSelecionados = new SelectionModel<ServicoModel>(true, []);
+  listaServicosSelecionados = new SelectionModel<ServicoModel>(true, []);
 
   constructor(private servicoService: ServicoService,
     private messageService: MessageService,
@@ -47,29 +47,28 @@ export class ServicosComponent implements AfterViewInit {
   }
 
   isAllSelected(): boolean {
-    const numSelected = this.listaProdutosSelecionados.selected.length;
+    const numSelected = this.listaServicosSelecionados.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
     if (this.isAllSelected()) {
-      this.listaProdutosSelecionados.clear();
+      this.listaServicosSelecionados.clear();
     } else {
-      this.dataSource.data.forEach(row => this.listaProdutosSelecionados.select(row));
+      this.dataSource.data.forEach(row => this.listaServicosSelecionados.select(row));
     }
   }
 
   refresh(): void {
     this.servicoService.obterServicos()
       .subscribe(res => {
-        if (this.selecao && this.produtosSelecionados && this.produtosSelecionados?.length > 0) {
+        if (this.selecao && this.servicosSelecionados && this.servicosSelecionados?.length > 0) {
           const servicosReduzidos: ServicoModel[] = [];
-          for (const produto of res)
+          for (const servico of res)
           {
-            if(!this.produtosSelecionados.some(x => x.id === produto.id)) {
-              servicosReduzidos.push(produto);
+            if(!this.servicosSelecionados.some(x => x.id === servico.id)) {
+              servicosReduzidos.push(servico);
             }
           }
           this.dataSource.data = servicosReduzidos;
@@ -80,38 +79,25 @@ export class ServicosComponent implements AfterViewInit {
   }
 
   submitSelecao(): void {
-    this.selecaoFinalizada.emit(this.listaProdutosSelecionados.selected);
+    this.selecaoFinalizada.emit(this.listaServicosSelecionados.selected);
   }
 
-  // editar(produto: ServicoModel): void {
-  //   const dialogRef = this.dialog.open(PrestadorModalComponent,
-  //     { data:
-  //       {
-  //         produto
-  //       }
-  //     });
-
-  //   dialogRef.afterClosed().subscribe((formValue: any) =>
-  //   {
-  //     if(formValue) {
-  //       const produtoEditado = new ServicoModel(formValue);
-
-  editar(servicoModel: ServicoModel): void {
-    const dialogRef = this.matDialog.open(SelecionaServicoModalComponent,
+  editar(servico: ServicoModel): void {
+    const dialogRef = this.matDialog.open(ServicoModalComponent,
       {
         data:
         {
-          servicoModel
+          servico
         }
       });
 
     dialogRef.afterClosed().subscribe((formValue: any) => {
       if (formValue) {
-        const produtoEditado = new ServicoModel(formValue);
+        const servicoEditado = new ServicoModel(formValue);
 
-        this.servicoService.editarServico(produtoEditado.id as number, produtoEditado)
+        this.servicoService.editarServico(servicoEditado.id as number, servicoEditado)
           .subscribe(() => {
-            this.messageService.success('Produto alterado com sucesso!');
+            this.messageService.success('Servico alterado com sucesso!');
             this.refresh();
           });
       }
@@ -120,17 +106,17 @@ export class ServicosComponent implements AfterViewInit {
   }
 
   excluir(id: number) {
-    this.servicoService.excluirProduto(id)
+    this.servicoService.excluirServico(id)
       .subscribe(() => {
-        this.messageService.success('Produto excluído com sucesso!');
+        this.messageService.success('servico excluído com sucesso!');
         this.refresh();
       });
   }
 
   getDisplayedColumns(): string[] {
     if (this.selecao) {
-      return this.displayedColumns = ['select', 'nome', 'descricao', 'valor'];
+      return this.displayedColumns = ['select', 'nomeServico', 'descricao'];
     }
-    return this.displayedColumns = ['id', 'nome', 'descricao', 'valor', 'acoes'];
+    return this.displayedColumns = ['id', 'nomeServico', 'descricao', 'acoes'];
   }
 }

@@ -1,1 +1,6 @@
-<p>servico-modal works!</p>
+<div class="modal-header" mat-dialog-title>
+    Editar Servico
+</div>
+<div>
+    <app-servico-formulario [servico]="servico" (formularioEnviado)="editarServico($event)"></app-servico-formulario>
+</div>

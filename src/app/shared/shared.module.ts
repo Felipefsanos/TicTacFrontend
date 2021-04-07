@@ -144,7 +144,8 @@ const routes: Routes = [
     PrestadoresComponent,
     ComponenteComponent,
     SelecionaProdutoModalComponent,
-    ServicoFormularioComponent
+    ServicoFormularioComponent,
+    ServicosComponent
   ]
 })
 export class SharedModule { }

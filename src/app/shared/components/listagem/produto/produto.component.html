@@ -65,6 +65,6 @@
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
-<div fxLayout="row-reverse" class="mt-2">
+<div fxLayout="row-reverse" class="mt-2"  *ngIf="selecao">
     <button mat-raised-button color="primary" (click)="submitSelecao()">Selecionar</button>
 </div>

@@ -1,3 +1,5 @@
+import { HttpClient } from '@angular/common/http';
+import { BaseService } from 'src/app/services/base/service-base.service';
 import { ServicoModel } from 'src/app/models/servico.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -5,19 +7,26 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ServicoService {
+export class ServicoService extends BaseService {
 
-  constructor() { }
+  constructor(protected http: HttpClient)
+  {
+    super(http);
+  }
 
   obterServicos(): Observable<ServicoModel[]> {
-    throw new Error('Method not implemented.');
+    return this.get('servicos');
   }
 
   editarServico(id: number, servicoEditado: ServicoModel): Observable<any> {
-    throw new Error('Method not implemented.');
+    return this.put(`servicos/${id}`, servicoEditado);
   }
 
-  excluirProduto(id: number): Observable<any> {
-    throw new Error('Method not implemented.');
+  excluirServico(id: number): Observable<any> {
+    return this.delete(`servicos/${id}`);
+  }
+
+  criarServico(servico: ServicoModel): Observable<any> {
+    return this.post('servicos', servico);
   }
 }
