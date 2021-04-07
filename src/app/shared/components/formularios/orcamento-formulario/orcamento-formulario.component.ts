@@ -153,7 +153,7 @@ export class OrcamentoFormularioComponent implements OnInit {
   }
 
   adicionarProdutosAnimaximo(): void {
-    const dialogRef = this.dialog.open(SelecionaProdutoModalComponent, { data: this.produtosAnimaximoForm.value, width: '90%' });
+    const dialogRef = this.dialog.open(SelecionaProdutoModalComponent, { data: this.produtosAnimaximoForm.value, width: '70%' });
 
     dialogRef.afterClosed().subscribe((produtos: ProdutoModel[]) => {
       if (produtos) {
@@ -172,10 +172,39 @@ export class OrcamentoFormularioComponent implements OnInit {
     });
   }
 
+  adicionarServicosAnimaximo(): void {
+    const dialogRef = this.dialog.open(SelecionaServicoModalComponent, { data: this.servicosTicTacForm.value, width: '90%' });
+
+    dialogRef.afterClosed().subscribe((servicos: ServicoModel[]) => {
+      if (servicos) {
+        servicos.forEach(servico => {
+          this.servicosTicTacForm.push(
+            this.formBuilder.group({
+              quantidade: [1, Validators.required],
+              id: [servico.id, Validators.required],
+              servico: [servico.nomeServico, Validators.required],
+              descricao: [servico.descricao, Validators.required],
+              valor: [0, Validators.required],
+              observacao: ['', Validators.required]
+            })
+          );
+        });
+      }
+    });
+  }
+
   removerProdutosAnimaximo(idProduto: number): void {
     (this.produtosAnimaximoForm.value as ProdutoModel[]).forEach((produto, index) => {
       if (produto.id === idProduto) {
         this.produtosAnimaximoForm.removeAt(index);
+      }
+    });
+  }
+
+  removerServicosAnimaximo(idServico: number): void {
+    (this.servicosTicTacForm.value as ServicoModel[]).forEach((servico, index) => {
+      if (servico.id === idServico) {
+        this.servicosTicTacForm.removeAt(index);
       }
     });
   }
