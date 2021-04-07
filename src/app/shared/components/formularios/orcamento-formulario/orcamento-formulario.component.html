@@ -399,7 +399,7 @@
 
                 <div class="mb-2 mt-2" fxLayout="row" fxLayoutAlign="space-between center">
                     <h2 class="no-margin">Serviços TicTac</h2>
-                    <button mat-fab color="primary" (click)="adicionarProdutosAnimaximo()">
+                    <button mat-fab color="primary" (click)="adicionarServicosAnimaximo()">
                         <mat-icon>add</mat-icon>
                     </button>
                 </div>
@@ -408,14 +408,38 @@
 
                 <div fxLayout="row" fxLayoutAlign="space-around center" class="mt-2">
 
-                    <div formArrayName="animaximo">
-                        <div *ngFor="let produto of produtosAnimaximoForm.controls; let i=index">
+                    <div formArrayName="tictac">
+                        <div *ngFor="let servico of servicosTicTacForm.controls; let i=index">
 
-                            <div [formGroupName]="i">
+                            <div [formGroupName]="i" fxLayout="row-wrap" fxLayoutAlign="center center"
+                            fxLayoutGap="10px">
 
+                            <mat-form-field appearance="outline" fxFlex>
+                                <mat-label>Serviço</mat-label>
+                                <input matInput formControlName="servico" readonly>
+                            </mat-form-field>
 
+                            <mat-form-field appearance="outline" fxFlex>
+                                <mat-label>Descricao</mat-label>
+                                <input matInput formControlName="descricao" readonly>
+                            </mat-form-field>
 
-                            </div>
+                            <mat-form-field appearance="outline" fxFlex="initial">
+                                <mat-label>Valor</mat-label>
+                                <input matInput formControlName="valor" >
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex="initial">
+                                <mat-label>Observação</mat-label>
+                                <textarea formControlName="observacao" placeholder="Observações sobre o cliente"
+                                matInput></textarea>
+                                <input matInput formControlName="observacao">
+                            </mat-form-field>
+
+                            <button mat-icon-button color="primary" (click)="removerServicosAnimaximo(servico.value.id)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
 
                         </div>
                     </div>
