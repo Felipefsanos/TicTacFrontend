@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 
 const routes: Routes = [
@@ -43,6 +45,10 @@ const routes: Routes = [
   declarations: [HomeComponent],
   imports: [
     CommonModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
