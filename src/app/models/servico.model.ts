@@ -9,6 +9,7 @@ export class ServicoModel {
     tipoAlimentacao!: TiposAlimentacao;
     tipoCarrinho!: TipoCarrinhos;
     tipoServico!: TipoServicos;
+    valor!: number;
 
     public constructor(init?: Partial<ServicoModel>) {
         Object.assign(this, init);
