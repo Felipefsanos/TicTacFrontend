@@ -384,10 +384,11 @@
 
                                 <mat-form-field appearance="outline" fxFlex="initial">
                                     <mat-label>Valor</mat-label>
-                                    <input matInput formControlName="valor" readonly>
+                                    <input matInput formControlName="valor" type="number" readonly>
                                 </mat-form-field>
 
-                                <button mat-icon-button color="primary" (click)="removerProdutosAnimaximo(produto.value.id)">
+                                <button mat-icon-button color="primary"
+                                    (click)="removerProdutosAnimaximo(produto.value.id)">
                                     <mat-icon>delete</mat-icon>
                                 </button>
                             </div>
@@ -412,34 +413,35 @@
                         <div *ngFor="let servico of servicosTicTacForm.controls; let i=index">
 
                             <div [formGroupName]="i" fxLayout="row-wrap" fxLayoutAlign="center center"
-                            fxLayoutGap="10px">
+                                fxLayoutGap="10px">
 
-                            <mat-form-field appearance="outline" fxFlex>
-                                <mat-label>Serviço</mat-label>
-                                <input matInput formControlName="servico" readonly>
-                            </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex>
+                                    <mat-label>Serviço</mat-label>
+                                    <input matInput formControlName="servico" readonly>
+                                </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex>
-                                <mat-label>Descricao</mat-label>
-                                <input matInput formControlName="descricao" readonly>
-                            </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex>
+                                    <mat-label>Descricao</mat-label>
+                                    <input matInput formControlName="descricao" readonly>
+                                </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="initial">
-                                <mat-label>Valor</mat-label>
-                                <input matInput formControlName="valor" >
-                            </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="initial">
+                                    <mat-label>Valor</mat-label>
+                                    <input matInput formControlName="valor">
+                                </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="initial">
-                                <mat-label>Observação</mat-label>
-                                <textarea formControlName="observacao" placeholder="Observações sobre o serviço"
-                                matInput></textarea>
-                                <input matInput formControlName="observacao">
-                            </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="initial">
+                                    <mat-label>Observação</mat-label>
+                                    <textarea formControlName="observacao" placeholder="Observações sobre o serviço"
+                                        matInput></textarea>
+                                    <input matInput formControlName="observacao">
+                                </mat-form-field>
 
-                            <button mat-icon-button color="primary" (click)="removerServicosAnimaximo(servico.value.id)">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
+                                <button mat-icon-button color="primary"
+                                    (click)="removerServicosAnimaximo(servico.value.id)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
 
                         </div>
                     </div>
@@ -454,10 +456,90 @@
             </div>
         </form>
     </mat-step>
-    <mat-step>
-        <ng-template matStepLabel>Valores</ng-template>
-
-        Resumo de valores e cálculo do valor total
+    <mat-step [stepControl]="orcamentoFinalFormGroup && orcamentoFormGroup">
+        <form [formGroup]="orcamentoForm" class="mt-2">
+            <ng-template matStepLabel>Valores</ng-template>
+            <div formGroupName="orcamentoFinal">
+                <div>
+                    <mat-accordion class="example-headers-align">
+                        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Frete
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Valores Referente ao frete
+                                    <mat-icon>map</mat-icon>
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+    
+                            <mat-form-field>
+                                <mat-label>Valores Frete</mat-label>
+                                <input formControlName="valorFrete" matInput placeholder="Frete">
+                                <mat-error *ngIf="orcamentoFinalFormGroup.controls.valorFrete.hasError('required')">Campo
+                                    obrigatório
+                                </mat-error>
+                            </mat-form-field>
+    
+                            <mat-action-row>
+                                <button mat-button color="primary" (click)="nextStep()">Validar</button>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+    
+                        <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Produtos
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Valor Total Produtos
+                                    <mat-icon>add_shopping_cart</mat-icon>
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+    
+                            <mat-form-field>
+                                <mat-label>Valor Total Produto</mat-label>
+                                <input formControlName="valorTotalProduto" [value] ="valorProtudos" readonly matInput placeholder="Frete">
+                                <mat-error *ngIf="orcamentoFinalFormGroup.controls.valorTotalProduto.hasError('required')">
+                                    Campo obrigatório
+                                </mat-error>
+                            </mat-form-field>
+    
+                            <mat-action-row>
+                                <button mat-button color="warn" (click)="prevStep()">Voltar</button>
+                                <button mat-button color="primary" (click)="nextStep()">Validar</button>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+    
+                        <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Serviços
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Valor Total Serviços
+                                    <mat-icon>settings_accessibility</mat-icon>
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+    
+                            <mat-form-field>
+                                <mat-label>Valor Total Serviço</mat-label>
+                                <input formControlName="valorTotalServico"  [value] ="valorServicos" readonly matInput placeholder="Valor Total Serviço">
+                                <mat-error *ngIf="orcamentoFinalFormGroup.controls.valorTotalServico.hasError('required')">
+                                    Campo obrigatório
+                                </mat-error>
+                            </mat-form-field>
+    
+                            <mat-action-row>
+                                <button mat-button color="warn" (click)="prevStep()">Voltar</button>
+                                <button mat-button color="primary" (click)="onSubmit()">Criar Orçamento</button>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+    
+                    </mat-accordion>
+                </div>
+            </div>
+        </form>
 
     </mat-step>
 </mat-horizontal-stepper>

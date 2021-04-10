@@ -25,6 +25,9 @@ export class OrcamentoFormularioComponent implements OnInit {
   @ViewChild('stepper')
   stepper?: MatHorizontalStepper;
   lastFilter = '';
+  step = 0;
+  valorProtudos = 0;
+  valorServicos = 0;
 
   orcamentoModel = new OrcamentoModel();
   orcamentoForm: FormGroup = new FormGroup({});
@@ -88,8 +91,13 @@ export class OrcamentoFormularioComponent implements OnInit {
       servicos: this.formBuilder.group({
         animaximo: this.formBuilder.array([]),
         tictac: this.formBuilder.array([])
-      })
-    });
+      }),
+      orcamentoFinal:this.formBuilder.group({
+        valorFrete: [0, Validators.required],
+        valorTotalServico: [this.valorProtudos, Validators.required],
+        valorTotalProduto: [this.valorServicos, Validators.required],
+    })
+  });
   }
 
   onSubmit(): void {
@@ -209,6 +217,17 @@ export class OrcamentoFormularioComponent implements OnInit {
     });
   }
 
+ adicionarValoresAtributosTotais(): void {
+  this.valorProtudos = 0;
+  this.valorServicos = 0;
+  (this.produtosAnimaximoForm.value as ProdutoModel[]).forEach((produto, index) => {
+     this.valorProtudos += produto.valor || 0 ;
+  });
+  (this.servicosTicTacForm.value as ServicoModel[]).forEach((servico, index) => {
+    this.valorServicos +=  +servico.valor;
+  });
+ }
+
   adicionarServicoTicTac(): void {
     const dialogRef = this.dialog.open(SelecionaServicoModalComponent, { data: this.servicosTicTacForm.value, width: '90%' });
 
@@ -228,6 +247,20 @@ export class OrcamentoFormularioComponent implements OnInit {
     });
   }
 
+  setStep(index: number) {
+    debugger;
+    this.adicionarValoresAtributosTotais();
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
+
   get contatos(): FormArray {
     return this.clienteFormGroup.controls.contatos as FormArray;
   }
@@ -242,6 +275,10 @@ export class OrcamentoFormularioComponent implements OnInit {
 
   get enderecoFormGroup(): FormGroup {
     return this.orcamentoForm.controls.endereco as FormGroup;
+  }
+
+  get orcamentoFinalFormGroup(): FormGroup {
+    return this.orcamentoForm.controls.orcamentoFinal as FormGroup;
   }
 
   get produtosAnimaximoForm(): FormArray {

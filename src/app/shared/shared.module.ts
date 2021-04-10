@@ -52,7 +52,7 @@ import { SelecionaServicoModalComponent } from './components/modals/seleciona-se
 import { ServicosComponent } from './components/listagem/servicos/servicos.component';
 import { ServicoModalComponent } from './components/modals/servico-modal/servico-modal.component';
 import { ServicoFormularioComponent } from './components/formularios/servico-formulario/servico-formulario.component';
-
+import {MatExpansionModule} from '@angular/material/expansion';
 const routes: Routes = [
   {
     path: 'login',
@@ -124,7 +124,8 @@ const routes: Routes = [
     MatTooltipModule,
     MatDividerModule,
     MatPaginatorModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatExpansionModule
   ],
   exports: [
     LoginComponent,
