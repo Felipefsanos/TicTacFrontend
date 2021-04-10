@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseService } from './base/service-base.service';
 import { OrcamentoModel } from '../models/orcamento.model';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -19,12 +20,12 @@ export class OrcamentoService extends BaseService {
   }
 
   obterOrcamentos(dataInicio?: Date, dataFim?: Date): Observable<OrcamentoModel[]> {
-    debugger;
+    const datePipe = new DatePipe('en-US');
     if (dataInicio && dataFim) {
       return this.get('orcamentos',
       {
-        dataInicio: `${dataInicio.getFullYear()}-${dataInicio.getMonth()}-${dataInicio.getDay()}`,
-        dataFim: `${dataFim.getFullYear()}-${dataFim.getMonth()}-${dataFim.getDay()}`
+        dataInicio: datePipe.transform(dataInicio, 'yyyy-MM-dd'),
+        dataFim: datePipe.transform(dataFim, 'yyyy-MM-dd')
       });
     }
 

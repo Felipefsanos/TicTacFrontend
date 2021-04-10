@@ -17,8 +17,4 @@ export class LoadingService {
   hideLoading(): void {
     this.$isLoading.next(false);
   }
-
-  dontShowGlobalLoading(): void {
-    this.$isLoading.next('dont-show');
-  }
 }
