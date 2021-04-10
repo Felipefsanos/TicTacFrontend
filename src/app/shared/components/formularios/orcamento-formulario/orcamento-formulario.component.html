@@ -412,9 +412,10 @@
                     <div formArrayName="tictac">
                         <div *ngFor="let servico of servicosTicTacForm.controls; let i=index">
 
-                            <div [formGroupName]="i" fxLayout="row-wrap" fxLayoutAlign="center center"
+                            <div [formGroupName]="i" fxLayout="column"  fxLayoutAlign="center center"
                                 fxLayoutGap="10px">
 
+                             <div fxLayout="row-wrap" fxLayoutGap="10px">
                                 <mat-form-field appearance="outline" fxFlex>
                                     <mat-label>Serviço</mat-label>
                                     <input matInput formControlName="servico" readonly>
@@ -424,13 +425,17 @@
                                     <mat-label>Descricao</mat-label>
                                     <input matInput formControlName="descricao" readonly>
                                 </mat-form-field>
-
                                 <mat-form-field appearance="outline" fxFlex="initial">
                                     <mat-label>Valor</mat-label>
                                     <input matInput formControlName="valor">
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" fxFlex="initial">
+                                    <mat-label>Quantidade</mat-label>
+                                    <input matInput formControlName="quantidade">
+                                </mat-form-field>
+                            </div>
+                                <mat-form-field appearance="outline" fxFill>
                                     <mat-label>Observação</mat-label>
                                     <textarea formControlName="observacao" placeholder="Observações sobre o serviço"
                                         matInput></textarea>
@@ -458,8 +463,9 @@
     </mat-step>
     <mat-step [stepControl]="orcamentoFinalFormGroup && orcamentoFormGroup">
         <form [formGroup]="orcamentoForm" class="mt-2">
+            <div formGroupName="servicos">
+
             <ng-template matStepLabel>Valores</ng-template>
-            <div formGroupName="orcamentoFinal">
                 <div>
                     <mat-accordion class="example-headers-align">
                         <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
@@ -470,15 +476,13 @@
                                 <mat-panel-description>
                                     Valores Referente ao frete
                                     <mat-icon>map</mat-icon>
+                                    <strong>R${{frete}}</strong>
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
     
                             <mat-form-field>
                                 <mat-label>Valores Frete</mat-label>
                                 <input formControlName="valorFrete" matInput placeholder="Frete">
-                                <mat-error *ngIf="orcamentoFinalFormGroup.controls.valorFrete.hasError('required')">Campo
-                                    obrigatório
-                                </mat-error>
                             </mat-form-field>
     
                             <mat-action-row>
@@ -494,15 +498,13 @@
                                 <mat-panel-description>
                                     Valor Total Produtos
                                     <mat-icon>add_shopping_cart</mat-icon>
+                                    <strong>R${{valorProtudos}}</strong>
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
     
                             <mat-form-field>
                                 <mat-label>Valor Total Produto</mat-label>
-                                <input formControlName="valorTotalProduto" [value] ="valorProtudos" readonly matInput placeholder="Frete">
-                                <mat-error *ngIf="orcamentoFinalFormGroup.controls.valorTotalProduto.hasError('required')">
-                                    Campo obrigatório
-                                </mat-error>
+                                <input [value] ="valorProtudos" readonly matInput placeholder="Frete">
                             </mat-form-field>
     
                             <mat-action-row>
@@ -517,25 +519,45 @@
                                     Serviços
                                 </mat-panel-title>
                                 <mat-panel-description>
-                                    Valor Total Serviços
-                                    <mat-icon>settings_accessibility</mat-icon>
+                                    Valor Total Serviços 
+                                    <mat-icon> settings_accessibility</mat-icon>
+                                    <strong>R${{valorServicos}}</strong>
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
     
                             <mat-form-field>
                                 <mat-label>Valor Total Serviço</mat-label>
-                                <input formControlName="valorTotalServico"  [value] ="valorServicos" readonly matInput placeholder="Valor Total Serviço">
-                                <mat-error *ngIf="orcamentoFinalFormGroup.controls.valorTotalServico.hasError('required')">
-                                    Campo obrigatório
-                                </mat-error>
+                                <input  [value] ="valorServicos" readonly matInput placeholder="Valor Total Serviço">
+                            </mat-form-field>
+                            
+    
+                            <mat-action-row>
+                                <button mat-button color="warn" (click)="prevStep()">Voltar</button>
+                                <button mat-button color="primary" (click)="nextStep()">Validar</button>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+                            <mat-expansion-panel-header class="right-aligned-header">
+                                <mat-panel-title>
+                                    Total
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Valores Totais
+                                    <mat-icon>map</mat-icon>
+                                    <strong>R${{totalValor}}</strong>
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+    
+                            <mat-form-field>
+                                <mat-label>Valores Totais</mat-label>
+                                <input [value]="totalValor" readonly matInput placeholder="Frete" >
                             </mat-form-field>
     
                             <mat-action-row>
                                 <button mat-button color="warn" (click)="prevStep()">Voltar</button>
-                                <button mat-button color="primary" (click)="onSubmit()">Criar Orçamento</button>
+                                <button mat-button color="primary" (click)="onSubmit()">Criar</button>
                             </mat-action-row>
                         </mat-expansion-panel>
-    
                     </mat-accordion>
                 </div>
             </div>

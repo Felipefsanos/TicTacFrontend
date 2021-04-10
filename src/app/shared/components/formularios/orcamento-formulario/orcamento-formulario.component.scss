@@ -1,3 +1,11 @@
 .no-margin {
     margin: 0;
 }
+.right-aligned-header > .mat-content {
+    justify-content: space-between;
+}
+
+.mat-content > mat-panel-title, .mat-content > mat-panel-description {
+  flex: 0 0 auto;
+}
+ 

@@ -90,18 +90,15 @@ export class OrcamentoFormularioComponent implements OnInit {
       }),
       servicos: this.formBuilder.group({
         animaximo: this.formBuilder.array([]),
-        tictac: this.formBuilder.array([])
-      }),
-      orcamentoFinal:this.formBuilder.group({
+        tictac: this.formBuilder.array([]),
         valorFrete: [0, Validators.required],
-        valorTotalServico: [this.valorProtudos, Validators.required],
-        valorTotalProduto: [this.valorServicos, Validators.required],
-    })
+
+      }),
   });
   }
 
   onSubmit(): void {
-
+    debugger;
     if (this.orcamentoForm.invalid) {
       return;
     }
@@ -188,7 +185,7 @@ export class OrcamentoFormularioComponent implements OnInit {
         servicos.forEach(servico => {
           this.servicosTicTacForm.push(
             this.formBuilder.group({
-              quantidade: [1, Validators.required],
+              quantidade: [0, Validators.required],
               id: [servico.id, Validators.required],
               servico: [servico.nomeServico, Validators.required],
               descricao: [servico.descricao, Validators.required],
@@ -248,7 +245,6 @@ export class OrcamentoFormularioComponent implements OnInit {
   }
 
   setStep(index: number) {
-    debugger;
     this.adicionarValoresAtributosTotais();
     this.step = index;
   }
@@ -261,6 +257,12 @@ export class OrcamentoFormularioComponent implements OnInit {
     this.step--;
   }
 
+  get totalValor(): number{
+    return +this.valorProtudos + +this.valorServicos + +this.frete;
+  }
+  get frete(): number {
+    return (this.orcamentoForm.controls.servicos as FormGroup).get('valorFrete')?.value;
+  }
   get contatos(): FormArray {
     return this.clienteFormGroup.controls.contatos as FormArray;
   }
