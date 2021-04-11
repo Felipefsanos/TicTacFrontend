@@ -434,6 +434,10 @@
                                     <mat-label>Quantidade</mat-label>
                                     <input matInput formControlName="quantidade">
                                 </mat-form-field>
+                                <button mat-icon-button color="primary"
+                                    (click)="removerServicosAnimaximo(servico.value.id)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
                             </div>
                                 <mat-form-field appearance="outline" fxFill>
                                     <mat-label>Observação</mat-label>
@@ -442,10 +446,7 @@
                                     <input matInput formControlName="observacao">
                                 </mat-form-field>
 
-                                <button mat-icon-button color="primary"
-                                    (click)="removerServicosAnimaximo(servico.value.id)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
+                                
                             </div>
 
                         </div>
