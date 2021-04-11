@@ -190,7 +190,7 @@ export class OrcamentoFormularioComponent implements OnInit {
               servico: [servico.nomeServico, Validators.required],
               descricao: [servico.descricao, Validators.required],
               valor: [0, Validators.required],
-              observacao: ['', Validators.required]
+              observacao: ['']
             })
           );
         });
