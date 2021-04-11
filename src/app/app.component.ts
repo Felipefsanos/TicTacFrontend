@@ -25,7 +25,7 @@ export class AppComponent implements OnDestroy {
   title = 'Tic tac Admin';
   opened = false;
   showMenu = false;
-  $isLoading: BehaviorSubject<boolean | 'dont-show'>;
+  $isLoading: BehaviorSubject<boolean>;
 
   dontShowMenuUrls = ['/auth/login', '**', '/s/sessao-expirada'];
 

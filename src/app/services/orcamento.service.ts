@@ -1,4 +1,3 @@
-import { TokenModel } from './../shared/models/token.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -19,14 +18,14 @@ export class OrcamentoService extends BaseService {
     return this.post('orcamentos', orcamentoModel);
   }
 
-  obterOrcamentos(dataInicio?: Date, dataFim?: Date): Observable<OrcamentoModel[]> {
+  obterOrcamentos(dataInicio?: Date, dataFim?: Date, dontShowLoading?: boolean): Observable<OrcamentoModel[]> {
     const datePipe = new DatePipe('en-US');
     if (dataInicio && dataFim) {
       return this.get('orcamentos',
       {
         dataInicio: datePipe.transform(dataInicio, 'yyyy-MM-dd'),
         dataFim: datePipe.transform(dataFim, 'yyyy-MM-dd')
-      });
+      }, true);
     }
 
     return this.get('orcamentos');
