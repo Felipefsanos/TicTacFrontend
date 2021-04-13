@@ -1,3 +1,6 @@
+import { ContatoModel } from './../../../../models/base/contato.model';
+import { EnderecoModel } from './../../../../models/base/endereco.model';
+import { ClienteModel } from './../../../../models/cliente.model';
 import { SelecionaProdutoModalComponent } from './../../modals/seleciona-produto-modal/seleciona-produto-modal.component';
 import { ProdutoModel } from './../../../../models/produto.model';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,6 +16,7 @@ import { MessageService } from 'src/app/shared/services/message.service';
 import { ServicoModel } from 'src/app/models/servico.model';
 import { ProdutoService } from 'src/app/services/produto.service';
 import { SelecionaServicoModalComponent } from '../../modals/seleciona-servico-modal/seleciona-servico-modal.component';
+import { EnderecoLocalModel } from 'src/app/models/endereco-local.model';
 
 @Component({
   selector: 'app-orcamento-formulario',
@@ -64,7 +68,7 @@ export class OrcamentoFormularioComponent implements OnInit {
       cliente: this.formBuilder.group({
         nome: ['Felipe', [Validators.required, Validators.minLength(5)]],
         cpfCnpj: [''],
-        canalCaptacaoId: ['Instagram', Validators.required],
+        canalCaptacaoId: [1, Validators.required],
         contatos: this.formBuilder.array([
           this.formBuilder.group({
             telefone: ['31975155261', Validators.required],
@@ -99,11 +103,12 @@ export class OrcamentoFormularioComponent implements OnInit {
 
   onSubmit(): void {
     debugger;
-    if (this.orcamentoForm.invalid) {
-      return;
-    }
+    const orcamentoModelRequest = this.montarObjetoRequest();
 
-    this.orcamentoService.novoOrcamento(this.orcamentoModel)
+    // if (this.orcamentoForm.invalid) {
+    //   return;
+    // }
+    this.orcamentoService.novoOrcamento(orcamentoModelRequest)
       .subscribe(res => {
         try {
           this.messageService.success('Orçamento salvo som sucesso!');
@@ -111,6 +116,40 @@ export class OrcamentoFormularioComponent implements OnInit {
           this.messageService.warn('Erro ao salvar orçamento!');
         }
       }, (error => this.messageService.warn('Favor validar: ' + error.error.message)));
+  }
+
+  montarObjetoRequest(): OrcamentoModel{
+    const orcamentoModelForm = new OrcamentoModel();
+    orcamentoModelForm.produtos = [];
+    orcamentoModelForm.servicos = [];
+    const produtos = this.orcamentoForm.value.servicos.animaximo as ProdutoModel[];
+    const servicos = this.orcamentoForm.value.servicos.tictac as ServicoModel[];
+    const contatos = this.orcamentoForm.value.cliente.contatos as ContatoModel[];
+    this.orcamentoForm.value.cliente.contatos = [];
+    produtos.forEach(produto => {
+      orcamentoModelForm.produtos.push(produto);
+    });
+    servicos.forEach(servico => {
+      orcamentoModelForm.servicos.push(servico);
+    });
+    contatos.forEach(contato => {
+      contato.ddd = +String(contato.telefone).substr(0,2);
+      this.orcamentoForm.value.cliente.contatos.push(contato);
+    });
+    orcamentoModelForm.cliente = this.orcamentoForm.value.cliente as ClienteModel;
+
+    this.orcamentoForm.value.endereco.cep = this.orcamentoForm.value.endereco.cep.replace('-','');
+    orcamentoModelForm.endereco = this.orcamentoForm.value.endereco as EnderecoLocalModel;
+    
+    orcamentoModelForm.dataEvento = this.orcamentoForm.value.orcamento.dataEvento;
+    orcamentoModelForm.horaEvento = this.orcamentoForm.value.orcamento.horaEvento;
+    orcamentoModelForm.tipoEvento = this.orcamentoForm.value.orcamento.tipoEvento;
+    orcamentoModelForm.quantidadeAdultos = this.orcamentoForm.value.orcamento.quantidadeAdultos;
+    orcamentoModelForm.quantidadeCriancas = this.orcamentoForm.value.orcamento.quantidadeCriancas;
+    orcamentoModelForm.buffetPrincipal = this.orcamentoForm.value.orcamento.buffetPrincipal;
+    orcamentoModelForm.observacao = this.orcamentoForm.value.orcamento.observacao;
+    
+    return orcamentoModelForm;
   }
 
   buscarCep(cep: string): void {
@@ -167,7 +206,7 @@ export class OrcamentoFormularioComponent implements OnInit {
             this.formBuilder.group({
               quantidade: [1, Validators.required],
               id: [produto.id, Validators.required],
-              produto: [produto.nome, Validators.required],
+              nome: [produto.nome, Validators.required],
               descricao: [produto.descricao, Validators.required],
               valor: [produto.valor, Validators.required]
             })
@@ -187,7 +226,7 @@ export class OrcamentoFormularioComponent implements OnInit {
             this.formBuilder.group({
               quantidade: [0, Validators.required],
               id: [servico.id, Validators.required],
-              servico: [servico.nomeServico, Validators.required],
+              nomeServico: [servico.nomeServico, Validators.required],
               descricao: [servico.descricao, Validators.required],
               valor: [0, Validators.required],
               observacao: ['']
