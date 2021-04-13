@@ -79,7 +79,6 @@ export class OrcamentoComponent implements AfterViewInit {
     this.orcamentoService.obterOrcamentos()
       .subscribe(res => {
         try {
-          debugger;
           this.dataSource.data = res;
           console.log(res);
         } catch (e) {
