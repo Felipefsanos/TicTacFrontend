@@ -58,22 +58,22 @@ export class OrcamentoFormularioComponent implements OnInit {
     this.orcamentoForm = this.formBuilder.group({
       orcamento: this.formBuilder.group({
         dataEvento: [new Date(), Validators.required],
-        horaEvento: ['1500', Validators.required],
-        tipoEvento: ['Aniversario', Validators.required],
-        quantidadeAdultos: [5, Validators.required],
-        quantidadeCriancas: [5, Validators.required],
+        horaEvento: ['', Validators.required],
+        tipoEvento: [ 0, Validators.required],
+        quantidadeAdultos: [ 0, Validators.required],
+        quantidadeCriancas: [0 , Validators.required],
         buffetPrincipal: [false, Validators.required],
         observacao: ['']
       }),
       cliente: this.formBuilder.group({
-        nome: ['Felipe', [Validators.required, Validators.minLength(5)]],
+        nome: [' ', [Validators.required, Validators.minLength(5)]],
         cpfCnpj: [''],
-        canalCaptacaoId: [1, Validators.required],
+        canalCaptacaoId: [0, Validators.required],
         contatos: this.formBuilder.array([
           this.formBuilder.group({
-            telefone: ['31975155261', Validators.required],
-            nomeContato: ['Felipe', Validators.required],
-            email: ['', Validators.email],
+            telefone: [' ', Validators.required],
+            nomeContato: [' ', Validators.required],
+            email: [''],
             ddd: ['']
           })
         ]),
@@ -87,7 +87,7 @@ export class OrcamentoFormularioComponent implements OnInit {
         estado: ['', Validators.required],
         complemento: [''],
         logradouro: ['', Validators.required],
-        tamanhoLocal: ['', Validators.required],
+        tamanhoLocal: [''],
         escada: [false, Validators.required],
         elevador: [false, Validators.required],
         restricaoHorario: [false, Validators.required]
@@ -102,12 +102,12 @@ export class OrcamentoFormularioComponent implements OnInit {
   }
 
   onSubmit(): void {
-    debugger;
+
+    if (this.orcamentoForm.invalid) {
+      return;
+    }
     const orcamentoModelRequest = this.montarObjetoRequest();
 
-    // if (this.orcamentoForm.invalid) {
-    //   return;
-    // }
     this.orcamentoService.novoOrcamento(orcamentoModelRequest)
       .subscribe(res => {
         try {
@@ -140,7 +140,6 @@ export class OrcamentoFormularioComponent implements OnInit {
 
     this.orcamentoForm.value.endereco.cep = this.orcamentoForm.value.endereco.cep.replace('-','');
     orcamentoModelForm.endereco = this.orcamentoForm.value.endereco as EnderecoLocalModel;
-    
     orcamentoModelForm.valorFrete = this.orcamentoForm.value.servicos.valorFrete;
     orcamentoModelForm.dataEvento = this.orcamentoForm.value.orcamento.dataEvento;
     orcamentoModelForm.horaEvento = this.orcamentoForm.value.orcamento.horaEvento;
@@ -150,7 +149,6 @@ export class OrcamentoFormularioComponent implements OnInit {
     orcamentoModelForm.quantidadeCriancas = this.orcamentoForm.value.orcamento.quantidadeCriancas;
     orcamentoModelForm.buffetPrincipal = this.orcamentoForm.value.orcamento.buffetPrincipal;
     orcamentoModelForm.observacao = this.orcamentoForm.value.orcamento.observacao;
-    
     return orcamentoModelForm;
   }
 
