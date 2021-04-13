@@ -144,6 +144,7 @@ export class OrcamentoFormularioComponent implements OnInit {
     orcamentoModelForm.valorFrete = this.orcamentoForm.value.servicos.valorFrete;
     orcamentoModelForm.dataEvento = this.orcamentoForm.value.orcamento.dataEvento;
     orcamentoModelForm.horaEvento = this.orcamentoForm.value.orcamento.horaEvento;
+    orcamentoModelForm.valor = this.totalValor;
     orcamentoModelForm.tipoEvento = this.orcamentoForm.value.orcamento.tipoEvento;
     orcamentoModelForm.quantidadeAdultos = this.orcamentoForm.value.orcamento.quantidadeAdultos;
     orcamentoModelForm.quantidadeCriancas = this.orcamentoForm.value.orcamento.quantidadeCriancas;
