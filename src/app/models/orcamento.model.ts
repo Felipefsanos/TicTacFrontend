@@ -10,6 +10,7 @@ export class OrcamentoModel {
     quantidadeAdultos!: number;
     quantidadeCriancas!: number;
     buffetPrincipal!: boolean;
+    valorFrete!: number;
     observacao?: string;
     endereco!: EnderecoLocalModel;
     cliente!: ClienteModel;

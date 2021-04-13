@@ -141,6 +141,7 @@ export class OrcamentoFormularioComponent implements OnInit {
     this.orcamentoForm.value.endereco.cep = this.orcamentoForm.value.endereco.cep.replace('-','');
     orcamentoModelForm.endereco = this.orcamentoForm.value.endereco as EnderecoLocalModel;
     
+    orcamentoModelForm.valorFrete = this.orcamentoForm.value.servicos.valorFrete;
     orcamentoModelForm.dataEvento = this.orcamentoForm.value.orcamento.dataEvento;
     orcamentoModelForm.horaEvento = this.orcamentoForm.value.orcamento.horaEvento;
     orcamentoModelForm.tipoEvento = this.orcamentoForm.value.orcamento.tipoEvento;
