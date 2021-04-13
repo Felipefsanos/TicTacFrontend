@@ -7,7 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-
+import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [
   {
@@ -53,6 +53,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatButtonModule,
     RouterModule.forChild(routes)
   ]
 })

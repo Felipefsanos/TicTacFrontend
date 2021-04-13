@@ -53,7 +53,7 @@ export class HomeComponent implements AfterViewInit {
   }
 
   obterEventos(): void {
-    this.events$ = this.orcamentoService.obterOrcamentos(subDays(startOfMonth(new Date()), 6), addDays(endOfMonth(new Date()), 6))
+    this.events$ = this.orcamentoService.obterOrcamentos(subDays(startOfMonth(new Date()), 6), addDays(endOfMonth(new Date()), 6), true)
       .pipe(
         map(orcamentos => orcamentos.map(orcamento => ({
           title: `Orçamento de : ${orcamento.cliente?.nome}`,

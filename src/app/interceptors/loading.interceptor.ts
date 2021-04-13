@@ -16,8 +16,8 @@ export class LoadingInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-    if (this.loadingService.$isLoading.getValue() === 'dont-show') {
-      this.loadingService.hideLoading();
+    debugger;
+    if (request.headers.has('dontShowLoading')) {
       return next.handle(request);
     }
 

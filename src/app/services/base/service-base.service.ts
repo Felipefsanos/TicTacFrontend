@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -9,23 +9,30 @@ export class BaseService {
     constructor(protected http: HttpClient) {
     }
 
-    protected get(url: string, parameters?: any): Observable<any> {
+    protected get(url: string, parameters?: any, dontShowLoading?: boolean): Observable<any> {
         return this.http.get(this.baseUrl + url,
-            { params: parameters });
+            { params: parameters, headers: this.getSpinnerHeader(dontShowLoading) });
     }
 
-    protected post(url: string, body?: any, parameters?: any): Observable<any> {
+    protected post(url: string, body?: any, parameters?: any, dontShowLoading?: boolean): Observable<any> {
         return this.http.post(this.baseUrl + url, body,
-            {  params: parameters });
+            {  params: parameters, headers: this.getSpinnerHeader(dontShowLoading) });
     }
 
-    protected put(url: string, body?: any, parameters?: any): Observable<any> {
+    protected put(url: string, body?: any, parameters?: any, dontShowLoading?: boolean): Observable<any> {
         return this.http.put(this.baseUrl + url, body,
-            {  params: parameters });
+            {  params: parameters, headers: this.getSpinnerHeader(dontShowLoading) });
     }
 
-    protected delete(url: string, parameters?: any): Observable<any> {
+    protected delete(url: string, parameters?: any, dontShowLoading?: boolean): Observable<any> {
         return this.http.delete(this.baseUrl + url,
-            {  params: parameters });
+            {  params: parameters, headers: this.getSpinnerHeader(dontShowLoading) });
+    }
+
+    private getSpinnerHeader(dontShowLoading?: boolean): HttpHeaders | undefined {
+        if (!dontShowLoading) {
+            return undefined;
+        }
+        return new HttpHeaders().set('dontShowLoading', 'true');
     }
 }
