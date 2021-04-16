@@ -1,11 +1,10 @@
 import { LoadingService } from './../../shared/services/loading.service';
-import { OrcamentoModel } from './../../models/orcamento.model';
 import { OrcamentoService } from './../../services/orcamento.service';
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { CalendarView, CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent } from 'angular-calendar';
-import { subDays, startOfDay, addDays, endOfMonth, addHours, isSameMonth, isSameDay, endOfDay, startOfMonth } from 'date-fns';
+import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { CalendarView, CalendarEvent } from 'angular-calendar';
+import { subDays, addDays, endOfMonth, isSameMonth, isSameDay, startOfMonth } from 'date-fns';
 import { Observable, of, Subject } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 
 const colors: any = {
@@ -78,46 +77,9 @@ export class HomeComponent implements AfterViewInit {
     }
   }
 
-  // eventTimesChanged({
-  //   event,
-  //   newStart,
-  //   newEnd,
-  // }: CalendarEventTimesChangedEvent): void {
-  //   this.events = this.events.map((iEvent) => {
-  //     if (iEvent === event) {
-  //       return {
-  //         ...event,
-  //         start: newStart,
-  //         end: newEnd,
-  //       };
-  //     }
-  //     return iEvent;
-  //   });
-  //   this.handleEvent('Dropped or resized', event);
-  // }
-
   handleEvent(action: string, event: CalendarEvent): void {
-    // this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
+
   }
-
-  // addEvent(event: CalendarEvent): void {
-  //   debugger;
-  //   this.events = [
-  //     ...this.events,
-  //     {
-  //       title: event.title,
-  //       start: event.start,
-  //       end: event.end,
-  //       color: event.color,
-  //       allDay: event.allDay
-  //     },
-  //   ];
-  // }
-
-  // deleteEvent(eventToDelete: CalendarEvent) {
-  //   this.events = this.events.filter((event) => event !== eventToDelete);
-  // }
 
   setView(view: CalendarView) {
     this.view = view;

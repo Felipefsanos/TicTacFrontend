@@ -95,8 +95,7 @@ export class OrcamentoFormularioComponent implements OnInit {
       servicos: this.formBuilder.group({
         animaximo: this.formBuilder.array([]),
         tictac: this.formBuilder.array([]),
-        valorFrete: [0, Validators.required],
-
+        valorFrete: [0, Validators.required]
       }),
   });
   }

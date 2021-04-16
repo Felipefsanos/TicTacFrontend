@@ -1,29 +1,29 @@
-<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+<div fxLayout="row-wrap" fxLayoutAlign="space-between center" fxLayoutGap="10px">
   <div fxLayoutGap="10px">
-    <button mat-stroked-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+    <button mat-raised-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
       (viewDateChange)="closeOpenMonthViewDay()">
       Anterior
     </button>
-    <button mat-stroked-button mwlCalendarToday [(viewDate)]="viewDate">
+    <button mat-raised-button color="primary" mwlCalendarToday [(viewDate)]="viewDate">
       Hoje
     </button>
-    <button mat-stroked-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+    <button mat-raised-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
       (viewDateChange)="closeOpenMonthViewDay()">
       Próximo
     </button>
   </div>
-  <div class="col-md-4">
-    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-  </div>
   <div>
-    <button mat-stroked-button (click)="setView(calendarView.Month)" [class.active]="view === calendarView.Month">
-      Month
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'pt-br' }}</h3>
+  </div>
+  <div fxLayoutGap="10px">
+    <button mat-raised-button [color]="view === calendarView.Month ? 'primary' : ''" (click)="setView(calendarView.Month)" [class.active]="view === calendarView.Month">
+      Mês
     </button>
-    <button mat-stroked-button (click)="setView(calendarView.Week)" [class.active]="view === calendarView.Week">
-      Week
+    <button mat-raised-button [color]="view === calendarView.Week ? 'primary' : ''" (click)="setView(calendarView.Week)" [class.active]="view === calendarView.Week">
+      Semana
     </button>
-    <button mat-stroked-button (click)="setView(calendarView.Day)" [class.active]="view === calendarView.Day">
-      Day
+    <button mat-raised-button [color]="view === calendarView.Day ? 'primary' : ''" (click)="setView(calendarView.Day)" [class.active]="view === calendarView.Day">
+      Dia
     </button>
   </div>
 </div>
