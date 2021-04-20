@@ -4,9 +4,9 @@ import { ClienteModel } from './../../../../models/cliente.model';
 import { SelecionaProdutoModalComponent } from './../../modals/seleciona-produto-modal/seleciona-produto-modal.component';
 import { ProdutoModel } from './../../../../models/produto.model';
 import { MatDialog } from '@angular/material/dialog';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
-import { MatHorizontalStepper } from '@angular/material/stepper';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray, FormGroupDirective } from '@angular/forms';
+import { MatHorizontalStepper, MatStepper } from '@angular/material/stepper';
 import { OrcamentoModel } from 'src/app/models/orcamento.model';
 import { OrcamentoService } from 'src/app/services/orcamento.service';
 import { TiposEvento } from 'src/app/shared/models/tipos-evento-enum.model';
@@ -26,8 +26,20 @@ import { EnderecoLocalModel } from 'src/app/models/endereco-local.model';
 })
 export class OrcamentoFormularioComponent implements OnInit {
 
+  @Input()
+  orcamento?: OrcamentoModel;
+
+  @Output()
+  formularioEnviado = new EventEmitter<OrcamentoModel>();
+
+  edicao = false;
+
   @ViewChild('stepper')
-  stepper?: MatHorizontalStepper;
+  stepper?: MatStepper;
+
+  @ViewChild (FormGroupDirective)
+  formGroupDirective!: FormGroupDirective;
+
   lastFilter = '';
   step = 0;
   valorProtudos = 0;
@@ -45,30 +57,31 @@ export class OrcamentoFormularioComponent implements OnInit {
     private cepService: CepService,
     private produtosService: ProdutoService,
     private dialog: MatDialog) {
-    this.construirFormularios();
   }
 
   ngOnInit(): void {
     this.produtosService.obterProdutos().subscribe(prod => this.produtosAnimaxo = prod);
+    this.construirFormularios();
   }
 
   construirFormularios(): void {
+    this.edicao = this.orcamento ? true : false;
 
     // TODO: Remover valores fixos, por teste
     this.orcamentoForm = this.formBuilder.group({
       orcamento: this.formBuilder.group({
-        dataEvento: [new Date(), Validators.required],
-        horaEvento: ['', Validators.required],
-        tipoEvento: [ 0, Validators.required],
-        quantidadeAdultos: [ 0, Validators.required],
-        quantidadeCriancas: [0 , Validators.required],
-        buffetPrincipal: [false, Validators.required],
-        observacao: ['']
+        dataEvento: [this.orcamento?.dataEvento, Validators.required],
+        horaEvento: [this.orcamento?.dataEvento, Validators.required],
+        tipoEvento: [ this.orcamento?.tipoEvento, Validators.required],
+        quantidadeAdultos: [ this.orcamento?.quantidadeAdultos, Validators.required],
+        quantidadeCriancas: [this.orcamento?.quantidadeCriancas, Validators.required],
+        buffetPrincipal: [this.orcamento?.buffetPrincipal, Validators.required],
+        observacao: [this.orcamento?.observacao]
       }),
       cliente: this.formBuilder.group({
-        nome: [' ', [Validators.required, Validators.minLength(5)]],
-        cpfCnpj: [''],
-        canalCaptacaoId: [0, Validators.required],
+        nome: [this.orcamento?.cliente.nome, [Validators.required, Validators.minLength(5)]],
+        cpfCnpj: [this.orcamento?.cliente.cpfCnpj],
+        canalCaptacaoId: [this.orcamento?.cliente.canalCaptacaoId, Validators.required],
         contatos: this.formBuilder.array([
           this.formBuilder.group({
             telefone: [' ', Validators.required],
@@ -77,27 +90,67 @@ export class OrcamentoFormularioComponent implements OnInit {
             ddd: ['']
           })
         ]),
-        observacao: ['']
+        observacao: [this.orcamento?.cliente.observacao]
       }),
-      endereco: this.formBuilder.group({
-        cep: ['', Validators.required],
-        bairro: ['', Validators.required],
-        cidade: ['', Validators.required],
-        numero: [''],
-        estado: ['', Validators.required],
-        complemento: [''],
-        logradouro: ['', Validators.required],
-        tamanhoLocal: [''],
-        escada: [false, Validators.required],
-        elevador: [false, Validators.required],
-        restricaoHorario: [false, Validators.required]
+      local: this.formBuilder.group({
+        cep: [this.orcamento?.local.cep , Validators.required],
+        bairro: [this.orcamento?.local.bairro, Validators.required],
+        cidade: [this.orcamento?.local.cidade, Validators.required],
+        numero: [this.orcamento?.local.numero],
+        estado: [this.orcamento?.local.estado, Validators.required],
+        complemento: [this.orcamento?.local.complemento],
+        logradouro: [this.orcamento?.local.logradouro, Validators.required],
+        tamanhoLocal: [this.orcamento?.local.tamanhoLocal],
+        escada: [this.orcamento?.local.escada, Validators.required],
+        elevador: [this.orcamento?.local.elevador, Validators.required],
+        restricaoHorario: [this.orcamento?.local.restricaoHorario, Validators.required]
       }),
       servicos: this.formBuilder.group({
         animaximo: this.formBuilder.array([]),
         tictac: this.formBuilder.array([]),
-        valorFrete: [0, Validators.required]
+        valorFrete: [this.orcamento?.valorFrete, Validators.required]
       }),
   });
+  if (this.orcamento?.produto) {
+    this.orcamento?.produto.forEach(produto => {
+      this.produtosAnimaximoForm.push(
+        this.formBuilder.group({
+          quantidade: [1, Validators.required],
+          id: [produto.id, Validators.required],
+          nome: [produto.nome, Validators.required],
+          descricao: [produto.descricao, Validators.required],
+          valor: [produto.valor, Validators.required]
+        })
+      );
+    });
+  }
+  if (this.orcamento?.servico) {
+    this.orcamento?.servico.forEach(servico => {
+      this.servicosTicTacForm.push(
+        this.formBuilder.group({
+          quantidade: [0, Validators.required],
+          id: [servico.id, Validators.required],
+          nomeServico: [servico.nomeServico, Validators.required],
+          descricao: [servico.descricao, Validators.required],
+          valor: [0, Validators.required],
+          observacao: ['']
+        })
+      );
+    });
+  }
+  if (this.orcamento?.cliente.contatos) {
+    this.clienteFormGroup.controls.contatos = new FormArray([]);;
+    this.orcamento?.cliente.contatos.forEach(contato => {
+      this.contatos.push(
+        this.formBuilder.group({
+           telefone: [contato.telefone, Validators.required],
+            nomeContato: [contato.nomeContato, Validators.required],
+            email: [contato.email],
+            ddd: [contato.ddd]
+        })
+      );
+    });
+  }
   }
 
   onSubmit(): void {
@@ -110,6 +163,8 @@ export class OrcamentoFormularioComponent implements OnInit {
     this.orcamentoService.novoOrcamento(orcamentoModelRequest)
       .subscribe(res => {
         try {
+          this.stepper?.reset();
+          this.formGroupDirective.resetForm();
           this.messageService.success('Orçamento salvo som sucesso!');
         } catch (e) {
           this.messageService.warn('Erro ao salvar orçamento!');
@@ -119,17 +174,17 @@ export class OrcamentoFormularioComponent implements OnInit {
 
   montarObjetoRequest(): OrcamentoModel{
     const orcamentoModelForm = new OrcamentoModel();
-    orcamentoModelForm.produtos = [];
-    orcamentoModelForm.servicos = [];
+    orcamentoModelForm.produto = [];
+    orcamentoModelForm.servico = [];
     const produtos = this.orcamentoForm.value.servicos.animaximo as ProdutoModel[];
     const servicos = this.orcamentoForm.value.servicos.tictac as ServicoModel[];
     const contatos = this.orcamentoForm.value.cliente.contatos as ContatoModel[];
     this.orcamentoForm.value.cliente.contatos = [];
     produtos.forEach(produto => {
-      orcamentoModelForm.produtos.push(produto);
+      orcamentoModelForm.produto.push(produto);
     });
     servicos.forEach(servico => {
-      orcamentoModelForm.servicos.push(servico);
+      orcamentoModelForm.servico.push(servico);
     });
     contatos.forEach(contato => {
       contato.ddd = +String(contato.telefone).substr(0,2);
@@ -137,8 +192,8 @@ export class OrcamentoFormularioComponent implements OnInit {
     });
     orcamentoModelForm.cliente = this.orcamentoForm.value.cliente as ClienteModel;
 
-    this.orcamentoForm.value.endereco.cep = this.orcamentoForm.value.endereco.cep.replace('-','');
-    orcamentoModelForm.endereco = this.orcamentoForm.value.endereco as EnderecoLocalModel;
+    this.orcamentoForm.value.local.cep = String(this.orcamentoForm.value.local.cep).replace('-','');
+    orcamentoModelForm.local = this.orcamentoForm.value.local as EnderecoLocalModel;
     orcamentoModelForm.valorFrete = this.orcamentoForm.value.servicos.valorFrete;
     orcamentoModelForm.dataEvento = this.orcamentoForm.value.orcamento.dataEvento;
     orcamentoModelForm.horaEvento = this.orcamentoForm.value.orcamento.horaEvento;
@@ -150,6 +205,17 @@ export class OrcamentoFormularioComponent implements OnInit {
     orcamentoModelForm.observacao = this.orcamentoForm.value.orcamento.observacao;
     return orcamentoModelForm;
   }
+
+editar(): void {
+  
+  if (this.orcamentoForm.invalid) {
+    return;
+  }
+  const orcamentoModelRequest = this.montarObjetoRequest();
+  this.formularioEnviado.emit(orcamentoModelRequest as OrcamentoModel);
+  this.stepper?.reset();
+  this.formGroupDirective.resetForm();
+}
 
   buscarCep(cep: string): void {
     if (cep === '_____-___') { // Valor da máscara do CEP
@@ -165,15 +231,15 @@ export class OrcamentoFormularioComponent implements OnInit {
       .subscribe(resp => {
 
         if (resp.erro && resp.erro === true) {
-          this.enderecoFormGroup.controls.cep.setErrors({ cepInvalido: true });
+          this.localFormGroup.controls.cep.setErrors({ cepInvalido: true });
         } else {
-          this.definirEndereco(resp);
+          this.definirLocal(resp);
         }
       });
   }
 
-  definirEndereco(resp: ViaCepEnderecoModel): void {
-    this.enderecoFormGroup.patchValue({
+  definirLocal(resp: ViaCepEnderecoModel): void {
+    this.localFormGroup.patchValue({
       cep: resp.cep,
       logradouro: resp.logradouro,
       bairro: resp.bairro,
@@ -313,8 +379,8 @@ export class OrcamentoFormularioComponent implements OnInit {
     return this.orcamentoForm.controls.cliente as FormGroup;
   }
 
-  get enderecoFormGroup(): FormGroup {
-    return this.orcamentoForm.controls.endereco as FormGroup;
+  get localFormGroup(): FormGroup {
+    return this.orcamentoForm.controls.local as FormGroup;
   }
 
   get orcamentoFinalFormGroup(): FormGroup {

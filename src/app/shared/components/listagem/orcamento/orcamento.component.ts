@@ -50,7 +50,27 @@ export class OrcamentoComponent implements AfterViewInit {
   }
 
   editar(orcamento: OrcamentoModel): void {
-    const dialogRef = this.matDialog.open(OrcamentoModalComponent);
+    const dialogRef = this.matDialog.open(OrcamentoModalComponent,
+      { data:
+        {
+          orcamento
+        },
+        height: '100%',
+      });
+
+    dialogRef.afterClosed().subscribe((formValue: any) =>
+    {
+      if(formValue) {
+        const orcamentoEditado = new OrcamentoModel(formValue);
+
+        this.orcamentoService.editarOrcamento(orcamentoEditado.id as number, orcamentoEditado)
+            .subscribe(() => {
+              this.messageService.success('Orçamento alterado com sucesso!');
+              this.refresh();
+            });
+      }
+    });
+
   }
 
   excluir(id: number): void {

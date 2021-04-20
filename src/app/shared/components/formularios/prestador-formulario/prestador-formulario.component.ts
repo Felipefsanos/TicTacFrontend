@@ -20,7 +20,7 @@ export class PrestadorFormularioComponent implements OnInit {
   @Output()
   formularioEnviado = new EventEmitter<PrestadorModel>();
 
-  edicao = false;;
+  edicao = false;
 
   @ViewChild('stepper')
   stepper?: MatStepper;

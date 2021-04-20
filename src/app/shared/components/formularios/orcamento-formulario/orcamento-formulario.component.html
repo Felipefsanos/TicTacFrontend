@@ -196,7 +196,7 @@
 
         </form>
     </mat-step>
-    <mat-step [stepControl]="enderecoFormGroup && servicosTicTacForm && produtosAnimaximoForm">
+    <mat-step [stepControl]="localFormGroup && servicosTicTacForm && produtosAnimaximoForm">
         <form [formGroup]="orcamentoForm" class="mt-2">
             <ng-template matStepLabel>Local / Produtos / Servicos</ng-template>
 
@@ -205,7 +205,7 @@
                 <mat-divider></mat-divider>
             </div>
 
-            <div formGroupName="endereco">
+            <div formGroupName="local">
 
                 <div fxLayoutGap.gt-xs="10px" fxLayout.lt-md="column" fxLayout="row">
 
@@ -213,23 +213,23 @@
                         <mat-label>CEP</mat-label>
                         <input #inputCep formControlName="cep" matInput placeholder="CEP do cliente" mask="00000-000"
                             [showMaskTyped]="true" (blur)="buscarCep(inputCep.value)">
-                        <mat-error *ngIf="enderecoFormGroup.controls.cep.hasError('required')">Campo obrigatório
+                        <mat-error *ngIf="localFormGroup.controls.cep.hasError('required')">Campo obrigatório
                         </mat-error>
-                        <mat-error *ngIf="enderecoFormGroup.controls.cep.hasError('cepInvalido')">CEP inválido
+                        <mat-error *ngIf="localFormGroup.controls.cep.hasError('cepInvalido')">CEP inválido
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" fxFlex.gt-xs>
                         <mat-label>Logradouro</mat-label>
                         <input formControlName="logradouro" matInput placeholder="Logradouro">
-                        <mat-error *ngIf="enderecoFormGroup.controls.logradouro.hasError('required')">Campo obrigatório
+                        <mat-error *ngIf="localFormGroup.controls.logradouro.hasError('required')">Campo obrigatório
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline">
                         <mat-label>Número</mat-label>
                         <input formControlName="numero" type="number" matInput placeholder="Número">
-                        <mat-error *ngIf="enderecoFormGroup.controls.numero.hasError('required')">Campo obrigatório
+                        <mat-error *ngIf="localFormGroup.controls.numero.hasError('required')">Campo obrigatório
                         </mat-error>
                     </mat-form-field>
 
@@ -241,14 +241,14 @@
                     <mat-form-field appearance="outline" fxFlex.gt-xs>
                         <mat-label>Bairro</mat-label>
                         <input formControlName="bairro" matInput placeholder="Bairro">
-                        <mat-error *ngIf="enderecoFormGroup.controls.bairro.hasError('required')">Campo obrigatório
+                        <mat-error *ngIf="localFormGroup.controls.bairro.hasError('required')">Campo obrigatório
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" fxFlex.gt-xs>
                         <mat-label>Cidade</mat-label>
                         <input formControlName="cidade" matInput placeholder="Cidade do cliente">
-                        <mat-error *ngIf="enderecoFormGroup.controls.cidade.hasError('required')">Campo obrigatório
+                        <mat-error *ngIf="localFormGroup.controls.cidade.hasError('required')">Campo obrigatório
                         </mat-error>
                     </mat-form-field>
 
@@ -284,7 +284,7 @@
                             <mat-option value="SE">Sergipe</mat-option>
                             <mat-option value="TO">Tocantins</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="enderecoFormGroup.controls.estado.hasError('required')">Campo obrigatório
+                        <mat-error *ngIf="localFormGroup.controls.estado.hasError('required')">Campo obrigatório
                         </mat-error>
                     </mat-form-field>
 
@@ -305,7 +305,7 @@
                         <mat-form-field appearance="outline" fxFlex.gt-xs>
                             <mat-label>Tamanho do Local</mat-label>
                             <input formControlName="tamanhoLocal" type="number" matInput placeholder="Tamanho do Local">
-                            <mat-error *ngIf="enderecoFormGroup.controls.tamanhoLocal.hasError('required')">Campo
+                            <mat-error *ngIf="localFormGroup.controls.tamanhoLocal.hasError('required')">Campo
                                 obrigatório
                             </mat-error>
                         </mat-form-field>
@@ -316,7 +316,7 @@
                                 <mat-option [value]="true">Sim</mat-option>
                                 <mat-option [value]="false" selected>Não</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="enderecoFormGroup.controls.elevador.hasError('required')">Campo
+                            <mat-error *ngIf="localFormGroup.controls.elevador.hasError('required')">Campo
                                 obrigatório
                             </mat-error>
                         </mat-form-field>
@@ -331,7 +331,7 @@
                                 <mat-option [value]="true">Sim</mat-option>
                                 <mat-option [value]="false" selected>Não</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="enderecoFormGroup.controls.escada.hasError('required')">Campo obrigatório
+                            <mat-error *ngIf="localFormGroup.controls.escada.hasError('required')">Campo obrigatório
                             </mat-error>
                         </mat-form-field>
 
@@ -342,7 +342,7 @@
                                 <mat-option [value]="true">Sim</mat-option>
                                 <mat-option [value]="false" selected>Não</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="enderecoFormGroup.controls.restricaoHorario.hasError('required')">Campo
+                            <mat-error *ngIf="localFormGroup.controls.restricaoHorario.hasError('required')">Campo
                                 obrigatório
                             </mat-error>
                         </mat-form-field>
@@ -480,7 +480,7 @@
                                     <span>Valores Referente ao frete</span>
                                     <div fxLayoutAlign="center center">
                                         <mat-icon>map</mat-icon>
-                                        <strong>R${{frete}}</strong>
+                                        <strong>R${{frete| currency}}</strong>
                                     </div>
                                 </mat-panel-description>
 
@@ -492,7 +492,9 @@
                             </mat-form-field>
 
                             <mat-action-row>
+                                <div fxLayoutGap="10px" fxLayout="row-reverse">
                                 <button mat-button color="primary" (click)="nextStep()">Validar</button>
+                                </div>
                             </mat-action-row>
 
                         </mat-expansion-panel>
@@ -565,11 +567,18 @@
                                 <mat-label>Valores Totais</mat-label>
                                 <input [value]="totalValor" readonly matInput placeholder="Frete">
                             </mat-form-field>
-
+                            <div fxLayoutGap="10px" fxLayout="row-reverse">
                             <mat-action-row>
+
                                 <button mat-button color="warn" (click)="prevStep()">Voltar</button>
-                                <button mat-button color="primary" (click)="onSubmit()">Criar</button>
+                                <div *ngIf="!edicao">
+                                    <button mat-button color="primary" (click)="onSubmit()">Criar</button>
+                                </div>
+                                <div *ngIf="edicao">
+                                    <button mat-button color="primary" (click)="editar()">Atualizar</button>
+                                </div>
                             </mat-action-row>
+                        </div>
                         </mat-expansion-panel>
                     </mat-accordion>
                 </div>

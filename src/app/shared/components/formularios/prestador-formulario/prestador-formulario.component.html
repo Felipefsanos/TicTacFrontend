@@ -1,5 +1,6 @@
-<mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
-    <mat-step [stepControl]="formulario.controls.nome && formulario.controls.cpf || contatos">
+
+<mat-horizontal-stepper  labelPosition="bottom" [linear]="true" #stepper >
+    <mat-step  [stepControl]="formulario.controls.nome && formulario.controls.cpf || contatos">
         <form [formGroup]="formulario">
             <ng-template matStepLabel>Contato</ng-template>
             <div fxLayoutGap.gt-xs="10px" fxLayout.lt-sm="column" fxLayout="row">
@@ -62,7 +63,6 @@
             </div>
         </form>
     </mat-step>
-
     <mat-step [stepControl]="endereco" mat-optional>
         <form [formGroup]="endereco">
             <ng-template matStepLabel>Endereço</ng-template>

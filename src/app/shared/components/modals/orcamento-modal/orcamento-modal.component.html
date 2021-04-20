@@ -1,1 +1,6 @@
-<p>orcamento-modal works!</p>
+<div class="modal-header" mat-dialog-title>
+    Editar Orçamento
+</div>
+<div>
+    <app-orcamento-formulario [orcamento]="orcamento" (formularioEnviado)="editarOrcamento($event)"></app-orcamento-formulario>
+</div>

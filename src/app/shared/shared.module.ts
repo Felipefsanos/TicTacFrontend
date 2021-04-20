@@ -53,6 +53,7 @@ import { ServicosComponent } from './components/listagem/servicos/servicos.compo
 import { ServicoModalComponent } from './components/modals/servico-modal/servico-modal.component';
 import { ServicoFormularioComponent } from './components/formularios/servico-formulario/servico-formulario.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { OrcamentoModalComponent } from './components/modals/orcamento-modal/orcamento-modal.component';
 const routes: Routes = [
   {
     path: 'login',
@@ -74,6 +75,7 @@ const routes: Routes = [
     OrcamentoFormularioComponent,
     ComponenteFormularioComponent,
     OrcamentoComponent,
+    OrcamentoModalComponent,
     CanalCaptacaoComponent,
     CanalCaptacaoModalComponent,
     ConfirmacaoModalComponent,

@@ -38,4 +38,8 @@ export class OrcamentoService extends BaseService {
   removerOrcamento(id: number): Observable<any> {
     return this.delete(`orcamentos/${id}`);
   }
+  editarOrcamento(id: number,parametros: OrcamentoModel): Observable<any> {
+    return this.put(`orcamentos/${id}`, parametros);
+  }
+
 }

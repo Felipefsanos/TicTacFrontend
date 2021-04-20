@@ -4,6 +4,7 @@ import { ProdutoModel } from './produto.model';
 import { ServicoModel } from './servico.model';
 
 export class OrcamentoModel {
+    id!: number;
     dataEvento!: Date;
     horaEvento!: string;
     tipoEvento!: string;
@@ -13,13 +14,13 @@ export class OrcamentoModel {
     valorFrete!: number;
     valor!: number;
     observacao?: string;
-    endereco!: EnderecoLocalModel;
+    local!: EnderecoLocalModel;
     cliente!: ClienteModel;
-    produtos!: ProdutoModel[];
-    servicos!: ServicoModel[];
+    produto!: ProdutoModel[];
+    servico!: ServicoModel[];
 
 
-    public constructor(init?: Partial<OrcamentoModel>, clienteInit?: Partial<ClienteModel>, enderecoInit?: Partial<EnderecoLocalModel>) {
+    public constructor(init?: Partial<OrcamentoModel>, clienteInit?: Partial<ClienteModel>, localInit?: Partial<EnderecoLocalModel>) {
         Object.assign(this, init);
 
         if (init && init.dataEvento && init.horaEvento) {
@@ -30,7 +31,7 @@ export class OrcamentoModel {
                                        +init.horaEvento.slice(2));
         }
 
-        this.endereco = new EnderecoLocalModel(enderecoInit);
+        this.local = new EnderecoLocalModel(localInit);
         this.cliente = new ClienteModel(clienteInit);
     }
 }
