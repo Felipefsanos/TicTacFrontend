@@ -207,7 +207,7 @@ export class OrcamentoFormularioComponent implements OnInit {
   }
 
 editar(): void {
-  
+
   if (this.orcamentoForm.invalid) {
     return;
   }
